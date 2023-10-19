@@ -1,0 +1,177 @@
+﻿@inherits LayoutComponentBase
+
+@inject ILocalStorageService localStorageService
+@inject IAccountService accountService
+@inject ISnackbar Snackbar
+@inject NavigationManager navigationManager
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+@if (GlobalClass.IsLogin && IsDateFectch)
+{
+    <MudLayout>
+        <MudAppBar Class='topbar' Fixed='true' Elevation='3' Dense>
+                    <MudText Class='topbar__tbxpagetitle' Style='@updateStyleStr'> @GlobalClass.pageTitle</MudText>
+                    <MudSpacer/>
+                    <div class='usercp'>
+                        <MudExpansionPanels Class='usercp__expansionpanel-header' DisableBorders='userCPborderVal' Elevation='userCPElevationVal'> 
+                            <MudExpansionPanel Class='usercp__expansionpanel' IsExpandedChanged='ToggleUserCP'>
+                                <TitleContent>
+                                    <div class='d-flex usercp__infocontainer' style='@userCPInfoStyleStr'>
+                                        <MudText class="mr-3">ACCOUNT</MudText>
+                                    </div>
+                                </TitleContent>
+                                <ChildContent>
+                                    <MudDivider />
+                                    <div Class='d-flex usercp__btncontainer'>
+                                        <MudButton Class='usercp__btnsettings' OnClick="GoToSettings" Variant='Variant.Text' StartIcon='@Icons.Material.Filled.Settings' Size='Size.Small'>Settings</MudButton>
+                                        <MudSpacer/>
+                                        <MudButton Class='usercp__btntohub' Variant='Variant.Text' StartIcon='@Icons.Material.Filled.PublishedWithChanges' Size='Size.Small'>Change Password</MudButton>
+                                    </div>
+                                    <MudDivider />
+                                    <div class='py-2'>
+                                        <MudButton Class='usercp__btnlogout' Variant='Variant.Filled' OnClick="Logout" StartIcon='@Icons.Material.Filled.Logout' Color='Color.Error' DisableElevation>
+                                            Log Out
+                                        </MudButton>
+                                    </div>
+                                </ChildContent>
+                            </MudExpansionPanel>
+                        </MudExpansionPanels>
+                    </div>
+        </MudAppBar>
+        <MudDrawer Class='main-drawer' @bind-Open="_drawerOpen" Fixed Elevation='0' Variant='@DrawerVariant.Mini'>
+            <MudDrawerHeader Class='@(_drawerOpen  == true ? "drawer-header" : "width55px drawer-header")'>
+                <MudIconButton OnClick="@((e) => ToggleDrawer())" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+                <MudText Class='drawer-header__header-text text-center'>@(_drawerOpen  == true ? "UA" : "")</MudText>
+            </MudDrawerHeader>
+            @* menu here *@
+            
+            <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+            <MudNavLink Href="/servers" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
+            <MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt">Billing</MudNavLink>
+        </MudDrawer>
+        <MudMainContent>
+            <div class='main-body overflow-hidden'>
+                @Body
+            </div>
+        </MudMainContent>
+        <MudAppBar Class='footerbar' Fixed Elevation='2' Dense Bottom>
+            <MudSpacer />
+                <MudText>
+                    Copyright © January 2023
+                </MudText>
+            <MudSpacer />
+            <MudText>
+                <div @ref='timeElement'></div>
+            </MudText>
+        </MudAppBar>
+    </MudLayout>
+}
+else
+{
+    @if (GlobalClass.ShowLogin)
+    {
+        <Loading />
+    }
+    <MudGrid class="bg-gradient">
+        <MudItem xs="6">
+            <LoginSVG />
+        </MudItem>
+        <MudItem xs="5" class="d-flex justify-content-center align-items-center">
+            <MudPaper Elevation="3" Width="100%" Height="90vh">
+                <div class="center flex-column gap-7">
+                    <MudText Typo="Typo.h6">LOGIN</MudText>
+                    <MudTextField class="w60" @bind-Value="AccountModel.Username" Label="Username"
+                        Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Person"
+                        AdornmentColor="Color.Warning" />
+                    <MudTextField class="w60" InputType="InputType.Password" @bind-Value="AccountModel.Password"
+                        Label="Password" Variant="Variant.Outlined" Adornment="Adornment.Start"
+                        AdornmentIcon="@Icons.Material.Filled.LockOpen" AdornmentColor="Color.Warning" />
+                    <MudButton class="w60" OnClick="Login" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send"
+                        Color="Color.Primary" Size="Size.Large">LOGIN</MudButton>
+                </div>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
+@code {
+    bool IsDateFectch = false;
+    AccountModel AccountModel = new();
+    private string? systemIconSource = $"images/icons/budget.png", drawerStyleStr = "display: none;", 
+    userCPExpPanelStyleStr = "background-color: #fafafa;", userCPInfoStyleStr = "width: 250px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;";
+    private bool _drawerOpen, _isFullScreen, _hideExpandDrawerIcon, dataFetched, showLoadingOverlay = true, 
+    userCPOpen, userCPborderVal = true, isConfigPage;
+    private int userCPElevationVal = 0;
+    ElementReference timeElement;
+    string updateStyleStr = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await VerifyLogin();
+    }
+    private async Task Login()
+    {
+        GlobalClass.ShowLogin = !GlobalClass.ShowLogin;
+        await Task.Delay(1500);
+        Task<AccountModel> account = accountService.Authenticate(AccountModel);
+        await account;
+        if (account.Status == TaskStatus.RanToCompletion)
+        {
+            if (account.Result.UserId != 0)
+            {
+                await localStorageService.SetItemAsync("token", true);
+                await VerifyLogin();
+            }
+            else
+            {
+                Snackbar.Add("Sorry we can't fint your account.", Severity.Error, config =>
+                {
+                    config.Icon = @Icons.Material.Filled.Error;
+                    config.IconColor = Color.Warning;
+                    config.IconSize = Size.Large;
+                });
+            }
+            GlobalClass.ShowLogin = !GlobalClass.ShowLogin;
+        }
+    }
+    private async Task VerifyLogin()
+    {
+        ValueTask<bool> token = localStorageService.GetItemAsync<bool>("token");
+        await token;
+        if (token.IsCompletedSuccessfully)
+        {
+            GlobalClass.IsLogin = token.Result;
+            IsDateFectch = true;
+            StateHasChanged();
+        }
+    }
+    private async Task Logout()
+    {
+        await localStorageService.RemoveItemAsync("token");
+        GlobalClass.IsLogin = false;
+        StateHasChanged();
+    }
+    void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    private void ToggleUserCP()
+    {
+        userCPOpen = !userCPOpen;
+        if (userCPOpen) {
+            userCPborderVal = false;
+            userCPElevationVal = 1;
+            userCPExpPanelStyleStr = "background: color: white;";
+            userCPInfoStyleStr = "width: 250px;";
+        } else if (!userCPOpen) {
+            userCPborderVal = true;
+            userCPElevationVal = 0;
+            userCPExpPanelStyleStr = "background-color: #fafafa;";
+            userCPInfoStyleStr = "width: 250px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;";
+        }
+    }
+    private void GoToSettings()
+    {
+        navigationManager.NavigateTo("/settings" , true);
+    }
+}

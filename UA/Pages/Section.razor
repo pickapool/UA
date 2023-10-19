@@ -1,0 +1,138 @@
+@inject ISectionService SectionService
+@inject IDialogService dialogService
+@inject ISnackbar Snackbar
+
+<div class="settings">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<SectionModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Section Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='GetList' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="()=> EditSection(new())">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 20px' />
+            <col />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                    SortBy="new Func<SectionModel, object>(x=>x.SectionId)">
+                    Id
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<SectionModel, object>(x=>x.SectionName)">
+                    Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Division Name">@context.SectionId</MudTd>
+            <MudTd DataLabel="Short Name">@context.SectionName</MudTd>
+            <MudTd Class='text-center pa-2'>
+                <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                    <MudMenuItem OnClick="()=> EditSection(context)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Edit</MudText>
+                        </div>
+                    </MudMenuItem>
+                    <MudMenuItem OnClick="()=> DeleteSection(context.SectionId)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Remove</MudText>
+                        </div>
+                    </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code {
+    List<SectionModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Sections";
+        await GetList();
+    }
+    private async Task GetList()
+    {
+        IsLoading = true;
+        Task<List<SectionModel>> data = SectionService.ListOfSection(new FilterParameter());
+        await data;
+        if (data.Status == TaskStatus.RanToCompletion)
+        {
+            list = data.Result;
+            await Task.Delay(1000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private bool FilterItems(SectionModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.SectionName.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task EditSection(SectionModel dept)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("color", dept.SectionId == 0 ? Color.Info : Color.Success);
+        parameters.Add("dialogTitle", dept.SectionId == 0 ? "Add Section" : "Edit Section");
+        parameters.Add("buttonText", dept.SectionId == 0 ? "Add" : "Save");
+        parameters.Add("SectionModel", dept);
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var resultDialog = await dialogService.Show<Dialogs.SectionDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+    private async Task DeleteSection(int id)
+    {
+        IsLoading = !IsLoading;
+        Task t = SectionService.DeleteSection(id);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            await GetList();
+            Extensions.ShowAlert("Section successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+        }
+    }
+}

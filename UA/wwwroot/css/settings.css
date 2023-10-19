@@ -1,0 +1,80 @@
+.page-cont {
+    height: 100%;
+}
+
+.subdrawer-left {
+    width: 58px;
+    position: relative;
+}
+
+.subdrawer-left .mud-drawer {
+    overflow: hidden;
+}
+
+.subdrawer-left .mud-drawer .mud-navmenu {
+    overflow: auto;
+}
+
+.subdrawer-left .mud-drawer .mud-drawer-content {
+    background-color: #7a5095;
+}
+
+.subdrawer-left .mud-drawer .mud-nav-link-text {
+    color: white;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.subdrawer-left .mud-drawer .mud-icon-root {
+    color: white !important;
+}
+
+.subdrawer-left .mud-drawer .mud-nav-group .mud-collapse-container {
+    background-color: #5d3c71 !important;
+}
+
+.subdrawer-left .activelink {
+    border-left: solid thick #ffa500;
+}
+
+.subdrawer-left .activelink .mud-icon-root {
+    color: #ffa500 !important;
+}
+
+.subdrawer-left .activelink .mud-nav-link-text {
+    color: #ffa500;
+    font-weight: 450;
+}
+.transition-05s-ease {
+    transition: all 0.5s;
+    transition-timing-function: ease;
+  }
+  .settings .mud-table-container
+  {
+    height: 70vh !important;
+  }
+  .settings .col-one{
+    width: 300px !important;
+  }
+  .txtfield-75 .mud-input-slot,
+  .txtfield-75 .mud-input-label {
+    font-size: 0.75rem !important;
+  }
+  .txtfield-75 .mud-input-slot,
+  .txtfield-75 .mud-input-label {
+    font-size: 0.75rem !important;
+  }  
+  .txtfield-75
+  {
+    width: 400px;
+  }
+  .settings .mud-input-control>.mud-input-control-input-container>div.mud-input.mud-input-text
+  {
+    margin-top: unset !important;
+  }
+  .settings-dialog.mud-grid
+  {
+    justify-content: center !important;
+  }

@@ -1,0 +1,19 @@
+.customdialog2 .mud-dialog-title, .customdialog3 .mud-dialog-title {
+    background-color: #542d6f !important;
+    color: white;
+  }
+  .customdialog2 .mud-dialog-title .mud-typography, .customdialog3 .mud-dialog-title .mud-typography {
+    font-family: "Theramin";
+  }
+  .customdialog2 .mud-dialog-content, .customdialog3 .mud-dialog-content {
+    padding: 8px !important;
+    background-color: rgba(238, 238, 238, 0.6274509804) !important;
+  }
+  .btn-ios-d {
+    font-weight: 500 !important;
+    min-width: 70px !important;
+  }
+  
+  .btn-ios-d .mud-button-icon-start {
+    margin-right: 0px !important;
+  }

@@ -1,0 +1,176 @@
+@inject IStudentService StudentService
+@inject IDialogService dialogService
+@inject ISnackbar Snackbar
+
+<div class="settings">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<StudentModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Student Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='GetList' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="()=> EditStudent(new())">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 20px' />
+            <col />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                    SortBy="new Func<StudentModel, object>(x=>x.StudentId)">
+                    Id
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<StudentModel, object>(x=>x.StudentName)">
+                    Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<StudentModel, object>(x=>x.Course.CourseName)">
+                    Course
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<StudentModel, object>(x=>x.Department.DepartmentName)">
+                    Department
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<StudentModel, object>(x=>x.Section.SectionName)">
+                    Department
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                Sanctions
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                Year Level
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Student Name">@context.StudentId</MudTd>
+            <MudTd DataLabel="Course Name">@context.StudentName</MudTd>
+            <MudTd DataLabel="Course Name">@context.Course.CourseName</MudTd>
+            <MudTd DataLabel="Department Name">@context.Department.DepartmentName</MudTd>
+            <MudTd DataLabel="Section Name">@context.Section.SectionName</MudTd>
+            <MudTd DataLabel="Sanctions">
+                @foreach(SanctionModel s in context.Sanctions)
+                {
+                    <MudChip Color="Color.Secondary" Size="Size.Small">@s.SanctionName</MudChip>
+                }
+            </MudTd>
+            <MudTd DataLabel="Year Level">@Extensions.GetEnumDescription((Enums.YearLevel) context.YearLevel)</MudTd>
+
+            <MudTd Class='text-center pa-2'>
+                <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                    <MudMenuItem OnClick="()=> EditStudent(context)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Edit</MudText>
+                        </div>
+                    </MudMenuItem>
+                    <MudMenuItem OnClick="()=> DeleteStudent(context.StudentId)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Remove</MudText>
+                        </div>
+                    </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code {
+    List<StudentModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Students";
+        await GetList();
+    }
+    private async Task GetList()
+    {
+        IsLoading = true;
+        Task<List<StudentModel>> data = StudentService.ListOfStudent(new FilterParameter());
+        await data;
+        if (data.Status == TaskStatus.RanToCompletion)
+        {
+            list = data.Result;
+            await Task.Delay(1000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private bool FilterItems(StudentModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.StudentName.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task EditStudent(StudentModel dept)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("color", dept.StudentId == 0 ? Color.Info : Color.Success);
+        parameters.Add("dialogTitle", dept.StudentId == 0 ? "Add Student" : "Edit Student");
+        parameters.Add("buttonText", dept.StudentId == 0 ? "Add" : "Save");
+        parameters.Add("StudentModel", dept);
+        MaxWidth width = MaxWidth.ExtraSmall;
+        if(dept.StudentId != 0)
+            width = MaxWidth.Medium;
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = width, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var resultDialog = await dialogService.Show<Dialogs.StudentDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+    private async Task DeleteStudent(int id)
+    {
+        IsLoading = !IsLoading;
+        Task t = StudentService.DeleteStudent(id);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            await GetList();
+            Extensions.ShowAlert("Student successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+        }
+    }
+}

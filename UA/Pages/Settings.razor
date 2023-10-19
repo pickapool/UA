@@ -1,0 +1,48 @@
+@page "/settings"
+
+<div class='page-cont d-flex'>
+        <div class='subdrawer-left transition-05s-ease mr-2' square style='@(open ? "width:270px" : "width:58px")'>
+            <MudDrawer @bind-Open='open' Fixed='false' Anchor='Anchor.Left' Elevation='0' Variant="@DrawerVariant.Mini" OpenMiniOnHover='true'>
+                <MudNavMenu>
+                    <MudNavLink OnClick="()=> GoToPage(1)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Courses</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(2)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Departments</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(3)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Sanctions</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(4)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Sections</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(5)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Students</MudNavLink>
+                </MudNavMenu>
+            </MudDrawer>
+        </div>
+        <MudContainer Class='pa-2 transition-05s-ease' Fixed='false' MaxWidth='MaxWidth.ExtraExtraLarge'>
+            @if(currentPage == 1) {
+                <Course/>
+            } else if(currentPage == 2) {
+                <Department/>
+            } else if(currentPage == 3) {
+                <Sanction/>
+            } else if(currentPage == 4) {
+                <Section/>
+            } else if(currentPage == 5) {
+                <Student/>
+            }
+        </MudContainer>
+</div>
+@code
+{
+    bool open = false;
+    int currentPage = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    private void GoToPage(int page)
+    {
+        currentPage = page;
+        StateHasChanged();
+    }
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    } 
+}

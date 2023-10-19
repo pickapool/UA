@@ -1,0 +1,138 @@
+@inject IDepartmentService departmentService
+@inject IDialogService dialogService
+@inject ISnackbar Snackbar
+
+<div class="settings">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<DepartmentModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Department Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='GetList' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="()=> EditDepartment(new())">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 20px' />
+            <col />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                    SortBy="new Func<DepartmentModel, object>(x=>x.DepartmentId)">
+                    Id
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<DepartmentModel, object>(x=>x.DepartmentName)">
+                    Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Division Name">@context.DepartmentId</MudTd>
+            <MudTd DataLabel="Short Name">@context.DepartmentName</MudTd>
+            <MudTd Class='text-center pa-2'>
+                <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                    <MudMenuItem OnClick="()=> EditDepartment(context)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Edit</MudText>
+                        </div>
+                    </MudMenuItem>
+                    <MudMenuItem OnClick="()=> DeleteDepartment(context.DepartmentId)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Remove</MudText>
+                        </div>
+                    </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code {
+    List<DepartmentModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Departments";
+        await GetList();
+    }
+    private async Task GetList()
+    {
+        IsLoading = true;
+        Task<List<DepartmentModel>> data = departmentService.ListOfDepartment(new FilterParameter());
+        await data;
+        if (data.Status == TaskStatus.RanToCompletion)
+        {
+            list = data.Result;
+            await Task.Delay(1000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private bool FilterItems(DepartmentModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.DepartmentName.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task EditDepartment(DepartmentModel dept)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("color", dept.DepartmentId == 0 ? Color.Info : Color.Success);
+        parameters.Add("dialogTitle", dept.DepartmentId == 0 ? "Add Department" : "Edit Department");
+        parameters.Add("buttonText", dept.DepartmentId == 0 ? "Add" : "Save");
+        parameters.Add("DepartmentModel", dept);
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var resultDialog = await dialogService.Show<Dialogs.DepartmentDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+    private async Task DeleteDepartment(int id)
+    {
+        IsLoading = !IsLoading;
+        Task t = departmentService.DeleteDepartment(id);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            await GetList();
+            Extensions.ShowAlert("Department successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+        }
+    }
+}
