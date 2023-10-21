@@ -82,9 +82,9 @@
             <MudTd DataLabel="Department Name">@context.Department.DepartmentName</MudTd>
             <MudTd DataLabel="Section Name">@context.Section.SectionName</MudTd>
             <MudTd DataLabel="Sanctions">
-                @foreach(SanctionModel s in context.Sanctions)
+                @foreach(UserSanctionModel s in context.Sanctions)
                 {
-                    <MudChip Color="Color.Secondary" Size="Size.Small">@s.SanctionName</MudChip>
+                    <MudChip Color="Color.Secondary" Size="Size.Small">@s.Sanction.SanctionName</MudChip>
                 }
             </MudTd>
             <MudTd DataLabel="Year Level">@Extensions.GetEnumDescription((Enums.YearLevel) context.YearLevel)</MudTd>
@@ -159,6 +159,8 @@
         var resultDialog = await dialogService.Show<Dialogs.StudentDialog>("", parameters, options).Result;
         if (!resultDialog.Canceled)
         {
+            await GetList();
+        } else {
             await GetList();
         }
     }

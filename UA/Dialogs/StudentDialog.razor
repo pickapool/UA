@@ -4,93 +4,111 @@
 @inject IDepartmentService departmentService
 @inject ISectionService sectionService
 @inject ISanctionService sanctionService
-    <EditForm Model='StudentModel' OnValidSubmit='Submit'>
-        <DataAnnotationsValidator />
-        <MudDialog Class='customdialog2'>
-            <TitleContent>
-                <div class='d-flex align-center'>
-                    @if (StudentModel.StudentId != 0)
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" />
-                    }
-                    else
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3" />
-                    }
-                    <MudText Class='txt-uppercase' Typo='Typo.h6'>@dialogTitle</MudText>
-                    </div>
-                </TitleContent>
-                <DialogContent>
-                    <MudPaper Class='pa-2' Elevation='0'>
-                        <MudGrid Class='settings-dialog pa-2' Spacing='1'>
-                            <MudItem xs='@xsL'>
-                                <MudItem xs='11'>
-                                    <MudTextField @bind-Value='@StudentModel.StudentName' Label='Student Name'
-                                        ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
-                                    <ValidationMessage For="()=> StudentModel.StudentName" />
-                                </MudItem>
-                                <MudItem xs='11'>
-                                    <MudSelect 
-                                        @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
-                                        @foreach(CourseModel c in courses)
-                                        {
-                                            <MudSelectItem Value="@c">@c.CourseName</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                <MudItem xs='11'>
-                                    <MudSelect 
-                                        @bind-Value="StudentModel.Department" Margin="Margin.Dense" Text="" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
-                                        @foreach(DepartmentModel d in departments)
-                                        {
-                                            <MudSelectItem Value="@d">@d.DepartmentName</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                <MudItem xs='11'>
-                                    <MudSelect 
-                                        @bind-Value="StudentModel.Section" Margin="Margin.Dense" Text="" Label="Section" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
-                                        @foreach(SectionModel s in sections)
-                                        {
-                                            <MudSelectItem Value="@s">@s.SectionName</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                                 <MudItem xs='11'>
-                                    <MudSelect @bind-Value="StudentModel.YearLevel" Margin="Margin.Dense" Label="Year Level" HelperText="Required*" Placeholder="Year Level" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
-                                        @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
-                                        {
-                                            <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
-                                        }
-                                    </MudSelect>
-                                </MudItem>
-                            </MudItem>
-                            <MudItem xs='@xsR'>
+@inject IUserSanctionService userSanctionService
 
-                            </MudItem>
-                            
-                        </MudGrid>
-                    </MudPaper>
-                </DialogContent>
-                <DialogActions>
-                    <MudSpacer />
-                    <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small'
-                    DisableElevation>Cancel</MudButton>
-                @if(IsLoading)
+<EditForm Model='StudentModel' OnValidSubmit='Submit'>
+    <DataAnnotationsValidator />
+    <MudDialog Class='customdialog2'>
+        <TitleContent>
+            <div class='d-flex align-center'>
+                @if (StudentModel.StudentId != 0)
                 {
-                <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color' Size='Size.Small' Disabled=IsLoading DisableElevation>
-                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                    <MudText Class='font11 ms-2'>Loading...</MudText>
-                </MudButton>
-                } else {
-                    <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color'
-                        Size='Size.Small' Disabled=IsLoading DisableElevation>
-                        @buttonText
-                    </MudButton>
+                    <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" />
                 }
-            </DialogActions>
-        </MudDialog>
-    </EditForm>
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3" />
+                }
+                <MudText Class='txt-uppercase' Typo='Typo.h6'>@dialogTitle</MudText>
+                </div>
+            </TitleContent>
+            <DialogContent>
+                <MudPaper Class='pa-2' Elevation='0'>
+                    <MudGrid Class='settings-dialog pa-2' Spacing='1'>
+                        <MudItem xs='@xsL'>
+                            <MudItem xs='11'>
+                                <MudTextField @bind-Value='@StudentModel.StudentName' Label='Student Name'
+                                    ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
+                                <ValidationMessage For="()=> StudentModel.StudentName" />
+                            </MudItem>
+                            <MudItem xs='11'>
+                                <MudSelect 
+                                    @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    @foreach(CourseModel c in courses)
+                                    {
+                                        <MudSelectItem Value="@c">@c.CourseName</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs='11'>
+                                <MudSelect 
+                                    @bind-Value="StudentModel.Department" Margin="Margin.Dense" Text="@StudentModel.Department.DepartmentName" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    @foreach(DepartmentModel d in departments)
+                                    {
+                                        <MudSelectItem Value="@d">@d.DepartmentName</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs='11'>
+                                <MudSelect 
+                                    @bind-Value="StudentModel.Section" Margin="Margin.Dense" Text="@StudentModel.Section.SectionName" Label="Section" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    @foreach(SectionModel s in sections)
+                                    {
+                                        <MudSelectItem Value="@s">@s.SectionName</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                                <MudItem xs='11'>
+                                <MudSelect @bind-Value="StudentModel.YearLevel" Margin="Margin.Dense" Label="Year Level" HelperText="Required*" Placeholder="Year Level" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
+                                    {
+                                        <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        </MudItem>
+                        <MudItem xs='@xsR' Class="@hide">
+                            <MudGrid>
+                                <MudItem xs="8">
+                                    <MudText Typo="Typo.caption">Sanction</MudText>
+                                    <BlazoredTypeahead Context="sanc"  @bind-Value="@sanction" SearchMethod='LoadSanctions' DisableClear placeholder='Sanctions'
+                                        Debounce="300">
+                                        <SelectedTemplate>
+                                            @(String.IsNullOrEmpty(sanc.SanctionName) == true ? "-" : sanc.SanctionName)
+                                        </SelectedTemplate>
+                                        <ResultTemplate>
+                                            @sanc.SanctionName
+                                        </ResultTemplate>
+                                    </BlazoredTypeahead>
+                                </MudItem>
+                                <MudItem xs="4" Class="d-flex justify-content-center align-items-end">
+                                    <MudButton OnClick="AddSanction" Variant="Variant.Filled" Size="Size.Small" Color="Color.Success">Add Sanction</MudButton>
+                                </MudItem>
+                            </MudGrid>
+                            
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </DialogContent>
+            <DialogActions>
+                <MudSpacer />
+                <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small'
+                DisableElevation>Cancel</MudButton>
+            @if(IsLoading)
+            {
+            <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color' Size='Size.Small' Disabled=IsLoading DisableElevation>
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class='font11 ms-2'>Loading...</MudText>
+            </MudButton>
+            } else {
+                <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color'
+                    Size='Size.Small' Disabled=IsLoading DisableElevation>
+                    @buttonText
+                </MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
 @code {
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
     [Parameter] public StudentModel StudentModel { get; set; }
@@ -102,26 +120,27 @@
     private List<DepartmentModel> departments = new();
     private List<SanctionModel> sanctions = new();
     private List<SectionModel> sections = new();
-    private CourseModel course = new();
-    private DepartmentModel department = new();
     private SanctionModel sanction = new();
-    private SectionModel section = new();
     private int xsL = 12;
     private int xsR = 0;
+    private string hide = "d-none";
     protected override async Task OnInitializedAsync()
     {
+        if(StudentModel.StudentId == 0)
+        {
+            xsL = 12;
+            xsR = 0;
+            hide = "d-none";
+        } else {
+            xsL = 6;
+            xsR = 6;
+            hide = "d-block";
+        }
         Task t = GetList();
         await t;
         if(t.Status == TaskStatus.RanToCompletion)
         {
-            if(StudentModel.StudentId == 0)
-            {
-                xsL = 12;
-                xsR = 0;
-            } else {
-                xsL = 6;
-                xsR = 6;
-            }
+
             IsLoading = !IsLoading;
             StateHasChanged();
         }
@@ -160,21 +179,42 @@
         courses =  await courseService.ListOfCourse(new FilterParameter());
         sanctions =  await sanctionService.ListOfSanction(new FilterParameter());
         sections =  await sectionService.ListOfSection(new FilterParameter());
-        if(courses.Count > 0)
-            StudentModel.Course = courses.FirstOrDefault()?? new();
-        if(departments.Count > 0)
-            StudentModel.Department = departments.FirstOrDefault()?? new();
-        if(sections.Count > 0)
-            StudentModel.Section = sections.FirstOrDefault()?? new();
         if(StudentModel.StudentId == 0)
-            StudentModel.YearLevel = Enums.YearLevel.Firstyear;
+        {
+            if(courses.Count > 0)
+                StudentModel.Course = courses.FirstOrDefault()?? new();
+            if(departments.Count > 0)
+                StudentModel.Department = departments.FirstOrDefault()?? new();
+            if(sections.Count > 0)
+                StudentModel.Section = sections.FirstOrDefault()?? new();
+            if(StudentModel.StudentId == 0)
+                StudentModel.YearLevel = Enums.YearLevel.Firstyear;
+        }
         StateHasChanged();
         await Task.Delay(1500);
+    }
+    private async Task<IEnumerable<SanctionModel>> LoadSanctions(string sanc)
+    {
+        return await Task.FromResult(sanctions.Where(s => s.SanctionName.Contains(sanc, StringComparison.InvariantCultureIgnoreCase)));
     }
     private void MapIds()
     {
         StudentModel.CourseId = StudentModel.Course.CourseId;
         StudentModel.DepartmentId = StudentModel.Department.DepartmentId;
         StudentModel.SectionId = StudentModel.Section.SectionId;
+    }
+    private async Task AddSanction()
+    {
+        UserSanctionModel userSanc  = new();
+        userSanc.StudentId = StudentModel.StudentId;
+        userSanc.SanctionId = sanction.SanctionId;
+        userSanc.Sanction.SanctionId = sanction.SanctionId;
+        userSanc.Sanction.SanctionName = sanction.SanctionName;
+        Task<UserSanctionModel> task = userSanctionService.AddUserSanction(userSanc);
+        await task;
+        if(task.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Sanction successfully added.", Variant.Filled, Snackbar, Severity.Success);
+        }
     }
 }

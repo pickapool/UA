@@ -13,10 +13,10 @@ namespace UA.Models
         public int CourseId { get; set; }
         public int DepartmentId { get; set; }
         public int SectionId { get; set; }
-        public CourseModel Course { get; set; }
-        public DepartmentModel Department { get; set; }
-        public SectionModel Section { get; set; }
-        public List<SanctionModel> Sanctions { get; set;}
+        public CourseModel Course { get; set; } = new();
+        public DepartmentModel Department { get; set; } = new();
+        public SectionModel Section { get; set; } = new();
+        public List<UserSanctionModel> Sanctions { get; set;} = new();
         public Enums.Enums.YearLevel YearLevel { get; set; }
 
     }

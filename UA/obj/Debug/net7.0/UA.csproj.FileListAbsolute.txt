@@ -1,3 +1,10 @@
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.csproj.AssemblyReference.cache
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.AssemblyInfoInputs.cache
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.AssemblyInfo.cs
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.csproj.CoreCompileInputs.cache
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.sourcelink.json
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\blazor.boot.json
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Blazored.LocalStorage.dll
@@ -633,12 +640,6 @@ C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\icudt.dat
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\icudt_CJK.dat
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\icudt_EFIGS.dat
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\icudt_no_CJK.dat
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.csproj.AssemblyReference.cache
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.AssemblyInfoInputs.cache
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.AssemblyInfo.cs
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.csproj.CoreCompileInputs.cache
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\blazor.build.boot-extension.json
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\blazor.boot.json
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\staticwebassets.build.json
