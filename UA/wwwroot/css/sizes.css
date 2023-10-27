@@ -2,3 +2,15 @@
 {
     width: 60% !important;
 }
+.w300px
+{
+    width: 300px !important;
+}
+.mud-input.mud-input-outlined.mud-input-adorned-end
+{
+    height: 40px !important;
+}
+.width400px
+{
+    max-width: 400px !important;
+}

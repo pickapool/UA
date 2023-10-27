@@ -10,5 +10,7 @@ namespace UA.Models
         public int DepartmentId { get; set; }
         [Required(ErrorMessage = "Department name is required.")] 
         public string DepartmentName { get; set; } = string.Empty;
+        public List<DepartmentCourseModel> Courses { get; set; } = new();
+        public int C { get; set; }
     }
 }

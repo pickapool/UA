@@ -217,7 +217,7 @@
       "mscorlib.dll": "sha256-Xo3wdLenBZ41X73hGjkWTbEQZDKcQsnPFtlkePUxLY0=",
       "netstandard.dll": "sha256-qjqaAEP3hdLnU\/TnoCd8HaSa+0ruV1TpdaB2GUujGMw=",
       "System.Private.CoreLib.dll": "sha256-\/7uQ+eNo9u3H1mpgMko4D3tKZHeGRfsRjna0Dqsu62k=",
-      "UA.dll": "sha256-FpuAP\/h380kh7HVwDkvvJ6VLtPjO9\/XkUgSJuFJd2Rc="
+      "UA.dll": "sha256-NKDRUc7NVuhhbL7x4CLuyKD9pjMC41Xj\/4j4R5ut7lI="
     },
     "extensions": null,
     "hash": null,
@@ -225,7 +225,7 @@
     "libraryInitializers": null,
     "libraryStartupModules": null,
     "pdb": {
-      "UA.pdb": "sha256-jRcrN3ig6FR2+jBzqGoen3f5WkVCZQf0r1pYTQxjJX8="
+      "UA.pdb": "sha256-cccPxKCp8Y5b0ytAPxsCRQfPCd7TcPZ\/RjROS1c8LRs="
     },
     "remoteSources": null,
     "runtime": {

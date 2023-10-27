@@ -5,6 +5,7 @@
 @inject ISectionService sectionService
 @inject ISanctionService sanctionService
 @inject IUserSanctionService userSanctionService
+@inject IDepartmentCourseService departmentCourseService
 
 <EditForm Model='StudentModel' OnValidSubmit='Submit'>
     <DataAnnotationsValidator />
@@ -27,28 +28,38 @@
                     <MudGrid Class='settings-dialog pa-2' Spacing='1'>
                         <MudItem xs='@xsL'>
                             <MudItem xs='11'>
+                                <MudTextField @bind-Value='@StudentModel.IdNo' Label='ID No.'
+                                    ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
+                                <ValidationMessage For="()=> StudentModel.IdNo" />
+                            </MudItem>
+                            <MudItem xs='11'>
                                 <MudTextField @bind-Value='@StudentModel.StudentName' Label='Student Name'
                                     ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
                                 <ValidationMessage For="()=> StudentModel.StudentName" />
                             </MudItem>
                             <MudItem xs='11'>
                                 <MudSelect 
-                                    @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
-                                    @foreach(CourseModel c in courses)
-                                    {
-                                        <MudSelectItem Value="@c">@c.CourseName</MudSelectItem>
-                                    }
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs='11'>
-                                <MudSelect 
-                                    @bind-Value="StudentModel.Department" Margin="Margin.Dense" Text="@StudentModel.Department.DepartmentName" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    ValueChanged="(DepartmentModel m) => { DepartmentChange(m); StudentModel.Department = m; }" Value="StudentModel.Department" Margin="Margin.Dense" Text="@StudentModel.Department.DepartmentName" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
                                     @foreach(DepartmentModel d in departments)
                                     {
                                         <MudSelectItem Value="@d">@d.DepartmentName</MudSelectItem>
                                     }
                                 </MudSelect>
                             </MudItem>
+                        
+                            <MudItem xs='11'>
+                                <MudSelect 
+                                @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                @if (reload)
+                                {
+                                    @foreach (CourseModel c in currentCourses)
+                                    {
+                                        <MudSelectItem Value="@c">@c.CourseName</MudSelectItem>
+                                    }
+                                }
+                                </MudSelect>
+                            </MudItem>
+                           
                             <MudItem xs='11'>
                                 <MudSelect 
                                     @bind-Value="StudentModel.Section" Margin="Margin.Dense" Text="@StudentModel.Section.SectionName" Label="Section" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
@@ -84,8 +95,50 @@
                                 <MudItem xs="4" Class="d-flex justify-content-center align-items-end">
                                     <MudButton OnClick="AddSanction" Variant="Variant.Filled" Size="Size.Small" Color="Color.Success">Add Sanction</MudButton>
                                 </MudItem>
-                            </MudGrid>
-                            
+                                <MudItem xs="12">
+                                    <MudTable class="data-grid" Height="320px" Items="@userSanctions" Context="uSanc" Hover="true" Breakpoint="Breakpoint.Xs"
+                                        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading" Elevation="3">
+                                        <ColGroup>
+                                            <col />
+                                            <col />
+                                            <col style='width: 20px' />
+                                        </ColGroup>
+                                        <HeaderContent>
+                                            <MudTh Class='customheader-1'>
+                                                <MudTableSortLabel InitialDirection="SortDirection.None"
+                                                    SortBy="new Func<UserSanctionModel, object>(x=>x.Sanction.SanctionName)">
+                                                    Sanction
+                                                </MudTableSortLabel>
+                                            </MudTh>
+                                            <MudTh Class='customheader-1'>
+                                                <MudTableSortLabel InitialDirection="SortDirection.None"
+                                                    SortBy="new Func<UserSanctionModel, object>(x=>x.DateRecorded)">
+                                                    Date
+                                                </MudTableSortLabel>
+                                            </MudTh>
+                                            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                            <MudTd DataLabel="Sanction Name">@uSanc.Sanction.SanctionName</MudTd>
+                                            <MudTd DataLabel="Date">@uSanc.DateRecorded.ToString("MM/dd/yyyy")</MudTd>
+                                            <MudTd Class='text-center pa-2'>
+                                                <MudMenu Icon='@Icons.Material.Filled.MoreVert'
+                                                    AnchorOrigin='Origin.TopLeft' TransformOrigin='Origin.TopRight'
+                                                    Dense='true' Size='Size.Small'>
+                                                    <MudMenuItem OnClick="()=> RemoveUserSanctions(uSanc.UserSanctionId)">
+                                                        <div class='d-flex align-center gap-2 '>
+                                                            <MudIcon Icon='@Icons.Material.Filled.Delete'
+                                                                Size='Size.Small' />
+                                                            <MudText Typo='Typo.body2'>Remove</MudText>
+                                                        </div>
+                                                    </MudMenuItem>
+                                                </MudMenu>
+                                            </MudTd>
+                                        </RowTemplate>
+                                       
+                                    </MudTable>
+                                </MudItem>
+                            </MudGrid>  
                         </MudItem>
                     </MudGrid>
                 </MudPaper>
@@ -116,7 +169,7 @@
     [Parameter] public string dialogTitle { get; set; } = string.Empty;
     [Parameter] public string buttonText { get; set; } = string.Empty;
     private bool IsLoading = true;
-    private List<CourseModel> courses = new();
+    private List<CourseModel> courses = new(), currentCourses = new();
     private List<DepartmentModel> departments = new();
     private List<SanctionModel> sanctions = new();
     private List<SectionModel> sections = new();
@@ -124,6 +177,10 @@
     private int xsL = 12;
     private int xsR = 0;
     private string hide = "d-none";
+    List<UserSanctionModel> userSanctions = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool reload = false;
     protected override async Task OnInitializedAsync()
     {
         if(StudentModel.StudentId == 0)
@@ -140,7 +197,6 @@
         await t;
         if(t.Status == TaskStatus.RanToCompletion)
         {
-
             IsLoading = !IsLoading;
             StateHasChanged();
         }
@@ -179,6 +235,7 @@
         courses =  await courseService.ListOfCourse(new FilterParameter());
         sanctions =  await sanctionService.ListOfSanction(new FilterParameter());
         sections =  await sectionService.ListOfSection(new FilterParameter());
+        await GetUserSanctions();
         if(StudentModel.StudentId == 0)
         {
             if(courses.Count > 0)
@@ -189,9 +246,10 @@
                 StudentModel.Section = sections.FirstOrDefault()?? new();
             if(StudentModel.StudentId == 0)
                 StudentModel.YearLevel = Enums.YearLevel.Firstyear;
+            await DepartmentChange(departments.FirstOrDefault());
         }
         StateHasChanged();
-        await Task.Delay(1500);
+        // await Task.Delay(1500);
     }
     private async Task<IEnumerable<SanctionModel>> LoadSanctions(string sanc)
     {
@@ -215,6 +273,52 @@
         if(task.Status == TaskStatus.RanToCompletion)
         {
             Extensions.ShowAlert("Sanction successfully added.", Variant.Filled, Snackbar, Severity.Success);
+            await GetUserSanctions();
+        }
+    }
+    private async Task<List<UserSanctionModel>> GetUserSanctions()
+    {
+
+        Task<List<UserSanctionModel>> t = userSanctionService.ListOfUserSanction(
+            new FilterParameter
+            {
+                StudentId = StudentModel.StudentId
+            });
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            userSanctions = t.Result;
+        }
+        return new();
+    }
+    private async Task<UserSanctionModel> RemoveUserSanctions(int id)
+    {
+        IsLoading = !IsLoading;
+        Task<UserSanctionModel> t = userSanctionService.DeleteUserSanction(id);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Sanction successfully removed.", Variant.Filled, Snackbar, Severity.Success);
+            await GetUserSanctions();
+        }
+        IsLoading = !IsLoading;
+        return new();
+    }
+    private async Task DepartmentChange(DepartmentModel m)
+    {
+        reload = false;
+        StudentModel.Department = m;
+        StateHasChanged();
+        Task<List<DepartmentCourseModel>> list = departmentCourseService.ListOfDepartmentCourse(
+            new FilterParameter{
+                DepartmentId = m.DepartmentId
+            });
+        await list;
+        if(list.Status == TaskStatus.RanToCompletion)
+        {
+            currentCourses = courses.Where( d => list.Result.Any( dc => dc.CourseId == d.CourseId)).ToList();
+            reload = true;
+            StateHasChanged();
         }
     }
 }

@@ -41,15 +41,15 @@
                     </div>
         </MudAppBar>
         <MudDrawer Class='main-drawer' @bind-Open="_drawerOpen" Fixed Elevation='0' Variant='@DrawerVariant.Mini'>
-            <MudDrawerHeader Class='@(_drawerOpen  == true ? "drawer-header" : "width55px drawer-header")'>
+            <MudDrawerHeader Class='@(_drawerOpen  == true ? "drawer-header width100px" : "width55px drawer-header")'>
                 <MudIconButton OnClick="@((e) => ToggleDrawer())" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
-                <MudText Class='drawer-header__header-text text-center'>@(_drawerOpen  == true ? "UA" : "")</MudText>
+                <MudText Class='drawer-header__header-text text-center'>@(_drawerOpen  == true ? "STUDENT SANCTION" : "")</MudText>
             </MudDrawerHeader>
             @* menu here *@
             
             <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
-            <MudNavLink Href="/servers" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
-            <MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt">Billing</MudNavLink>
+            <MudNavLink Href="/students" Icon="@Icons.Material.Filled.People">Students</MudNavLink>
+            <MudNavLink Href="/colleges" Icon="@Icons.Material.Filled.Apartment">Colleges</MudNavLink>
         </MudDrawer>
         <MudMainContent>
             <div class='main-body overflow-hidden'>

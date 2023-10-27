@@ -10,6 +10,7 @@ using UA.Services.CourseServices;
 using UA.Services.SectionServices;
 using UA.Services.StudentServices;
 using UA.Services.UserSanctionServices;
+using UA.Services.DepartmentCourseServices;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -25,6 +26,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ISectionService, SectionService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IUserSanctionService, UserSanctionService>();
+builder.Services.AddScoped<IDepartmentCourseService, DepartmentCourseService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

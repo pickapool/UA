@@ -1,0 +1,77 @@
+@page "/colleges"
+
+@inject IDepartmentService departmentService
+
+<div class="settings pa-2">
+    <MudTable Items="list" class="data-grid" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true' FixedFooter='true'
+        Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-row">
+                @foreach(DepartmentModel dept in departments)
+                {
+                    <MudChip Class="chip" Color="Extensions.DepartmentColor(dept.C)" Variant="Variant.Filled">@dept.DepartmentName</MudChip>
+                }
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+            </MudTooltip>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 120px' />
+            <col />
+            <col />
+            <col style='width: 60px' />
+            <col style='width: 30px' />
+            <col />
+            <col style='width: 120px' />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh>
+                Year
+            </MudTh>
+            <MudTh>
+                Section
+            </MudTh>
+            <MudTh>
+                <div class="d-flex flex-column">
+                    <div>PROGRAM</div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+@code {
+
+    private int[] pageSize = new int[] { 30, 50, 100, 500, 1000 };
+    private bool IsLoading = true;
+    List<StudentModel> list = new();
+    List<DepartmentModel> departments  = new();
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Colleges";
+        await GetDepartments();
+        StateHasChanged();
+        IsLoading = !IsLoading;
+    }
+    private async Task GetDepartments()
+    {
+        departments = await departmentService.ListOfDepartment(new FilterParameter());
+        int count = 0;
+        departments.ForEach( d => {
+            d.C = count++;
+            if(count.Equals(departments.Count))
+                count = 0;
+        });
+    }
+}

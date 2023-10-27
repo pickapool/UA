@@ -17,3 +17,7 @@
   .btn-ios-d .mud-button-icon-start {
     margin-right: 0px !important;
   }
+  .mud-picker .mud-input-control
+  {
+    width: 300px !important;
+  }

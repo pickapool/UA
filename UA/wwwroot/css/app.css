@@ -375,4 +375,7 @@ a,
     overflow-y: auto;
     scrollbar-width: thin;
   }
-  
+  .chip
+  {
+    cursor: pointer !important;
+  }

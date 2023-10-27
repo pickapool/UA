@@ -1,5 +1,7 @@
 @inject IDepartmentService departmentService
 @inject ISnackbar Snackbar
+@inject IDepartmentCourseService departmentCourseService
+@inject ICourseService courseService
 
 <EditForm Model='DepartmentModel' OnValidSubmit='Submit'>
     <DataAnnotationsValidator />
@@ -22,10 +24,63 @@
                 <MudPaper Class='pa-2' Elevation='0'>
                     <MudGrid Class='settings-dialog pa-2' Spacing='1'>
                         <MudItem xs='12' sm='9'>
-                            <MudTextField @bind-Value='@DepartmentModel.DepartmentName' Label='Departmet Name'
+                            <MudTextField @bind-Value='@DepartmentModel.DepartmentName' Label='College Name'
                                 ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
                             <ValidationMessage For="()=> DepartmentModel.DepartmentName" />
                         </MudItem>
+                        @if(DepartmentModel.DepartmentId != 0)
+                        {
+                            <MudItem xs="8">
+                                    <MudText Typo="Typo.caption">Course</MudText>
+                                    <BlazoredTypeahead Context="c"  @bind-Value="@course" SearchMethod='LoadCourse' DisableClear placeholder='Courses'
+                                        Debounce="300">
+                                        <SelectedTemplate>
+                                            @(String.IsNullOrEmpty(c.CourseName) == true ? "-" : c.CourseName)
+                                        </SelectedTemplate>
+                                        <ResultTemplate>
+                                            @c.CourseName
+                                        </ResultTemplate>
+                                    </BlazoredTypeahead>
+                                </MudItem>
+                                <MudItem xs="4" Class="d-flex justify-content-center align-items-end">
+                                    <MudButton OnClick="AddCourse" Variant="Variant.Filled" Size="Size.Small" Color="Color.Success">Add Course</MudButton>
+                                </MudItem>
+                            <MudItem xs="12">
+                                <MudTable class="data-grid" Height="320px" Items="@departmentCourses" Context="deptC" Hover="true" Breakpoint="Breakpoint.Xs"
+                                    FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading" Elevation="3">
+                                    <ColGroup>
+                                        <col />
+                                        <col style='width: 20px' />
+                                    </ColGroup>
+                                    <HeaderContent>
+                                        <MudTh Class='customheader-1'>
+                                            <MudTableSortLabel InitialDirection="SortDirection.None"
+                                                SortBy="new Func<UserSanctionModel, object>(x=>x.Sanction.SanctionName)">
+                                                Sanction
+                                            </MudTableSortLabel>
+                                        </MudTh>
+                                        <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        <MudTd DataLabel="Course Name">@deptC.Course.CourseName</MudTd>
+                                        <MudTd Class='text-center pa-2'>
+                                            <MudMenu Icon='@Icons.Material.Filled.MoreVert'
+                                                AnchorOrigin='Origin.TopLeft' TransformOrigin='Origin.TopRight'
+                                                Dense='true' Size='Size.Small'>
+                                                <MudMenuItem OnClick="()=> RemoveCourse(deptC.DepartmentCourseId)">
+                                                    <div class='d-flex align-center gap-2 '>
+                                                        <MudIcon Icon='@Icons.Material.Filled.Delete'
+                                                            Size='Size.Small' />
+                                                        <MudText Typo='Typo.body2'>Remove</MudText>
+                                                    </div>
+                                                </MudMenuItem>
+                                            </MudMenu>
+                                        </MudTd>
+                                    </RowTemplate>
+                                    
+                                </MudTable>
+                            </MudItem>
+                        }
                     </MudGrid>
                 </MudPaper>
             </DialogContent>
@@ -57,6 +112,17 @@
     [Parameter] public string dialogTitle { get; set; } = string.Empty;
     [Parameter] public string buttonText { get; set; } = string.Empty;
     private bool IsLoading = false;
+    private List<DepartmentCourseModel> departmentCourses = new();
+    private List<CourseModel> courses = new();
+    private CourseModel course = new();
+    protected override async Task OnInitializedAsync()
+    {
+        if(DepartmentModel.DepartmentId != 0)
+        {
+            await GetCourses();
+            await GetDepartmentCourse();
+        }
+    }
     void Cancel()
     {
         MudDialog.Cancel();
@@ -70,7 +136,7 @@
         if (t.Status == TaskStatus.RanToCompletion)
         {
             await Task.Delay(1000);
-            Extensions.ShowAlert("Department successfully saved.", Variant.Filled, Snackbar, Severity.Success);
+            Extensions.ShowAlert("College successfully saved.", Variant.Filled, Snackbar, Severity.Success);
             MudDialog.Close();
             IsLoading = !IsLoading;
         }
@@ -82,5 +148,56 @@
     private async Task UpdateDepartment()
     {
         await departmentService.UpdateDepartment(DepartmentModel);
+    }
+    private async Task GetCourses()
+    {
+        courses = await courseService.ListOfCourse(new FilterParameter());
+    }
+    private async Task<List<DepartmentCourseModel>> GetDepartmentCourse()
+    {
+        IsLoading = true;
+        Task<List<DepartmentCourseModel>> t = departmentCourseService.ListOfDepartmentCourse(
+            new FilterParameter
+            {
+                DepartmentId = DepartmentModel.DepartmentId
+            });
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            departmentCourses = t.Result;
+            IsLoading = false;
+            StateHasChanged();
+        }
+        return new();
+    }
+    private async Task<DepartmentCourseModel> RemoveCourse(int id)
+    {
+        Task<DepartmentCourseModel> t = departmentCourseService.DeleteDepartmentCourse(id);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Course successfully removed.", Variant.Filled, Snackbar, Severity.Success);
+            await GetDepartmentCourse();
+        }
+        return new();
+    }
+    private async Task<IEnumerable<CourseModel>> LoadCourse(string sanc)
+    {
+        return await Task.FromResult(courses.Where(s => s.CourseName.Contains(sanc, StringComparison.InvariantCultureIgnoreCase)));
+    }
+    private async Task AddCourse()
+    {
+        DepartmentCourseModel dept  = new();
+        dept.DepartmentId = DepartmentModel.DepartmentId;
+        dept.CourseId = course.CourseId;
+        dept.Course.CourseId = course.CourseId;
+        dept.Course.CourseName = course.CourseName;
+        Task<DepartmentCourseModel> task = departmentCourseService.AddDepartmentCourse(dept);
+        await task;
+        if(task.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Course successfully added.", Variant.Filled, Snackbar, Severity.Success);
+            await GetDepartmentCourse();
+        }
     }
 }

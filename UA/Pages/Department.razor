@@ -13,7 +13,7 @@
                 @(list.Count() == 1 ? "item" : "items")
                 in Total
                 </MudText>
-                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Department Name'
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='College'
                         Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
                         Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
             </div>
@@ -34,6 +34,7 @@
         <ColGroup>
             <col style='width: 20px' />
             <col />
+            <col />
             <col style='width: 20px' />
         </ColGroup>
         <HeaderContent>
@@ -49,11 +50,18 @@
                     Name
                 </MudTableSortLabel>
             </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Courses</MudTh>
             <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Division Name">@context.DepartmentId</MudTd>
-            <MudTd DataLabel="Short Name">@context.DepartmentName</MudTd>
+            <MudTd DataLabel="ID">@context.DepartmentId</MudTd>
+            <MudTd DataLabel="College Name">@context.DepartmentName</MudTd>
+            <MudTd DataLabel="Short Name">
+                @foreach(DepartmentCourseModel c in context.Courses)
+                {
+                    <MudChip Color="Color.Info" Size="Size.Small">@c.Course.CourseName</MudChip>
+                }
+            </MudTd>
             <MudTd Class='text-center pa-2'>
                 <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
                     TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
@@ -86,7 +94,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        GlobalClass.pageTitle = "Departments";
+        GlobalClass.pageTitle = "COLLEGES";
         await GetList();
     }
     private async Task GetList()
@@ -114,13 +122,15 @@
     {
         var parameters = new DialogParameters();
         parameters.Add("color", dept.DepartmentId == 0 ? Color.Info : Color.Success);
-        parameters.Add("dialogTitle", dept.DepartmentId == 0 ? "Add Department" : "Edit Department");
+        parameters.Add("dialogTitle", dept.DepartmentId == 0 ? "Add College" : "Edit College");
         parameters.Add("buttonText", dept.DepartmentId == 0 ? "Add" : "Save");
         parameters.Add("DepartmentModel", dept);
         var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
         var resultDialog = await dialogService.Show<Dialogs.DepartmentDialog>("", parameters, options).Result;
         if (!resultDialog.Canceled)
         {
+            await GetList();
+        } else {
             await GetList();
         }
     }

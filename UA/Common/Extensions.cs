@@ -28,5 +28,25 @@ namespace UA.Common
                     ? value.ToString()  
                     : descriptionAttribute.Description;  
         }
+        public static Color DepartmentColor(int c)
+        {
+            switch(c)
+            {
+                case 1:
+                return Color.Primary;
+                case 2:
+                return Color.Secondary;
+                case 3:
+                return Color.Info;
+                case 4:
+                return Color.Success;
+                case 5:
+                return Color.Warning;
+                case 6:
+                return Color.Error;
+                default:
+                return Color.Secondary;
+            }
+        }
     }
 }

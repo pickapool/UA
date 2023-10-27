@@ -7,6 +7,7 @@ namespace UA.Models
         public int UserSanctionId { get; set; }
         public int StudentId { get; set; }
         public int SanctionId { get; set; }
+        public DateTime DateRecorded { get; set; }
         public SanctionModel Sanction { get; set; } = new();
     }
 }

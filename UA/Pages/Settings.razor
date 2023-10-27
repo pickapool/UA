@@ -4,11 +4,10 @@
         <div class='subdrawer-left transition-05s-ease mr-2' square style='@(open ? "width:270px" : "width:58px")'>
             <MudDrawer @bind-Open='open' Fixed='false' Anchor='Anchor.Left' Elevation='0' Variant="@DrawerVariant.Mini" OpenMiniOnHover='true'>
                 <MudNavMenu>
-                    <MudNavLink OnClick="()=> GoToPage(1)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Courses</MudNavLink>
-                    <MudNavLink OnClick="()=> GoToPage(2)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Departments</MudNavLink>
-                    <MudNavLink OnClick="()=> GoToPage(3)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Sanctions</MudNavLink>
-                    <MudNavLink OnClick="()=> GoToPage(4)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Sections</MudNavLink>
-                    <MudNavLink OnClick="()=> GoToPage(5)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.FactCheck">Students</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(1)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MenuBook">Courses</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(2)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apartment">Departments</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(3)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Attractions">Sanctions</MudNavLink>
+                    <MudNavLink OnClick="()=> GoToPage(4)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.OtherHouses">Sections</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
         </div>

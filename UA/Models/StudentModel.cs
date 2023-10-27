@@ -7,6 +7,8 @@ namespace UA.Models
 
     public class StudentModel
     {
+        [Required(ErrorMessage = "Student No. is required.")] 
+        public string IdNo { get; set; } = string.Empty;
         public int StudentId {  get; set; }
         [Required(ErrorMessage = "Student name is required.")] 
         public string StudentName { get; set; } = string.Empty;
