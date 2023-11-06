@@ -1,0 +1,114 @@
+@inject IJSRuntime JSRuntime
+@inject HttpClient Http
+
+<MudDialog Class='customdialog2'>
+    <TitleContent>
+        <div class='d-flex align-center'>
+            <MudIcon Icon="@Icons.Material.Filled.QrCode2" Class="mr-3" />
+            <MudText Class='txt-uppercase' Typo='Typo.h6'>SCAN QR CODE</MudText>
+        </div>
+    </TitleContent>
+    <DialogContent>
+        <MudPaper Class='pa-2' Elevation='0'>
+            <h3>@QRCodeResult</h3>
+            <section class="section">
+                <div class="container">
+                    <div class="columns">
+                        <div class="column is-four-fifths">
+
+                            <video autoplay id="video" width="320"></video>
+                            <br />
+                            <button class="button is-hidden" id="btnPlay" @onclick="PlayCAM">
+                                <span class="icon is-small">
+                                    <i class="fas fa-play">Play</i>
+                                </span>
+                            </button>
+                            <button class="button" id="btnPause" @onclick="PauseCAM">
+                                <span class="icon is-small">
+                                    <i class="fas fa-pause">Pause</i>
+                                </span>
+                            </button>
+                            <button class="button is-success" id="btnCapture" @onclick="    CaptureFrame">
+                                <span class="icon is-small">
+                                    <i class="fas fa-camera">Capture</i>
+                                </span>
+                            </button>
+                            <button class="button" id="btnChangeCamera" @onclick="SwitchCAM">
+                                <span class="icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </span>
+                                <span>Switch Cam</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <canvas class="d-none" id="canvas"></canvas>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer />
+        <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small' DisableElevation>
+            Cancel</MudButton>
+        <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='Color.Info'
+            Size='Size.Small' DisableElevation>
+            Done
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
+    private string QRCodeResult = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("initializeCamera");
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(QRCodeResult));
+    }
+    private async Task SwitchCAM()
+    {
+        await JSRuntime.InvokeVoidAsync("SwitchCam");
+    }
+
+    private async Task PlayCAM()
+    {
+        await JSRuntime.InvokeVoidAsync("PlayCam");
+    }
+
+    private async Task PauseCAM()
+    {
+        await JSRuntime.InvokeVoidAsync("PauseCam");
+    }
+
+    private async Task CaptureFrame()
+    {
+        string capt = await JSRuntime.InvokeAsync<String>("getFrame");
+        await ProcessImage(capt);
+    }
+
+    public async Task ProcessImage(string imageString)
+    {
+        CamImage img = new CamImage();
+        img.imageDataBase64 = imageString;
+        var jsonObj = System.Text.Json.JsonSerializer.Serialize(img.imageDataBase64);
+        var barcodeeResult = await Http.PostAsJsonAsync("global/QRCode", img);
+        if (barcodeeResult.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            QRCodeResult = barcodeeResult.Content.ReadAsStringAsync().Result;
+            StateHasChanged();
+        }
+        
+    }
+}

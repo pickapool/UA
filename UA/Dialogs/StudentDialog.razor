@@ -6,6 +6,8 @@
 @inject ISanctionService sanctionService
 @inject IUserSanctionService userSanctionService
 @inject IDepartmentCourseService departmentCourseService
+@inject IDialogService dialogService
+
 
 <EditForm Model='StudentModel' OnValidSubmit='Submit'>
     <DataAnnotationsValidator />
@@ -27,6 +29,14 @@
                 <MudPaper Class='pa-2' Elevation='0'>
                     <MudGrid Class='settings-dialog pa-2' Spacing='1'>
                         <MudItem xs='@xsL'>
+                            <MudItem xs='11'>
+                                <MudTextField Onclic @bind-Value='@StudentModel.QRCode' Label='QR Code'
+                                    ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense'
+                                    Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QrCode2"
+                                    OnAdornmentClick="OpenQR"
+                                      ReadOnly/>
+                                <ValidationMessage For="()=> StudentModel.QRCode" />
+                            </MudItem>
                             <MudItem xs='11'>
                                 <MudTextField @bind-Value='@StudentModel.IdNo' Label='ID No.'
                                     ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
@@ -319,6 +329,15 @@
             currentCourses = courses.Where( d => list.Result.Any( dc => dc.CourseId == d.CourseId)).ToList();
             reload = true;
             StateHasChanged();
+        }
+    }
+    private async Task OpenQR()
+    {
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var resultDialog = await dialogService.Show<Dialogs.QRCodeDialog>("", options).Result;
+        if (!resultDialog.Canceled)
+        {
+            string QR = (string) resultDialog.Data;
         }
     }
 }

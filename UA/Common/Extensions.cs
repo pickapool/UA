@@ -28,24 +28,24 @@ namespace UA.Common
                     ? value.ToString()  
                     : descriptionAttribute.Description;  
         }
-        public static Color DepartmentColor(int c)
+        public static MudBlazor.Color DepartmentColor(int c)
         {
             switch(c)
             {
                 case 1:
-                return Color.Primary;
+                return MudBlazor.Color.Primary;
                 case 2:
-                return Color.Secondary;
+                return MudBlazor.Color.Secondary;
                 case 3:
-                return Color.Info;
+                return MudBlazor.Color.Info;
                 case 4:
-                return Color.Success;
+                return MudBlazor.Color.Success;
                 case 5:
-                return Color.Warning;
+                return MudBlazor.Color.Warning;
                 case 6:
-                return Color.Error;
+                return MudBlazor.Color.Error;
                 default:
-                return Color.Secondary;
+                return MudBlazor.Color.Secondary;
             }
         }
     }

@@ -4,20 +4,19 @@
     "appsettings.json"
   ],
   "debugBuild": true,
-  "debugLevel": -1,
-  "diagnosticTracing": null,
   "entryAssembly": "UA",
-  "environmentVariables": null,
-  "extensions": {
-    "blazor": { }
-  },
   "icuDataMode": 0,
   "linkerEnabled": false,
-  "pthreadPoolSize": null,
   "resources": {
     "assembly": {
+      "IronBarCode.dll": "sha256-Chol5TkgMqpgozLbs1Xy4TZpU3b3GO5rKIrA+rH2Fc0=",
+      "BitMiracle.LibTiff.NET.dll": "sha256-9saBS2UEpCQM232bYzrYe7tnI7bTTlb9GZJwInpFMbg=",
       "Blazored.LocalStorage.dll": "sha256-5V8ovY1srbIIz7lzzMhLd3nNJ9LJ6bHoBOnLJahv8Go=",
       "Blazored.Typeahead.dll": "sha256-0cq+AP7JH6JLYVm2dkmhZ4IIP65fMqy\/jFQ5mtrpkJY=",
+      "IronSoftware.Abstractions.dll": "sha256-6jUdpAAVqLgAg6RVSe9ybp16w4\/\/gwQg0OGmdyUCEXQ=",
+      "IronSoftware.Logger.dll": "sha256-FRghwTfbT1fY+PpHJzRjM2Rs7isIfTUTrZTic8KkiRk=",
+      "IronSoftware.Shared.dll": "sha256-FVUVjFAnUq28qwqDhmvNgTe0usM\/nrbtv04nS\/1j7W0=",
+      "IronSoftware.Drawing.Common.dll": "sha256-O6P64mepoPcjpT+vPsZP7E1UmnV9a3TNjqnDHFQMQTc=",
       "Microsoft.AspNetCore.Authorization.dll": "sha256-8f3B2YKtr38X\/o9azir1JiTTvPB3b+xEcluEyMAk1iE=",
       "Microsoft.AspNetCore.Components.dll": "sha256-4ILNFgB643G5ZkreiD24BGeHIeuV3whK+n6lzWroM3s=",
       "Microsoft.AspNetCore.Components.Authorization.dll": "sha256-g0avXoQ3+yzqfe9j7EDyl8QHepV6t3Rp80vvvK3lvQc=",
@@ -45,10 +44,19 @@
       "Microsoft.Extensions.Primitives.dll": "sha256-q4ruoDSCjV\/QJY9ZkzV6uxvEvZUVrDbyUjU3SSh5SlE=",
       "Microsoft.JSInterop.dll": "sha256-ZglXsTJFg7gIPbFdWyqdUxrG4L+2H\/eEGtGJgrf3mls=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-uXNdaB5ieiQN17JUqeAopa3nh1z3wh+cyXpIYXeILzo=",
+      "Microsoft.Win32.SystemEvents.dll": "sha256-yklb9shrfwktYkkoEBmFqUFTLRSdzYrP6hcPilO+iFA=",
       "MudBlazor.dll": "sha256-fZeXRwimdnkNYIcH1nxZtKemTPxYlfxqYtGXFluJYpY=",
       "Polly.dll": "sha256-XnYz9eW2tgQbUJFBrN4qpq1PN0NV4gq8+JUw+zRNIfY=",
       "Polly.Extensions.Http.dll": "sha256-2Fko7Lrhp7qO8hi8vDjnMdqlMUVrXRjhYPSaXjhEAlw=",
+      "SixLabors.Fonts.dll": "sha256-W+gLxS+oYslRXSu22FZYccEnHI35JOzkEpP2JZM5QV4=",
+      "SixLabors.ImageSharp.dll": "sha256-Sx+KDGZg0FsAjDVo9uVGnvBxaBXYLdy118B9YsEuEa0=",
+      "SixLabors.ImageSharp.Drawing.dll": "sha256-oYrzbJkJONMb6\/ciU1nyyXV\/nSWt2aejqRElLdMGCm8=",
+      "System.Configuration.ConfigurationManager.dll": "sha256-SyZcn69Ju8196bOWd6jbATVgq2B2BRWvy5adNMTwGUE=",
+      "System.Drawing.Common.dll": "sha256-mNB+ax59NkGoYIo2Cz3Cc\/6KD3iSa24eX2eaegdNSR8=",
       "System.IO.Pipelines.dll": "sha256-P\/MqD0fCBd5bgTM16JC1QC\/Zz7s+CwViyzmDFkBG4\/c=",
+      "System.Security.Cryptography.ProtectedData.dll": "sha256-0YZFPuu6IeGakOT+oWwRw99Z7ZYQIBxaPG1ja5hk2EA=",
+      "System.Security.Permissions.dll": "sha256-YgaMD2v\/sOtOwcakWhZ4TK7nVl9sVATYNCCJ9P9LNxI=",
+      "System.Windows.Extensions.dll": "sha256-gQ6HZ9AtcK8XO8M8wQSP8xp98BX9Rs9COjCcyJxQ3Gk=",
       "Microsoft.CSharp.dll": "sha256-X69dv0Kcp5aCpsjyp0kh0E28KK1Z47p8anZQiQU8Irc=",
       "Microsoft.VisualBasic.Core.dll": "sha256-gqaDZ2GcFZADYOQ\/y+hWgkBU2p6w7DvAVQkHGZQAK44=",
       "Microsoft.VisualBasic.dll": "sha256-VYg98zaNa2dh6k4p\/0zRnCqPdp1qtrJ\/Hl\/7CVfsMDc=",
@@ -217,17 +225,14 @@
       "mscorlib.dll": "sha256-Xo3wdLenBZ41X73hGjkWTbEQZDKcQsnPFtlkePUxLY0=",
       "netstandard.dll": "sha256-qjqaAEP3hdLnU\/TnoCd8HaSa+0ruV1TpdaB2GUujGMw=",
       "System.Private.CoreLib.dll": "sha256-\/7uQ+eNo9u3H1mpgMko4D3tKZHeGRfsRjna0Dqsu62k=",
-      "UA.dll": "sha256-NKDRUc7NVuhhbL7x4CLuyKD9pjMC41Xj\/4j4R5ut7lI="
+      "UA.dll": "sha256-UVrac13jA8ehu0m069bi2dursWvXQYpw92TkEIhtTQM="
     },
     "extensions": null,
-    "hash": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
-    "libraryStartupModules": null,
     "pdb": {
-      "UA.pdb": "sha256-cccPxKCp8Y5b0ytAPxsCRQfPCd7TcPZ\/RjROS1c8LRs="
+      "UA.pdb": "sha256-Ni9iOUvvSIBK84BpcbwW6iC1UcSDO85B5H2eeN2Szrg="
     },
-    "remoteSources": null,
     "runtime": {
       "dotnet.7.0.10.n0r1hb1lji.js": "sha256-qJB30QURoyH3y3WyayHu6nMFIx2XNOkXCez7tagGpvE=",
       "dotnet.timezones.blat": "sha256-pf9chcB37Cf13KuuvScsozomnAUanMeCfvDr9Wqofh8=",
@@ -243,9 +248,6 @@
         "hash": "sha256-gdnUvePnfbvTJDGtaK1+TnCtuTiC5NZjlYZ9kgEpMO0="
       }
     },
-    "satelliteResources": null,
-    "vfs": null
-  },
-  "runtimeOptions": null,
-  "startupMemoryCache": null
+    "satelliteResources": null
+  }
 }

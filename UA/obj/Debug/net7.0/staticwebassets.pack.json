@@ -181,7 +181,7 @@
       "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
     },
     {
-      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\y6oe7omc19.gz",
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\build-gz\\sJNnofFU.gz",
       "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
     },
     {
@@ -263,6 +263,10 @@
     {
       "Id": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\wwwroot\\js\\webcam.js",
+      "PackagePath": "staticwebassets\\js\\webcam.js"
     },
     {
       "Id": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\wwwroot\\sample-data\\weather.json",

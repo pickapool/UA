@@ -274,7 +274,7 @@
         MaxWidth width = MaxWidth.ExtraSmall;
         if(dept.StudentId != 0)
             width = MaxWidth.Medium;
-        var options = new DialogOptions() { CloseButton = false, MaxWidth = width, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = width, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
         var resultDialog = await dialogService.Show<Dialogs.StudentDialog>("", parameters, options).Result;
         if (!resultDialog.Canceled)
         {

@@ -15,6 +15,8 @@ namespace UA.Models
         public int CourseId { get; set; }
         public int DepartmentId { get; set; }
         public int SectionId { get; set; }
+        [Required(ErrorMessage = "QR CODE is required.")] 
+        public string QRCode { get; set; } = string.Empty;
         public CourseModel Course { get; set; } = new();
         public DepartmentModel Department { get; set; } = new();
         public SectionModel Section { get; set; } = new();
