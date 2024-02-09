@@ -11,5 +11,7 @@ namespace UA.Models
         public int UserId { get; set; }
         [Required(ErrorMessage = "Sanction is required.")] 
         public string SanctionName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Amount is required.")]
+        public decimal Amount { get; set; }
     }
 }

@@ -23,5 +23,7 @@ namespace UA.Models
         public List<UserSanctionModel> Sanctions { get; set;} = new();
         public Enums.Enums.YearLevel YearLevel { get; set; }
 
+        public bool IsOpenSanctions { get; set; }
+
     }
 }

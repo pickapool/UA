@@ -24,7 +24,9 @@
                         <MudItem xs='12' sm='9'>
                             <MudTextField @bind-Value='@SanctionModel.SanctionName' Label='Sanction Name'
                                 ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
-                            <ValidationMessage For="()=> SanctionModel.SanctionName" />
+                            <MudNumericField @bind-Value='@SanctionModel.Amount' Label='Amount'
+                                          ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' HideSpinButtons/>
+                            <ValidationMessage For="()=> SanctionModel.Amount" />
                         </MudItem>
                     </MudGrid>
                 </MudPaper>

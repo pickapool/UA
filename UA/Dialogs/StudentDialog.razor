@@ -90,25 +90,45 @@
                         </MudItem>
                         <MudItem xs='@xsR' Class="@hide">
                             <MudGrid>
-                                <MudItem xs="8">
+                                <MudItem xs="3">
                                     <MudText Typo="Typo.caption">Sanction</MudText>
                                     <BlazoredTypeahead Context="sanc"  @bind-Value="@sanction" SearchMethod='LoadSanctions' DisableClear placeholder='Sanctions'
                                         Debounce="300">
                                         <SelectedTemplate>
-                                            @(String.IsNullOrEmpty(sanc.SanctionName) == true ? "-" : sanc.SanctionName)
+                                         @(String.IsNullOrEmpty(sanc.SanctionName) == true ? "-" : sanc.SanctionName)
                                         </SelectedTemplate>
                                         <ResultTemplate>
-                                            @sanc.SanctionName
+                                            @sanc.SanctionName | @sanc.Amount
                                         </ResultTemplate>
                                     </BlazoredTypeahead>
                                 </MudItem>
-                                <MudItem xs="4" Class="d-flex justify-content-center align-items-end">
+                            <MudItem xs="6" Class="d-flex justify-content-start align-center mt-4">
+                                        <MudFileUpload T="IBrowserFile" Accept=".png, .jpg" FilesChanged="UploadFiles2" MaximumFileCount="1">
+                                            <ButtonTemplate Context="cFile">
+                                                <MudButton HtmlTag="label"
+                                                            Variant="Variant.Filled"
+                                                            Color="Color.Primary"
+                                                            StartIcon="@Icons.Material.Filled.CloudUpload"
+                                                            for="@cFile">
+                                                    @if(files.Count > 0)
+                                                    {
+                                                        <span>@(files[0].Name.Length > 20 ? files[0].Name.Substring(0,17) +"...": files[0].Name.Length)</span>
+                                                    } else {
+                                                        <span>Select Image</span>
+                                                    }
+                                                </MudButton>
+                                            </ButtonTemplate>
+                                        </MudFileUpload>
+                                 </MudItem>
+                                <MudItem xs="3" Class="d-flex justify-content-end align-items-center mt-5">
                                     <MudButton OnClick="AddSanction" Variant="Variant.Filled" Size="Size.Small" Color="Color.Success">Add Sanction</MudButton>
                                 </MudItem>
                                 <MudItem xs="12">
                                     <MudTable class="data-grid" Height="320px" Items="@userSanctions" Context="uSanc" Hover="true" Breakpoint="Breakpoint.Xs"
                                         FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading" Elevation="3">
                                         <ColGroup>
+                                            <col />
+                                            <col />
                                             <col />
                                             <col />
                                             <col style='width: 20px' />
@@ -126,11 +146,24 @@
                                                     Date
                                                 </MudTableSortLabel>
                                             </MudTh>
+                                            <MudTh Class='customheader-1 text-center pa-2'>Amount</MudTh>
+                                            <MudTh Class='customheader-1 text-center pa-2'>Status</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
                                         </HeaderContent>
                                         <RowTemplate>
                                             <MudTd DataLabel="Sanction Name">@uSanc.Sanction.SanctionName</MudTd>
                                             <MudTd DataLabel="Date">@uSanc.DateRecorded.ToString("MM/dd/yyyy")</MudTd>
+                                            <MudTd Class="text-end" DataLabel="Sanction Name">@uSanc.Sanction.Amount.ToString("N2")</MudTd>
+                                            @if(uSanc.IsPaid)
+                                            {
+                                                <MudTd DataLabel="Paid" Class="text-center">
+                                                    <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Info">Paid</MudChip>
+                                                </MudTd>
+                                            } else {
+                                                <MudTd DataLabel="Paid" Class="text-center">
+                                                    <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Error">Not Paid</MudChip>
+                                                </MudTd>
+                                            }
                                             <MudTd Class='text-center pa-2'>
                                                 <MudMenu Icon='@Icons.Material.Filled.MoreVert'
                                                     AnchorOrigin='Origin.TopLeft' TransformOrigin='Origin.TopRight'
@@ -142,10 +175,16 @@
                                                             <MudText Typo='Typo.body2'>Remove</MudText>
                                                         </div>
                                                     </MudMenuItem>
+                                                    <MudMenuItem OnClick="()=> PaidSanction(uSanc)">
+                                                        <div class='d-flex align-center gap-2 '>
+                                                            <MudIcon Icon='@Icons.Material.Filled.Delete'
+                                                                Size='Size.Small' />
+                                                            <MudText Typo='Typo.body2'>@(uSanc.IsPaid ? "Mark as Unpaid" : "Mark as Paid")</MudText>
+                                                        </div>
+                                                    </MudMenuItem>
                                                 </MudMenu>
                                             </MudTd>
                                         </RowTemplate>
-                                       
                                     </MudTable>
                                 </MudItem>
                             </MudGrid>  
@@ -187,10 +226,12 @@
     private int xsL = 12;
     private int xsR = 0;
     private string hide = "d-none";
-    List<UserSanctionModel> userSanctions = new();
+    private List<UserSanctionModel> userSanctions = new();
+    private UserSanctionModel userSanc = new();
     private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
     private string searchTerm = string.Empty;
     private bool reload = false;
+    IList<IBrowserFile> files = new List<IBrowserFile>();
     protected override async Task OnInitializedAsync()
     {
         if(StudentModel.StudentId == 0)
@@ -199,8 +240,8 @@
             xsR = 0;
             hide = "d-none";
         } else {
-            xsL = 6;
-            xsR = 6;
+            xsL = 4;
+            xsR = 8;
             hide = "d-block";
         }
         Task t = GetList();
@@ -273,11 +314,21 @@
     }
     private async Task AddSanction()
     {
-        UserSanctionModel userSanc  = new();
+        userSanc  = new();
         userSanc.StudentId = StudentModel.StudentId;
         userSanc.SanctionId = sanction.SanctionId;
         userSanc.Sanction.SanctionId = sanction.SanctionId;
         userSanc.Sanction.SanctionName = sanction.SanctionName;
+        userSanc.Amount = sanction.Amount;
+        foreach (var file in files)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                //Fix upload file size
+                await file.OpenReadStream(209715200).CopyToAsync(memoryStream);
+                userSanc.SanctionImage = memoryStream.ToArray();
+            }
+        }
         Task<UserSanctionModel> task = userSanctionService.AddUserSanction(userSanc);
         await task;
         if(task.Status == TaskStatus.RanToCompletion)
@@ -314,6 +365,21 @@
         IsLoading = !IsLoading;
         return new();
     }
+    private async Task<UserSanctionModel> PaidSanction(UserSanctionModel uSan)
+    {
+        IsLoading = !IsLoading;
+        uSan.IsPaid = !uSan.IsPaid;
+        Task<UserSanctionModel> t = userSanctionService.UpdateUserSanction(uSan);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Sanction successfully update.", Variant.Filled, Snackbar, Severity.Success);
+            await GetUserSanctions();
+        }
+        IsLoading = !IsLoading;
+        return new();
+    }
+
     private async Task DepartmentChange(DepartmentModel m)
     {
         reload = false;
@@ -337,7 +403,14 @@
         var resultDialog = await dialogService.Show<Dialogs.QRCodeDialog>("", options).Result;
         if (!resultDialog.Canceled)
         {
-            string QR = (string) resultDialog.Data;
+            StudentModel.QRCode = (string) resultDialog.Data;
         }
+    }
+    private void UploadFiles2(IBrowserFile file)
+    {
+        files.Clear();
+        files.Add(file);
+        
+        //TODO upload the files to the server
     }
 }

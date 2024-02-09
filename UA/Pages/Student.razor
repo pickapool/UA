@@ -7,8 +7,9 @@
 @inject IDepartmentService departmentService
 @inject ISectionService sectionService
 @inject ISanctionService sanctionService
+@inject IJSRuntime JSRuntime
 
-<div class="settings pa-2">
+<div class="settings pa-2 table-fix-header">
     <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
         FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
         Filter='new Func<StudentModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
@@ -127,9 +128,10 @@
             <col style='width: 120px' />
             <col />
             <col />
+            <col />
             <col style='width: 60px' />
             <col style='width: 30px' />
-            <col />
+            <col style="width: 20px;"/>
             <col style='width: 120px' />
             <col style='width: 20px' />
         </ColGroup>
@@ -138,6 +140,12 @@
                 <MudTableSortLabel InitialDirection="SortDirection.Ascending"
                     SortBy="new Func<StudentModel, object>(x=>x.StudentId)">
                     Id No.
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                     SortBy="new Func<StudentModel, object>(x=>x.QRCode)">
+                    QR Code
                 </MudTableSortLabel>
             </MudTh>
             <MudTh Class='customheader-1'>
@@ -174,15 +182,15 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Student Name">@context.IdNo</MudTd>
+            <MudTd DataLabel="QR Code">@context.QRCode</MudTd>
             <MudTd DataLabel="Course Name">@context.StudentName</MudTd>
             <MudTd DataLabel="Course Name">@context.Course.CourseName</MudTd>
             <MudTd DataLabel="Department Name">@context.Department.DepartmentName</MudTd>
-            <MudTd DataLabel="Section Name">@context.Section.SectionName</MudTd>
-            <MudTd DataLabel="Sanctions">
-                @foreach(UserSanctionModel s in context.Sanctions)
-                {
-                    <MudChip Color="Color.Secondary" Size="Size.Small">@s.Sanction.SanctionName | @s.DateRecorded.ToString("MM/dd/yyyy")</MudChip>
-                }
+            <MudTd DataLabel="Section Name" Class="text-center">@context.Section.SectionName</MudTd>
+            <MudTd DataLabel="Sanctions" Class="text-center">
+                <MudToggleIconButton @bind-Toggled='context.IsOpenSanctions'
+                    Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Title="Expand" Size='Size.Small' ToggledSize='Size.Small'
+                    ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp" ToggledColor="@Color.Info" ToggledTitle="Collapse"/>
             </MudTd>
             <MudTd DataLabel="Year Level">@Extensions.GetEnumDescription((Enums.YearLevel) context.YearLevel)</MudTd>
             <MudTd Class='text-center pa-2'>
@@ -203,6 +211,68 @@
                 </MudMenu>
             </MudTd>
         </RowTemplate>
+        <ChildRowContent>
+            @if(context.IsOpenSanctions)
+            {
+                <MudTr>
+                  <td colspan="9" style="background: #bbdfff;">
+                    <div class="pa-2 table-fix-header2 mb-4">
+                    <MudTable class="data-grid overflow-hidden" style="height: unset !important;" Items="@context.Sanctions" Context="uSanc" Hover="true" Breakpoint="Breakpoint.Xs"
+                        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Elevation="3">
+                        <ColGroup>
+                            <col style="width: 120px;"/>
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col style='width: 20px' />
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh Class='customheader-1 text-center pa-2' style="z-index: 1 !important;">Image</MudTh>
+                            <MudTh Class='customheader-1' style="z-index: 1 !important;">
+                                <MudTableSortLabel InitialDirection="SortDirection.None"
+                                    SortBy="new Func<UserSanctionModel, object>(x=>x.Sanction.SanctionName)">
+                                    Sanction
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh Class='customheader-1'style="z-index: 1 !important;">
+                                <MudTableSortLabel InitialDirection="SortDirection.None"
+                                    SortBy="new Func<UserSanctionModel, object>(x=>x.DateRecorded)">
+                                    Date
+                                </MudTableSortLabel>
+                            </MudTh>
+                            <MudTh Class='customheader-1 text-center pa-2' style="z-index: 1 !important;">Amount</MudTh>
+                            <MudTh Class='customheader-1 text-center pa-2' style="z-index: 1 !important;">Status</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                             <MudTd Class="d-flex justify-content-center align-items-center" DataLabel="Sanction Name">
+                                <a href='@($"data:image/png;base64, {Convert.ToBase64String(uSanc.SanctionImage)}")' target="_blank" rel="noopener noreferrer" download="file.jpg">
+                                    <MudImage Src='@($"data:image/png;base64, {Convert.ToBase64String(uSanc.SanctionImage)}")'
+                                        ObjectFit="ObjectFit.Fill"
+                                        Width="100" Height="100"
+                                     Alt="Image" Elevation="25" Class="rounded-lg"></MudImage>
+                                </a>
+                            </MudTd>
+                            <MudTd DataLabel="Sanction Name">@uSanc.Sanction.SanctionName</MudTd>
+                            <MudTd DataLabel="Date">@uSanc.DateRecorded.ToString("MM/dd/yyyy")</MudTd>
+                            <MudTd Class="text-end" DataLabel="Sanction Name">@uSanc.Sanction.Amount.ToString("N2")</MudTd>
+                            @if(uSanc.IsPaid)
+                            {
+                                <MudTd DataLabel="Paid" Class="text-center">
+                                    <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Info">Paid</MudChip>
+                                </MudTd>
+                            } else {
+                                <MudTd DataLabel="Paid" Class="text-center">
+                                    <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Error">Not Paid</MudChip>
+                                </MudTd>
+                            }
+                        </RowTemplate>
+                    </MudTable>
+                    </div>
+                  </td>
+                </MudTr>
+            }
+        </ChildRowContent>
         <PagerContent>
             <MudTablePager PageSizeOptions='@pageSize' />
         </PagerContent>
@@ -273,7 +343,7 @@
         parameters.Add("StudentModel", dept);
         MaxWidth width = MaxWidth.ExtraSmall;
         if(dept.StudentId != 0)
-            width = MaxWidth.Medium;
+            width = MaxWidth.Large;
         var options = new DialogOptions() { CloseButton = false, MaxWidth = width, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
         var resultDialog = await dialogService.Show<Dialogs.StudentDialog>("", parameters, options).Result;
         if (!resultDialog.Canceled)
@@ -390,7 +460,7 @@
         var sanc = "";
         foreach (var item in hasSanction)
         {
-        sanc = string.Join(", ", hasSanction.Select(x => x.SanctionName));      
+            sanc = string.Join(", ", hasSanction.Select(x => x.SanctionName));      
         }
         return $"{sanc}";
     }
@@ -398,5 +468,12 @@
     {
         sanctionList = await sanctionService.ListOfSanction(new FilterParameter());
     }
-    
+    private async Task OpenImage(string base64)
+    {
+        // Generate the data URI for the base64 image
+        string dataUri = $"data:image/png;base64,{base64}";
+
+        // Open the image in a new tab
+        await JSRuntime.InvokeVoidAsync("window.open", dataUri, "_blank");
+    }
 }

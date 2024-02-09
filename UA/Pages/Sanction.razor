@@ -34,6 +34,7 @@
         <ColGroup>
             <col style='width: 20px' />
             <col />
+            <col />
             <col style='width: 20px' />
         </ColGroup>
         <HeaderContent>
@@ -49,11 +50,13 @@
                     Name
                 </MudTableSortLabel>
             </MudTh>
-            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Amount</MudTh>
+            <MudTh Class='customheader-1 text-right pa-2'>Action</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Division Name">@context.SanctionId</MudTd>
             <MudTd DataLabel="Short Name">@context.SanctionName</MudTd>
+                <MudTd Class="text-end" DataLabel="Amount">@context.Amount.ToString("N2")</MudTd>
             <MudTd Class='text-center pa-2'>
                 <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
                     TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>

@@ -1,0 +1,12 @@
+.table-fix-header2 th,tr
+{
+    z-index: 1 !important;
+}
+.table-fix-header th
+{
+    z-index: 2 !important;
+}
+.settings .table-fix-header2 .mud-table-container
+{
+  max-height: 400px !important;
+}

@@ -51,9 +51,9 @@
     transition: all 0.5s;
     transition-timing-function: ease;
   }
-  .settings .mud-table-container
+  .settings.table-fix-header .mud-table-container
   {
-    height: 70vh !important;
+    height: 70vh;
   }
   .settings .col-one{
     width: 300px !important;

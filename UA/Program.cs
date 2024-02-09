@@ -11,6 +11,7 @@ using UA.Services.SectionServices;
 using UA.Services.StudentServices;
 using UA.Services.UserSanctionServices;
 using UA.Services.DepartmentCourseServices;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -30,5 +31,10 @@ builder.Services.AddScoped<IDepartmentCourseService, DepartmentCourseService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 209715200; // Set to 200 MB (200 * 1024 * 1024 bytes)
+});
 
 await builder.Build().RunAsync();

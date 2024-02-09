@@ -18,7 +18,7 @@
 
                             <video autoplay id="video" width="320"></video>
                             <br />
-                            <button class="button is-hidden" id="btnPlay" @onclick="PlayCAM">
+                            @* <button class="button is-hidden" id="btnPlay" @onclick="PlayCAM">
                                 <span class="icon is-small">
                                     <i class="fas fa-play">Play</i>
                                 </span>
@@ -27,18 +27,13 @@
                                 <span class="icon is-small">
                                     <i class="fas fa-pause">Pause</i>
                                 </span>
-                            </button>
-                            <button class="button is-success" id="btnCapture" @onclick="    CaptureFrame">
-                                <span class="icon is-small">
-                                    <i class="fas fa-camera">Capture</i>
-                                </span>
-                            </button>
-                            <button class="button" id="btnChangeCamera" @onclick="SwitchCAM">
-                                <span class="icon">
-                                    <i class="fas fa-sync-alt"></i>
-                                </span>
-                                <span>Switch Cam</span>
-                            </button>
+                            </button> *@
+                            <MudButton id="btnCapture" Class='btn-ios-d font12' Variant='Variant.Text' Size='Size.Small' DisableElevation  OnClick="CaptureFrame">
+                                Capture
+                            </MudButton>
+                            <MudButton id="btnChangeCamera" Class='btn-ios-d font12' Variant='Variant.Text' Size='Size.Small' DisableElevation  OnClick="SwitchCAM">
+                                Switch Cam
+                            </MudButton>
                         </div>
 
                     </div>
@@ -68,9 +63,10 @@
         await JSRuntime.InvokeVoidAsync("initializeCamera");
     }
 
-    void Cancel()
+    async Task Cancel()
     {
         MudDialog.Cancel();
+        await JSRuntime.InvokeVoidAsync("stopVideoStream");
     }
 
     private async Task Submit()
@@ -107,6 +103,8 @@
         if (barcodeeResult.StatusCode == System.Net.HttpStatusCode.OK)
         {
             QRCodeResult = barcodeeResult.Content.ReadAsStringAsync().Result;
+            await JSRuntime.InvokeVoidAsync("stopVideoStream");
+            MudDialog.Close(DialogResult.Ok(QRCodeResult));
             StateHasChanged();
         }
         
