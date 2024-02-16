@@ -37,6 +37,12 @@
                         <MudText Typo='Typo.body2'>Add</MudText>
                     </div>
                 </MudMenuItem>
+                <MudMenuItem OnClick="OpenExport">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.ImportExport' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Import</MudText>
+                    </div>
+                </MudMenuItem>
                 <MudMenuItem OnClick="Toggle">
                     <div class='d-flex align-center gap-2 '>
                         <MudIcon Icon='@Icons.Material.Filled.FilterList' Size='Size.Small' />
@@ -57,27 +63,27 @@
                     <MudItem xs=10><MudDateRangePicker Label="Sanction Date" @bind-DateRange="_dateRange" 
                         IconSize='Size.Small' DisableToolbar AnchorOrigin='Origin.BottomLeft' TransformOrigin='Origin.BottomRight'
                         Placeholder="Sanction Date" Variant='Variant.Outlined' Margin='Margin.Dense' Disabled="!parameter.IsDate"/></MudItem>
-                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsCourse"></MudCheckBox></MudItem>
+                        <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDepartment"></MudCheckBox></MudItem>
                     <MudItem xs=10>
-                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedCourse))' @bind-SelectedValues=hasCourse Label='Course' 
-                            @bind-Value='selectedCourse'  Clearable  
-                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsCourse' Placeholder='Course' Variant='Variant.Outlined'
-                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
-                            @foreach (var item in courseList)
-                            {
-                                <MudSelectItem  Value="@item">@item.CourseName</MudSelectItem>
-                            }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDepartment"></MudCheckBox></MudItem>
-                    <MudItem xs=10>
-                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedDepartment))' @bind-SelectedValues=hasDepartment Label='Department' 
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedDepartment))' @bind-SelectedValues=hasDepartment Label='College' 
                             @bind-Value='selectedDepartment'  Clearable  
-                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsDepartment' Placeholder='Department' Variant='Variant.Outlined'
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsDepartment' Placeholder='College' Variant='Variant.Outlined'
                             AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
                             @foreach (var item in departmentList)
                             {
                                 <MudSelectItem  Value="@item">@item.DepartmentName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsCourse"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedCourse))' @bind-SelectedValues=hasCourse Label='Program' 
+                            @bind-Value='selectedCourse'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsCourse' Placeholder='Program' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in courseList)
+                            {
+                                <MudSelectItem  Value="@item">@item.CourseName</MudSelectItem>
                             }
                         </MudSelect>
                     </MudItem>
@@ -501,6 +507,18 @@
                 student.IsTableLoading = false;
                 StateHasChanged();
             } 
+        }
+    }
+    private async Task OpenExport()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
+        var resultDialog = await dialogService.Show<Dialogs.ExportDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList(new FilterParameter());
+        } else {
+            await GetList(new FilterParameter());
         }
     }
 }

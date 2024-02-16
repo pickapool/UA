@@ -112,7 +112,7 @@
                                                             for="@cFile">
                                                     @if(files.Count > 0)
                                                     {
-                                                        <span>@(files[0].Name.Length > 20 ? files[0].Name.Substring(0,17) +"...": files[0].Name.Length)</span>
+                                                        <span>@(files[0].Name.Length > 20 ? files[0].Name.Substring(0,17) +"...": files[0].Name)</span>
                                                     } else {
                                                         <span>Select Image</span>
                                                     }
@@ -416,7 +416,5 @@
     {
         files.Clear();
         files.Add(file);
-        
-        //TODO upload the files to the server
     }
 }

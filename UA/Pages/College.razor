@@ -16,13 +16,13 @@
             <div class="d-flex flex-row">
                 @foreach (DepartmentModel dept in departments)
                 {
-                    <MudChip OnClick="()=> Filter(dept.DepartmentId)" Class="chip"
+                    <MudChip OnClick="()=> Filter(dept.DepartmentId ,false)" Class="chip"
                         Color="Extensions.DepartmentColor(dept.C)" Variant="Variant.Filled">@dept.DepartmentName</MudChip>
                 }
             </div>
             <MudSpacer />
             <MudTooltip Text="Refresh Table">
-                <MudIconButton OnClick="()=> Filter(0)" Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+                <MudIconButton OnClick="()=> Filter(0 , true)" Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
             </MudTooltip>
             <MudTooltip Text="Print">
                 <MudIconButton OnClick="()=> PrintPDF()" Icon="@Icons.Material.Filled.PictureAsPdf" Size="Size.Small" />
@@ -49,23 +49,11 @@
                     <MudItem xs=10><MudDateRangePicker Label="Sanction Date" @bind-DateRange="_dateRange" 
                         IconSize='Size.Small' DisableToolbar AnchorOrigin='Origin.BottomLeft' TransformOrigin='Origin.BottomRight'
                         Placeholder="Sanction Date" Variant='Variant.Outlined' Margin='Margin.Dense' Disabled="!parameter.IsDate"/></MudItem>
-                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsCourse"></MudCheckBox></MudItem>
+                        <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDepartment"></MudCheckBox></MudItem>
                     <MudItem xs=10>
-                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedCourse))' @bind-SelectedValues=hasCourse Label='Course' 
-                            @bind-Value='selectedCourse'  Clearable  
-                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsCourse' Placeholder='Course' Variant='Variant.Outlined'
-                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
-                            @foreach (var item in courseList)
-                            {
-                                <MudSelectItem  Value="@item">@item.CourseName</MudSelectItem>
-                            }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDepartment"></MudCheckBox></MudItem>
-                    <MudItem xs=10>
-                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedDepartment))' @bind-SelectedValues=hasDepartment Label='Department' 
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedDepartment))' @bind-SelectedValues=hasDepartment Label='College' 
                             @bind-Value='selectedDepartment'  Clearable  
-                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsDepartment' Placeholder='Department' Variant='Variant.Outlined'
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsDepartment' Placeholder='College' Variant='Variant.Outlined'
                             AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
                             @foreach (var item in departmentList)
                             {
@@ -73,6 +61,19 @@
                             }
                         </MudSelect>
                     </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsCourse"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedCourse))' @bind-SelectedValues=hasCourse Label='Program' 
+                            @bind-Value='selectedCourse'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsCourse' Placeholder='Program' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in courseList)
+                            {
+                                <MudSelectItem  Value="@item">@item.CourseName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    
                     <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsSection"></MudCheckBox></MudItem>
                     <MudItem xs=10>
                         <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedSection))' @bind-SelectedValues=hasSection Label='Section' 
@@ -158,7 +159,7 @@
                                                 @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().Count() > 0)
                                                 {
                                                     <br>
-                                                    @foreach(SectionModel sec in departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).Select( e => e.Section).OrderBy( e => e.SectionName))
+                                                    @foreach(SectionModel sec in departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).Select( e => e.Section).DistinctBy( s => s.SectionId).OrderBy( e => e.SectionName))
                                                     {
                                                         <span> (Section - @sec.SectionName)</span>
                                                         <MudTable 
@@ -231,6 +232,18 @@
         </div>
     }
 </div>
+<style>
+    .mud-table-dense * .mud-table-row .mud-table-cell
+    {
+        padding: unset !important;
+        padding-left: 5px !important;
+    }
+    .mud-table-cell
+    {
+        padding: unset !important;
+        padding-left: 5px !important;
+    }
+</style>
 @code {
 
     private int[] pageSize = new int[] { 30, 50, 100, 500, 1000 };
@@ -259,7 +272,7 @@
     protected override async Task OnInitializedAsync()
     {
         GlobalClass.pageTitle = "Colleges";
-        Task t = Task.WhenAll(GetDepartments(), Filter(0));
+        Task t = Task.WhenAll(GetDepartments(), Filter(0, true));
         await t;
         if (t.Status == TaskStatus.RanToCompletion)
         {
@@ -284,8 +297,9 @@
         departmentList = GlobalClass.ListOfDepartments = departments;
         await Sanctions();
     }
-    private async Task Filter(int departmnetId) {
+    private async Task Filter(int departmnetId, bool IsRefresh) {
         parameter.DepartmentId = departmnetId;
+        if(IsRefresh) parameter = new();
         IsLoading = !IsLoading;
         Task<List<DepartmentModel>> list = DepartmentService.CollegesMasterList(parameter);
         await list;
@@ -432,6 +446,6 @@
         {
             parameter.Sanctions = hasSanction.ToList();
         }
-        await Filter(0);
+        await Filter(0, false);
     }
 }

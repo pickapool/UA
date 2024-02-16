@@ -1,0 +1,249 @@
+@inject IDepartmentService departmentService
+@inject ICourseService courseService
+@inject ISectionService sectionService
+@inject IDepartmentCourseService departmentCourseService
+@inject IStudentService studentService
+@inject ISnackbar SnackbarService
+
+<MudDialog Class='customdialog2'>
+    <TitleContent>
+        <div class='d-flex align-center'>
+            <MudText Class='txt-uppercase' Typo='Typo.h6'>Import Students</MudText>
+        </div>
+    </TitleContent>
+    <DialogContent>
+        <MudPaper Class='pa-2' Elevation='0'>
+            <MudGrid Class='settings-dialog pa-2' Spacing='1'>
+                <MudItem xs=11>
+                    <MudFileUpload T="IBrowserFile" Accept=".xls, .xlsx, .xlsb, .xlam, .xlw, .xlr" FilesChanged="UploadFiles2" MaximumFileCount="1">
+                        <ButtonTemplate Context="cFile">
+                            <MudButton HtmlTag="label"
+                                        Variant="Variant.Filled"
+                                        Color="Color.Primary"
+                                        StartIcon="@Icons.Material.Filled.CloudUpload"
+                                        for="@cFile">
+                                @if(files.Count > 0)
+                                {
+                                    <span>@(files[0].Name.Length > 20 ? files[0].Name.Substring(0,17) +"...": files[0].Name)</span>
+                                } else {
+                                    <span>Select File</span>
+                                }
+                            </MudButton>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+                </MudItem>
+                <MudItem xs='11'>
+                    <MudSelect ValueChanged="((DepartmentModel m) =>{ DepartmentChange(m); Department = m; }) " Value="Department"
+                        Margin="Margin.Dense" Text="@Department.DepartmentName" Label="Department"
+                        HelperText="Required*" Placeholder="College" AdornmentIcon="@Icons.Material.Filled.OtherHouses"
+                        AdornmentColor="Color.Primary">
+                        @foreach (DepartmentModel d in departments)
+                        {
+                            <MudSelectItem Value="@d">@d.DepartmentName</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs='11'>
+                    <MudSelect @bind-Value="Course" Margin="Margin.Dense" Text="@Course.CourseName" Label="Course"
+                        HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.MenuBook"
+                        AdornmentColor="Color.Primary">
+                        @if (reload)
+                        {
+                            @foreach (CourseModel c in currentCourse)
+                            {
+                                <MudSelectItem Value="@c">@c.CourseName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs='11'>
+                    <MudSelect @bind-Value="Section" Margin="Margin.Dense" Text="@Section.SectionName" Label="Section"
+                        HelperText="Required*" Placeholder="Section"
+                        AdornmentIcon="@Icons.Material.Filled.AssuredWorkload" AdornmentColor="Color.Primary">
+                        @foreach (SectionModel s in sections)
+                        {
+                            <MudSelectItem Value="@s">@s.SectionName</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs='11'>
+                    <MudSelect @bind-Value="YearLevel" Margin="Margin.Dense" Label="Year Level" HelperText="Required*"
+                        Placeholder="Year Level" AdornmentIcon="@Icons.Material.Filled.FormatListNumbered"
+                        AdornmentColor="Color.Primary">
+                        @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
+                        {
+                            <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer />
+        <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small' DisableElevation>
+            Cancel</MudButton>
+        @if (IsLoading)
+        {
+            <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled'
+                Color='Color.Default' Size='Size.Small' Disabled=IsLoading DisableElevation>
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class='font11 ms-2'>Loading...</MudText>
+            </MudButton>
+        }
+        else
+        {
+            <MudButton OnClick="Save" Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled'
+                Color='Color.Success' Size='Size.Small' Disabled=IsLoading DisableElevation>
+                Save
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
+    private bool IsLoading = true, reload = false;
+    private List<CourseModel> courses = new(), currentCourse = new();
+    private List<DepartmentModel> departments = new();
+    private List<SanctionModel> sanctions = new();
+    private List<SectionModel> sections = new();
+    private DepartmentModel Department = new();
+    private CourseModel Course = new();
+    private SectionModel Section = new();
+    private Enums.YearLevel YearLevel;
+    List<StudentModel> Students = new();
+    
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Task t = GetList();
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private async Task DepartmentChange(DepartmentModel m)
+    {
+        reload = false;
+        Task<List<DepartmentCourseModel>> list = departmentCourseService.ListOfDepartmentCourse(
+        new FilterParameter
+            {
+                DepartmentId = m.DepartmentId
+            });
+        await list;
+        if (list.Status == TaskStatus.RanToCompletion)
+        {
+            currentCourse = courses.Where(d => list.Result.Any(dc => dc.CourseId == d.CourseId)).ToList();
+            reload = true;
+            StateHasChanged();
+        }
+    }
+    private async Task GetList()
+    {
+        departments = await departmentService.ListOfDepartment(new FilterParameter());
+        courses = await courseService.ListOfCourse(new FilterParameter());
+        sections = await sectionService.ListOfSection(new FilterParameter());
+        await DepartmentChange(departments.FirstOrDefault());
+        StateHasChanged();
+        // await Task.Delay(1500);
+    }
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    private async Task UploadFiles2(IBrowserFile file)
+    {
+        files.Clear();
+        Students.Clear();
+        files.Add(file);
+        
+        //TODO upload the files to the server
+
+        string filePath = Path.Combine(Path.GetTempPath(), file.Name);
+        
+        // Save the file to the temporary location
+        using (FileStream fileStream = File.Create(filePath))
+        {
+            await file.OpenReadStream(209715200).CopyToAsync(fileStream);
+        }
+
+        // Read the Excel file and extract values per column
+        using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+        {
+            ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // Assuming you want to read the first worksheet
+
+            int rowCount = worksheet.Dimension.Rows;
+            int columnCount = worksheet.Dimension.Columns;
+
+            // Loop through each column
+            for(int i = 0 ; i< rowCount ; i++)
+            {
+                StudentModel stud = new();
+                Students.Add(stud);
+            }
+            
+            for (int col = 1; col <= 3; col++)
+            {
+                for (int row = 1; row <= rowCount; row++)
+                {
+                    object cellValue = worksheet.Cells[row, col].Value;
+                    string cellText = cellValue?.ToString() ?? string.Empty;
+                    if(col == 1)
+                    {
+                        Students[row - 1].QRCode = cellText;
+                    } else if(col == 2)
+                    {
+                        Students[row - 1].IdNo = cellText;
+                    } else if(col == 3)
+                    {
+                        Students[row - 1].StudentName = cellText;
+                    }
+                }
+            }
+        }
+
+        // Clean up: delete the temporary file
+        File.Delete(filePath);
+    }
+    private void MapStudents()
+    {
+        Students.ForEach( s => {
+            s.DepartmentId = Department.DepartmentId;
+            s.CourseId = Course.CourseId;
+            s.SectionId = Section.SectionId;
+            s.YearLevel = YearLevel;
+        });
+    }
+    private async Task Save()
+    {
+        MapStudents();
+        int count = 0;
+        IsLoading = true;
+        StateHasChanged();
+        foreach(var student in Students)
+        {
+            IsLoading = true;
+            Task t = studentService.AddStudent(student);
+            await t;
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                count++;
+                if(count == Students.Count)
+                {
+                    IsLoading = false;
+                    Extensions.ShowAlert("Successfully imported!", Variant.Filled, SnackbarService, Severity.Success);
+                }
+            } else {
+                IsLoading = false;
+                Extensions.ShowAlert("There was a problem while importing!", Variant.Filled, SnackbarService, Severity.Error);
+            }
+        }
+        
+    }
+}
