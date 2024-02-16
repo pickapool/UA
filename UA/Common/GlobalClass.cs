@@ -1,3 +1,6 @@
+using UA.Models;
+using UA.Pages;
+
 namespace UA.Common
 {
     public class GlobalClass
@@ -6,5 +9,8 @@ namespace UA.Common
         public static string pageTitle = string.Empty;
         public static bool ShowLogin = false;
         public static string QRCode = string.Empty;
+        public static List<CourseModel> ListOfCourse = new();
+        public static List<DepartmentModel> ListOfDepartments = new();
+        public static List<SectionModel> ListOfSections = new();
     }
 }

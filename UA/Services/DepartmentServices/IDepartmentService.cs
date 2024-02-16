@@ -10,5 +10,6 @@ namespace UA.Services.DepartmentServices
         Task<DepartmentModel> AddDepartment(DepartmentModel model);
         Task<DepartmentModel> UpdateDepartment(DepartmentModel model);
         Task<DepartmentModel> DeleteDepartment(int id);
+        Task<List<DepartmentModel>> CollegesMasterList(FilterParameter param);
     }
 }

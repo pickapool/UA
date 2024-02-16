@@ -49,7 +49,7 @@
                             </MudItem>
                             <MudItem xs='11'>
                                 <MudSelect 
-                                    ValueChanged="(DepartmentModel m) => { DepartmentChange(m); StudentModel.Department = m; }" Value="StudentModel.Department" Margin="Margin.Dense" Text="@StudentModel.Department.DepartmentName" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    ValueChanged="(DepartmentModel m) => { DepartmentChange(m); StudentModel.Department = m; }" Value="StudentModel.Department" Margin="Margin.Dense" Text="@StudentModel.Department.DepartmentName" Label="Department" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.OtherHouses" AdornmentColor="Color.Primary">
                                     @foreach(DepartmentModel d in departments)
                                     {
                                         <MudSelectItem Value="@d">@d.DepartmentName</MudSelectItem>
@@ -59,7 +59,7 @@
                         
                             <MudItem xs='11'>
                                 <MudSelect 
-                                @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.MenuBook" AdornmentColor="Color.Primary">
                                 @if (reload)
                                 {
                                     @foreach (CourseModel c in currentCourses)
@@ -72,7 +72,7 @@
                            
                             <MudItem xs='11'>
                                 <MudSelect 
-                                    @bind-Value="StudentModel.Section" Margin="Margin.Dense" Text="@StudentModel.Section.SectionName" Label="Section" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                    @bind-Value="StudentModel.Section" Margin="Margin.Dense" Text="@StudentModel.Section.SectionName" Label="Section" HelperText="Required*" Placeholder="Section" AdornmentIcon="@Icons.Material.Filled.AssuredWorkload" AdornmentColor="Color.Primary">
                                     @foreach(SectionModel s in sections)
                                     {
                                         <MudSelectItem Value="@s">@s.SectionName</MudSelectItem>
@@ -80,7 +80,7 @@
                                 </MudSelect>
                             </MudItem>
                                 <MudItem xs='11'>
-                                <MudSelect @bind-Value="StudentModel.YearLevel" Margin="Margin.Dense" Label="Year Level" HelperText="Required*" Placeholder="Year Level" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+                                <MudSelect @bind-Value="StudentModel.YearLevel" Margin="Margin.Dense" Label="Year Level" HelperText="Required*" Placeholder="Year Level" AdornmentIcon="@Icons.Material.Filled.FormatListNumbered" AdornmentColor="Color.Primary">
                                     @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
                                     {
                                         <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
@@ -133,6 +133,9 @@
                                             <col />
                                             <col style='width: 20px' />
                                         </ColGroup>
+                                        <ToolBarContent>
+                                            Total : @userSanctions.Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2")
+                                        </ToolBarContent>
                                         <HeaderContent>
                                             <MudTh Class='customheader-1'>
                                                 <MudTableSortLabel InitialDirection="SortDirection.None"
@@ -278,7 +281,10 @@
     private async Task UpdateStudent()
     {
         MapIds();
+        List<UserSanctionModel> list = StudentModel.Sanctions;
+        StudentModel.Sanctions = new();
         await StudentService.UpdateStudent(StudentModel);
+        StudentModel.Sanctions = list;
     }
     private async Task GetList()
     {

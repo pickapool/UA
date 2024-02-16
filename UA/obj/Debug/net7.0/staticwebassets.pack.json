@@ -205,6 +205,10 @@
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\css\\dashboard.css",
+      "PackagePath": "staticwebassets\\css\\dashboard.css"
+    },
+    {
       "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\css\\dialog.css",
       "PackagePath": "staticwebassets\\css\\dialog.css"
     },
@@ -265,6 +269,14 @@
       "PackagePath": "staticwebassets\\icon-192.png"
     },
     {
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\image\\logo-ini.png",
+      "PackagePath": "staticwebassets\\image\\logo-ini.png"
+    },
+    {
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\image\\ua.png",
+      "PackagePath": "staticwebassets\\image\\ua.png"
+    },
+    {
       "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
@@ -275,6 +287,10 @@
     {
       "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\sample-data\\weather.json",
       "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\svg\\pattern.svg",
+      "PackagePath": "staticwebassets\\svg\\pattern.svg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.UA.Microsoft.AspNetCore.StaticWebAssets.props",

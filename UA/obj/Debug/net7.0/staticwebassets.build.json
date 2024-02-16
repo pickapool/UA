@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TJ4yp6l0dF+wPgdvglprkSypwYdFdqS6n4fYbkk6HZ8=",
+  "Hash": "/b1pOL7m5em2DFK/a38gzq7Im0Lfdhfn2Wx0IqHuOqE=",
   "Source": "UA",
   "BasePath": "/",
   "Mode": "Root",
@@ -9859,6 +9859,25 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\css\\dashboard.css",
+      "SourceId": "UA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/dashboard.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\dashboard.css"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\css\\dialog.css",
       "SourceId": "UA",
       "SourceType": "Discovered",
@@ -10144,6 +10163,44 @@
       "OriginalItemSpec": "wwwroot\\icon-192.png"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\image\\logo-ini.png",
+      "SourceId": "UA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "image/logo-ini.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\logo-ini.png"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\image\\ua.png",
+      "SourceId": "UA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "image/ua.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\ua.png"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\index.html",
       "SourceId": "UA",
       "SourceType": "Discovered",
@@ -10199,6 +10256,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\sample-data\\weather.json"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\svg\\pattern.svg",
+      "SourceId": "UA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "svg/pattern.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\svg\\pattern.svg"
     }
   ]
 }

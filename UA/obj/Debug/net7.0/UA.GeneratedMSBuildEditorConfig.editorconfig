@@ -66,6 +66,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291cnNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cyril/source/repos/UA/ua/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cyril/source/repos/UA/ua/Pages/Department.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

@@ -22,8 +22,17 @@ namespace UA.Models
         public SectionModel Section { get; set; } = new();
         public List<UserSanctionModel> Sanctions { get; set;} = new();
         public Enums.Enums.YearLevel YearLevel { get; set; }
+        public bool IsTableLoading { get; set; }
 
+        //For report
         public bool IsOpenSanctions { get; set; }
+        public string Departmentname { get; set; } = string.Empty;
+        public string CourseName { get; set; } = string.Empty;
+        public string SectionName { get; set; } = string.Empty;
+        public string SanctionName { get; set; } = string.Empty;
+        public decimal SanctionAmount { get; set; }
+        public bool IsPaid { get; set; }
+        public DateTime DateRecorded { get; set; }
 
     }
 }

@@ -7,6 +7,7 @@
 @inject IDepartmentService departmentService
 @inject ISectionService sectionService
 @inject ISanctionService sanctionService
+@inject IUserSanctionService UserSanctionService
 @inject IJSRuntime JSRuntime
 
 <div class="settings pa-2 table-fix-header">
@@ -188,7 +189,12 @@
             <MudTd DataLabel="Department Name">@context.Department.DepartmentName</MudTd>
             <MudTd DataLabel="Section Name" Class="text-center">@context.Section.SectionName</MudTd>
             <MudTd DataLabel="Sanctions" Class="text-center">
-                <MudToggleIconButton @bind-Toggled='context.IsOpenSanctions'
+                <MudToggleIconButton Toggled='context.IsOpenSanctions'
+                    ToggledChanged="((bool b) =>
+                    { 
+                        context.IsOpenSanctions = !context.IsOpenSanctions;
+                        GetSanctions(b, context); 
+                    })"
                     Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Title="Expand" Size='Size.Small' ToggledSize='Size.Small'
                     ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp" ToggledColor="@Color.Info" ToggledTitle="Collapse"/>
             </MudTd>
@@ -211,14 +217,21 @@
                 </MudMenu>
             </MudTd>
         </RowTemplate>
+        <NoRecordsContent>
+            <span>No Records found</span>
+        </NoRecordsContent>
         <ChildRowContent>
             @if(context.IsOpenSanctions)
             {
                 <MudTr>
                   <td colspan="9" style="background: #bbdfff;">
-                    <div class="pa-2 table-fix-header2 mb-4">
-                    <MudTable class="data-grid overflow-hidden" style="height: unset !important;" Items="@context.Sanctions" Context="uSanc" Hover="true" Breakpoint="Breakpoint.Xs"
-                        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Elevation="3">
+                    <div class="pa-2 table-fix-header2 mb-4 d-flex justify-content-center align-center">
+                    @if(context.IsTableLoading)
+                    {
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true"/>
+                    } else {
+                         <MudTable class="data-grid overflow-hidden" style="height: unset !important; width: 100%;"  Items="@context.Sanctions" Context="uSanc" Hover="true" Breakpoint="Breakpoint.Xs"
+                        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Elevation="3" Loading="context.IsTableLoading">
                         <ColGroup>
                             <col style="width: 120px;"/>
                             <col />
@@ -267,7 +280,12 @@
                                 </MudTd>
                             }
                         </RowTemplate>
+                        <NoRecordsContent>
+                            <span>No Records found</span>
+                        </NoRecordsContent>
                     </MudTable>
+                    }
+                   
                     </div>
                   </td>
                 </MudTr>
@@ -298,7 +316,6 @@
     private List<SectionModel> sectionList = new();
     private IEnumerable<Enums.YearLevel> hasYear {get; set;} = new HashSet<Enums.YearLevel>();
     private Enums.YearLevel selectedYear = new();
-    private List<Enums.YearLevel> yearList = new();
     private IEnumerable<SanctionModel> hasSanction {get; set;} = new HashSet<SanctionModel>();
     private SanctionModel selectedSanction = new();
     private List<SanctionModel> sanctionList = new();
@@ -311,7 +328,6 @@
         await Departments();
         await Sections();
         await Sanctions();
-        YearLevels();
     }
     private async Task GetList(FilterParameter param)
     {
@@ -400,6 +416,18 @@
         }
        await GetList(parameter);
     }
+    private async Task Courses()
+    {
+        courseList = await courseService.ListOfCourse(new FilterParameter());
+    }
+    private async Task Departments()
+    {
+        departmentList = await departmentService.ListOfDepartment(new FilterParameter());
+    }
+    private async Task Sections()
+    {
+        sectionList = await sectionService.ListOfSection(new FilterParameter());
+    }
     private string SelectedCourse(List<string> selectedCourse)
     {
         var course = "";
@@ -408,23 +436,6 @@
         course = string.Join(", ", hasCourse.Select(x => x.CourseName));      
         }
         return $"{course}";
-    }
-    private async Task Courses()
-    {
-        courseList = await courseService.ListOfCourse(new FilterParameter());
-    }
-    private string SelectedDepartment(List<string> selectedDepartment)
-    {
-        var dept = "";
-        foreach (var item in hasDepartment)
-        {
-        dept = string.Join(", ", hasDepartment.Select(x => x.DepartmentName));      
-        }
-        return $"{dept}";
-    }
-    private async Task Departments()
-    {
-        departmentList = await departmentService.ListOfDepartment(new FilterParameter());
     }
     private string SelectedSection(List<string> selectedSection)
     {
@@ -435,9 +446,14 @@
         }
         return $"{sec}";
     }
-    private async Task Sections()
+    private string SelectedDepartment(List<string> selectedDepartment)
     {
-        sectionList = await sectionService.ListOfSection(new FilterParameter());
+        var dept = "";
+        foreach (var item in hasDepartment)
+        {
+        dept = string.Join(", ", hasDepartment.Select(x => x.DepartmentName));      
+        }
+        return $"{dept}";
     }
     private string SelectedYear(List<string> selectedYear)
     {
@@ -447,13 +463,6 @@
         year = string.Join(", ", hasYear.Select(x => x));      
         }
         return $"{year}";
-    }
-    private void YearLevels()
-    {
-        @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
-        {
-            yearList.Add(item);
-        }
     }
     private string SelectedSanction(List<string> selectedSanction)
     {
@@ -475,5 +484,23 @@
 
         // Open the image in a new tab
         await JSRuntime.InvokeVoidAsync("window.open", dataUri, "_blank");
+    }
+    private async Task GetSanctions(bool b, StudentModel student)
+    {
+        student.IsTableLoading = true;
+        StateHasChanged();
+        var param = new FilterParameter();
+        param.StudentId = student.StudentId;
+        if(b)
+        {
+            Task<List<UserSanctionModel>> list1 = UserSanctionService.ListOfUserSanction(param);
+            await list1;
+            if(list1.Status == TaskStatus.RanToCompletion)
+            {
+                list.Where( s=> s.StudentId == student.StudentId).FirstOrDefault().Sanctions = list1.Result;
+                student.IsTableLoading = false;
+                StateHasChanged();
+            } 
+        }
     }
 }

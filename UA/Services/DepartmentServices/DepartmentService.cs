@@ -25,6 +25,16 @@ namespace UA.Services.DepartmentServices
             }
             return list?? new();
         }
+        public async Task<List<DepartmentModel>> CollegesMasterList(FilterParameter param)
+        {
+
+            HttpResponseMessage responseMessage = await client.PostAsJsonAsync("department/CollegesMasterList", param);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                list = await responseMessage.Content.ReadFromJsonAsync<List<DepartmentModel>>();
+            }
+            return list?? new();
+        }
         public async Task<DepartmentModel> AddDepartment(DepartmentModel model)
         {
             HttpResponseMessage responseMessage = await client.PostAsJsonAsync("department/AddDepartment", model);

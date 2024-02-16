@@ -1,0 +1,59 @@
+.pattern {
+    background-image: url("/svg/pattern.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.dashboard-bottom {
+    background-image: url("/image/ua.png");
+    height: 60vh;
+    background-size: cover;
+    width: 100%;
+}
+
+.dashboard-upper {
+    height: 30vh;
+    width: 100%;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+}
+.logo img {
+
+    height: 28vh;
+    width: 30vh;
+    opacity: 90%;
+}
+.contact-container {
+    padding: 15px;
+    height: auto;
+    width: 35%;
+    background: rgba(255, 255, 255, 40%);
+}
+
+.contact-container2 {
+    padding: 15px;
+    height: auto;
+    width: 52%;
+    background: rgba(255, 255, 255, 40%);
+}
+
+.contact-container-border {
+    padding: 15px;
+    height: auto;
+    margin: 10px;
+    color: black;
+    width: 35%;
+    background: rgba(255, 255, 255, 60%);
+    border: 2px solid #d3d3d3;
+    border-radius: 5px;
+}
+
+.divider {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    background-color: #16307b !important;
+    height: 1px !important;
+}
+

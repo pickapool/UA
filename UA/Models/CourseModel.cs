@@ -12,5 +12,6 @@ namespace UA.Models
         public string CourseName { get; set; } = string.Empty;
         [Required(ErrorMessage = "Shortcut name is required.")] 
         public string ShortcutName { get; set; } = string.Empty;
+        public List<StudentModel> Students { get; set; } = new();
     }
 }

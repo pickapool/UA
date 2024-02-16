@@ -1,77 +1,437 @@
 @page "/colleges"
 
-@inject IDepartmentService departmentService
+@inject IDepartmentService DepartmentService
+@inject IReportService ReportService
+@inject ICourseService CourseService
+@inject ISectionService SectionService
+@inject ISanctionService sanctionService
 
 <div class="settings pa-2">
-    <MudTable Items="list" class="data-grid" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true' FixedFooter='true'
-        Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading" Elevation="3">
+    @if(!IsPrint)
+    {
+    <MudTable Items="masterList" Height="70vh" class="data-grid" Hover="true" Breakpoint="Breakpoint.Xs"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15' Loading="IsLoading"
+        Elevation="3">
         <ToolBarContent>
             <div class="d-flex flex-row">
-                @foreach(DepartmentModel dept in departments)
+                @foreach (DepartmentModel dept in departments)
                 {
-                    <MudChip Class="chip" Color="Extensions.DepartmentColor(dept.C)" Variant="Variant.Filled">@dept.DepartmentName</MudChip>
+                    <MudChip OnClick="()=> Filter(dept.DepartmentId)" Class="chip"
+                        Color="Extensions.DepartmentColor(dept.C)" Variant="Variant.Filled">@dept.DepartmentName</MudChip>
                 }
             </div>
             <MudSpacer />
             <MudTooltip Text="Refresh Table">
-                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
+                <MudIconButton OnClick="()=> Filter(0)" Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" />
             </MudTooltip>
+            <MudTooltip Text="Print">
+                <MudIconButton OnClick="()=> PrintPDF()" Icon="@Icons.Material.Filled.PictureAsPdf" Size="Size.Small" />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                    <MudMenuItem OnClick="Toggle">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.FilterList' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Filter</MudText>
+                        </div>
+                    </MudMenuItem>
+                </MudMenu>
+            <MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" Fixed="true" Class="px-4 pt-4 width400px">
+                <MudGrid Spacing="1">
+                    <MudItem Class="d-flex" xs="12">
+                        <MudIcon Class="mr-2" Icon='@Icons.Material.Filled.FilterList' Size='Size.Small' />
+                        <MudText Typo="Typo.button">FILTER</MudText>
+                    </MudItem>
+                    <MudItem Class="mb-2" xs="12">
+                        <MudDivider/>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDate"></MudCheckBox></MudItem>
+                    <MudItem xs=10><MudDateRangePicker Label="Sanction Date" @bind-DateRange="_dateRange" 
+                        IconSize='Size.Small' DisableToolbar AnchorOrigin='Origin.BottomLeft' TransformOrigin='Origin.BottomRight'
+                        Placeholder="Sanction Date" Variant='Variant.Outlined' Margin='Margin.Dense' Disabled="!parameter.IsDate"/></MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsCourse"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedCourse))' @bind-SelectedValues=hasCourse Label='Course' 
+                            @bind-Value='selectedCourse'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsCourse' Placeholder='Course' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in courseList)
+                            {
+                                <MudSelectItem  Value="@item">@item.CourseName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsDepartment"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedDepartment))' @bind-SelectedValues=hasDepartment Label='Department' 
+                            @bind-Value='selectedDepartment'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsDepartment' Placeholder='Department' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in departmentList)
+                            {
+                                <MudSelectItem  Value="@item">@item.DepartmentName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsSection"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedSection))' @bind-SelectedValues=hasSection Label='Section' 
+                            @bind-Value='selectedSection'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsSection' Placeholder='Section' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in sectionList)
+                            {
+                                <MudSelectItem  Value="@item">@item.SectionName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsYear"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedYear))' @bind-SelectedValues=hasYear Label='Year Level' 
+                            @bind-Value='selectedYear'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsYear' Placeholder='Year Level' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (Enums.YearLevel item in Enum.GetValues(typeof(Enums.YearLevel)))
+                            {
+                                <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs=2><MudCheckBox @bind-Checked="parameter.IsSanction"></MudCheckBox></MudItem>
+                    <MudItem xs=10>
+                        <MudSelect Class='w300px' MultiSelectionTextFunc='@(new Func<List<string>, string>(SelectedSanction))' @bind-SelectedValues=hasSanction Label='Sanction' 
+                            @bind-Value='selectedSanction'  Clearable  
+                            IconSize='Size.Small' Dense MultiSelection Disabled='!parameter.IsSanction' Placeholder='Sanction' Variant='Variant.Outlined'
+                            AnchorOrigin='Origin.BottomCenter' TransformOrigin='Origin.TopCenter'>
+                            @foreach (var item in sanctionList)
+                            {
+                                <MudSelectItem  Value="@item">@item.SanctionName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="7"></MudItem>
+                    <MudItem xs="5">
+                        <MudButton OnClick="Toggle" Class="ml-auto mr-1 mb-3" Color="Color.Default">Close</MudButton>
+                        <MudButton OnClick="Filter" Class="ml-auto mr-n3 mb-3" Variant="Variant.Filled" Color="Color.Info">Filter</MudButton> 
+                    </MudItem>
+                </MudGrid>
+            </MudPopover>
         </ToolBarContent>
         <ColGroup>
-            <col style='width: 120px' />
-            <col />
-            <col />
-            <col style='width: 60px' />
-            <col style='width: 30px' />
             <col />
             <col style='width: 120px' />
-            <col style='width: 20px' />
         </ColGroup>
         <HeaderContent>
             <MudTh>
-                Year
+                Colleges
             </MudTh>
-            <MudTh>
-                Section
-            </MudTh>
-            <MudTh>
-                <div class="d-flex flex-column">
-                    <div>PROGRAM</div>
-                    <div>
-                        
-                    </div>
-                </div>
+            <MudTh Class="text-center">
+                Expand
             </MudTh>
         </HeaderContent>
         <RowTemplate>
-
+            <MudTd DataLabel="Student Name"><b> College of @context.DepartmentName</b></MudTd>
+            <MudTd DataLabel="Sanctions" Class="text-center">
+                <MudToggleIconButton @bind-Toggled='context.IsOpenDeparment'
+                    Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Title="Expand"
+                    Size='Size.Small' ToggledSize='Size.Small' ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
+                    ToggledColor="@Color.Info" ToggledTitle="Collapse" />
+            </MudTd>
         </RowTemplate>
+        <ChildRowContent>
+            @if (context.IsOpenDeparment && !IsLoading)
+            {
+                <MudTr>
+                    <td colspan="2" style="background: #bbdfff;">
+                        <MudTable Items="context.Courses" Class="pa-2 ma-2 data-grid" Context="departmentCourse"
+                            Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true' Bordered='true'
+                            Dense='true' Elevation="3">
+                            <RowTemplate>
+                                <MudTd DataLabel="Course name">
+                                    <span><b><i> Program - @departmentCourse.Course.CourseName</i></b></span>
+                                    <MudTable Items="Enum.GetValues(typeof(Enums.YearLevel)).Cast<Enum>().ToArray()" Class="pa-2 ma-2 data-grid" Context="yearLevel"
+                                        Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true'
+                                        Dense='true' Elevation="0">
+                                        <RowTemplate>
+                                            <MudTd DataLabel="year Level">
+                                                <span><b>@Extensions.GetEnumDescription(yearLevel)</b></span>
+                                                @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().Count() > 0)
+                                                {
+                                                    <br>
+                                                    @foreach(SectionModel sec in departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).Select( e => e.Section).OrderBy( e => e.SectionName))
+                                                    {
+                                                        <span> (Section - @sec.SectionName)</span>
+                                                        <MudTable 
+                                                        Items="departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList()" 
+                                                        Class="pa-2 ma-2 data-grid" Context="students"
+                                                        Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true' Dense='true' Elevation="0">
+                                                        <HeaderContent>
+                                                            <MudTh>Student Name</MudTh>
+                                                        </HeaderContent>
+                                                        <RowTemplate>
+                                                            <MudTd DataLabel="Student name">
+                                                                
+                                                                <span>@students.StudentName</span>
+                                                                @if(students.Sanctions.Count > 0)
+                                                                {
+                                                                <MudTable 
+                                                                    Items="students.Sanctions" 
+                                                                    Class="pa-2 ma-2 data-grid" Context="uSanc"
+                                                                    Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true' Dense='true' Elevation="0">
+                                                                    <HeaderContent>
+                                                                        <MudTh>Sanction</MudTh>
+                                                                        <MudTh>Date</MudTh>
+                                                                        <MudTh>Amount</MudTh>
+                                                                        <MudTh>Status</MudTh>
+                                                                    </HeaderContent>
+                                                                    <RowTemplate>
+                                                                        <MudTd DataLabel="Sanction Name">@uSanc.Sanction.SanctionName</MudTd>
+                                                                        <MudTd DataLabel="Date">@uSanc.DateRecorded.ToString("MM/dd/yyyy")</MudTd>
+                                                                        <MudTd Class="text-end" DataLabel="Sanction Name">@uSanc.Sanction.Amount.ToString("N2")</MudTd>
+                                                                        @if(uSanc.IsPaid)
+                                                                        {
+                                                                            <MudTd DataLabel="Paid" Class="text-center">
+                                                                                <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Info">Paid</MudChip>
+                                                                            </MudTd>
+                                                                        } else {
+                                                                            <MudTd DataLabel="Paid" Class="text-center">
+                                                                                <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Error">Not Paid</MudChip>
+                                                                            </MudTd>
+                                                                        }
+                                                                    </RowTemplate>
+                                                                </MudTable>
+                                                                } else {
+                                                                    <span><b> (No record)</b></span>
+                                                                }
+                                                                </MudTd>
+                                                        </RowTemplate>
+                                                    </MudTable>
+                                                    }
+                                                } else {
+                                                    <span><b> (No Students)</b></span>
+                                                }
+                                            </MudTd>
+                                        </RowTemplate>
+                                    </MudTable>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </td>
+                </MudTr>
+            }
+        </ChildRowContent>
         <PagerContent>
             <MudTablePager PageSizeOptions='@pageSize' />
         </PagerContent>
     </MudTable>
+    } else {
+        <div class="d-flex flex-column justify-content-end gap-1">
+            <iframe src='@PDF' style='height:81vh;'/>
+            <MudButton OnClick="()=> IsPrint = !IsPrint" Class="ml-auto mr-1 mb-3" Variant="Variant.Filled" Color="Color.Warning">Cancel</MudButton>
+        </div>
+    }
 </div>
 @code {
 
     private int[] pageSize = new int[] { 30, 50, 100, 500, 1000 };
-    private bool IsLoading = true;
-    List<StudentModel> list = new();
-    List<DepartmentModel> departments  = new();
+    private bool IsLoading = true, IsPrint = false;
+    private List<DepartmentModel> departments = new();
+    private List<DepartmentModel> masterList = new();
+    private string PDF = string.Empty;
+    private FilterParameter parameter = new();
+    private bool _isOpen;
+    private DateRange _dateRange = new DateRange(DateTime.Now.Date, DateTime.Now.AddDays(5).Date);
+    private IEnumerable<CourseModel> hasCourse {get; set;} = new HashSet<CourseModel>();
+    private CourseModel selectedCourse = new();
+    private List<CourseModel> courseList = new();
+    private IEnumerable<DepartmentModel> hasDepartment {get; set;} = new HashSet<DepartmentModel>();
+    private DepartmentModel selectedDepartment = new();
+    private List<DepartmentModel> departmentList = new();
+    private IEnumerable<SectionModel> hasSection {get; set;} = new HashSet<SectionModel>();
+    private SectionModel selectedSection = new();
+    private List<SectionModel> sectionList = new();
+    private IEnumerable<Enums.YearLevel> hasYear {get; set;} = new HashSet<Enums.YearLevel>();
+    private Enums.YearLevel selectedYear = new();
+    private List<Enums.YearLevel> yearList = new();
+    private IEnumerable<SanctionModel> hasSanction {get; set;} = new HashSet<SanctionModel>();
+    private SanctionModel selectedSanction = new();
+    private List<SanctionModel> sanctionList = new();
     protected override async Task OnInitializedAsync()
     {
         GlobalClass.pageTitle = "Colleges";
-        await GetDepartments();
-        StateHasChanged();
-        IsLoading = !IsLoading;
+        Task t = Task.WhenAll(GetDepartments(), Filter(0));
+        await t;
+        if (t.Status == TaskStatus.RanToCompletion)
+        {
+            IsLoading = !IsLoading;
+            IsPrint = false;
+            StateHasChanged();
+        }
+
     }
     private async Task GetDepartments()
     {
-        departments = await departmentService.ListOfDepartment(new FilterParameter());
+        departments = await DepartmentService.ListOfDepartment(new FilterParameter());
         int count = 0;
-        departments.ForEach( d => {
+        departments.ForEach(d =>
+        {
             d.C = count++;
-            if(count.Equals(departments.Count))
+            if (count.Equals(departments.Count))
                 count = 0;
         });
+        courseList = GlobalClass.ListOfCourse = await CourseService.ListOfCourse(new FilterParameter());
+        sectionList = GlobalClass.ListOfSections = await SectionService.ListOfSection(new FilterParameter());
+        departmentList = GlobalClass.ListOfDepartments = departments;
+        await Sanctions();
+    }
+    private async Task Filter(int departmnetId) {
+        parameter.DepartmentId = departmnetId;
+        IsLoading = !IsLoading;
+        Task<List<DepartmentModel>> list = DepartmentService.CollegesMasterList(parameter);
+        await list;
+        if (list.Status == TaskStatus.RanToCompletion)
+        {
+            masterList = list.Result;
+            masterList.ForEach( e => e.IsOpenDeparment = true);
+            masterList.ForEach( e => e.Courses.ForEach( e => e.Course.Students.ForEach( e=> { e.Course = new(); e.Department = new(); })));
+            IsLoading = !IsLoading;
+            StateHasChanged();
+        }
+    }
+    private async Task PrintPDF()
+    {
+        //list = masterList.SelectMany(d => d.Courses.SelectMany(c => c.Course.Students)).ToList();
+        List<StudentModel> list = new List<StudentModel>();
+        foreach (var department in masterList)
+        {
+            foreach (var course in department.Courses)
+            {
+                foreach (var student in course.Course.Students)
+                {
+                    foreach (var sanction in student.Sanctions)
+                    {
+                        StudentModel studentModel = new StudentModel
+                        {
+                            // Copy properties from the original student
+                            IdNo = student.IdNo,
+                            StudentId = student.StudentId,
+                            StudentName = student.StudentName,
+                            CourseId = student.CourseId,
+                            DepartmentId = student.DepartmentId,
+                            SectionId = student.SectionId,
+                            QRCode = student.QRCode,
+                            YearLevel = student.YearLevel,
+                            // Additional properties from other sources
+                            Departmentname = GlobalClass.ListOfDepartments.FirstOrDefault(d => d.DepartmentId == student.DepartmentId)?.DepartmentName,
+                            SectionName = GlobalClass.ListOfSections.FirstOrDefault(s => s.SectionId == student.SectionId)?.SectionName,
+                            CourseName = GlobalClass.ListOfCourse.FirstOrDefault(c => c.CourseId == student.CourseId)?.CourseName,
+                            SanctionAmount = sanction.Amount,
+                            DateRecorded = sanction.DateRecorded,
+                            SanctionName = sanction.Sanction.SanctionName,
+                            IsPaid = sanction.IsPaid
+                        };
+                        
+                        list.Add(studentModel);
+                    }
+                }
+            }
+        }
+       //list.RemoveAll( e => String.IsNullOrEmpty(e.Departmentname));
+        
+        Task<string> t = ReportService.GetMasterListReport(list);
+        await t;
+        if(t.Status == TaskStatus.RanToCompletion)
+        {
+            PDF = t.Result;
+            IsPrint = !IsPrint;
+            StateHasChanged();
+        }
+        
+    }
+    
+    public void Toggle()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
+    private string SelectedCourse(List<string> selectedCourse)
+    {
+        var course = "";
+        foreach (var item in hasCourse)
+        {
+        course = string.Join(", ", hasCourse.Select(x => x.CourseName));      
+        }
+        return $"{course}";
+    }
+    private string SelectedSection(List<string> selectedSection)
+    {
+        var sec = "";
+        foreach (var item in hasSection)
+        {
+        sec = string.Join(", ", hasSection.Select(x => x.SectionName));      
+        }
+        return $"{sec}";
+    }
+    private string SelectedDepartment(List<string> selectedDepartment)
+    {
+        var dept = "";
+        foreach (var item in hasDepartment)
+        {
+        dept = string.Join(", ", hasDepartment.Select(x => x.DepartmentName));      
+        }
+        return $"{dept}";
+    }
+    private string SelectedYear(List<string> selectedYear)
+    {
+        var year = "";
+        foreach (var item in hasYear)
+        {
+        year = string.Join(", ", hasYear.Select(x => x));      
+        }
+        return $"{year}";
+    }
+    private string SelectedSanction(List<string> selectedSanction)
+    {
+        var sanc = "";
+        foreach (var item in hasSanction)
+        {
+            sanc = string.Join(", ", hasSanction.Select(x => x.SanctionName));      
+        }
+        return $"{sanc}";
+    }
+    private async Task Sanctions()
+    {
+        sanctionList = await sanctionService.ListOfSanction(new FilterParameter());
+    }
+    public async Task Filter()
+    {
+        if(parameter.IsDate)
+        {
+            parameter.DateFrom = Convert.ToDateTime(_dateRange.Start);
+            parameter.DateTo = Convert.ToDateTime(_dateRange.End);
+        }
+        if(parameter.IsCourse)
+        {
+            parameter.Courses = hasCourse.ToList();
+        }
+        if(parameter.IsDepartment)
+        {
+            parameter.Departments = hasDepartment.ToList();
+        }
+        if(parameter.IsSection)
+        {
+            parameter.Sections = hasSection.ToList();
+        }
+        if(parameter.IsYear)
+        {
+            parameter.YearLevels = hasYear.ToList();
+        }
+        if(parameter.IsSanction)
+        {
+            parameter.Sanctions = hasSanction.ToList();
+        }
+        await Filter(0);
     }
 }

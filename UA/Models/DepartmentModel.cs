@@ -12,5 +12,6 @@ namespace UA.Models
         public string DepartmentName { get; set; } = string.Empty;
         public List<DepartmentCourseModel> Courses { get; set; } = new();
         public int C { get; set; }
+        public bool IsOpenDeparment { get; set; }
     }
 }
