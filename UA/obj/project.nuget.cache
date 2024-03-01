@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zIxanEkTXDZvv1TNU/lq1yYt5jB8fOBC0zNtaUd1J1WaCQlUhLIYlmx/CVdnifj44SHiruIPEDq/XDRllg2v0g==",
+  "dgSpecHash": "7JStnsELYN9nTyD9Nro7nBictBOao5NgLcAI4LFYzoMJR2JTmLnAekhV/kGJGTtJkG5PmynIhSC71+BWUjoM9g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\UA.csproj",
+  "projectFilePath": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\UA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cyril\\.nuget\\packages\\barcode\\2023.11.8\\barcode.2023.11.8.nupkg.sha512",
     "C:\\Users\\cyril\\.nuget\\packages\\bitmiracle.libtiff.net\\2.4.649\\bitmiracle.libtiff.net.2.4.649.nupkg.sha512",

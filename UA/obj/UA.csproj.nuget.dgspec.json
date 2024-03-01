@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cyril\\source\\repos\\UA\\ua\\UA.csproj": {}
+    "C:\\Users\\cyril\\source\\repos\\UA\\UA\\UA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cyril\\source\\repos\\UA\\ua\\UA.csproj": {
+    "C:\\Users\\cyril\\source\\repos\\UA\\UA\\UA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\UA.csproj",
+        "projectUniqueName": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\UA.csproj",
         "projectName": "UA",
-        "projectPath": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\UA.csproj",
+        "projectPath": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\UA.csproj",
         "packagesPath": "C:\\Users\\cyril\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cyril\\source\\repos\\UA\\ua\\obj\\",
+        "outputPath": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
