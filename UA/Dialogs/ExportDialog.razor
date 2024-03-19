@@ -174,43 +174,67 @@
         }
 
         // Read the Excel file and extract values per column
-        using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+        try
         {
-            ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // Assuming you want to read the first worksheet
-
-            int rowCount = worksheet.Dimension.Rows;
-            int columnCount = worksheet.Dimension.Columns;
-
-            // Loop through each column
-            for(int i = 0 ; i< rowCount ; i++)
+            //Fixes
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //End Fixes
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
             {
-                StudentModel stud = new();
-                Students.Add(stud);
-            }
-            
-            for (int col = 1; col <= 3; col++)
-            {
-                for (int row = 1; row <= rowCount; row++)
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault(); // Get the first worksheet
+
+                if (worksheet != null)
                 {
-                    object cellValue = worksheet.Cells[row, col].Value;
-                    string cellText = cellValue?.ToString() ?? string.Empty;
-                    if(col == 1)
+                    int rowCount = worksheet.Dimension.Rows;
+                    int columnCount = worksheet.Dimension.Columns;
+
+                    // Loop through each row
+                    for (int row = 1; row <= rowCount; row++)
                     {
-                        Students[row - 1].QRCode = cellText;
-                    } else if(col == 2)
-                    {
-                        Students[row - 1].IdNo = cellText;
-                    } else if(col == 3)
-                    {
-                        Students[row - 1].StudentName = cellText;
+                        StudentModel stud = new StudentModel();
+
+                        for (int col = 1; col <= columnCount; col++)
+                        {
+                            object cellValue = worksheet.Cells[row, col].Value;
+                            string cellText = cellValue?.ToString() ?? string.Empty;
+
+                            // Assign cell values to StudentModel properties based on column index
+                            switch (col)
+                            {
+                                case 1:
+                                    stud.QRCode = cellText;
+                                    break;
+                                case 2:
+                                    stud.IdNo = cellText;
+                                    break;
+                                case 3:
+                                    stud.StudentName = cellText;
+                                    break;
+                                default:
+                                    // Handle additional columns if needed
+                                    break;
+                            }
+                        }
+
+                        Students.Add(stud);
                     }
+                }
+                else
+                {
+                    // Handle case where no worksheet is found
+                    Console.WriteLine("No worksheet found in the Excel file.");
                 }
             }
         }
-
+        catch (Exception ex)
+        {
+            // Handle any exceptions that occur during file reading
+            Console.WriteLine("An error occurred while reading the Excel file: " + ex.Message);
+        }
         // Clean up: delete the temporary file
         File.Delete(filePath);
-    }
+
+     }
     private void MapStudents()
     {
         Students.ForEach( s => {

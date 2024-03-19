@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Reflection;
 using UA.Models;
 
 namespace UA.Services.AccountServices
@@ -30,6 +31,27 @@ namespace UA.Services.AccountServices
                 Console.WriteLine(ee.Message);
                 throw ee;
             }
+        }
+        public async Task<List<AccountModel>> ListOfUsers(FilterParameter param)
+        {
+            List<AccountModel> list = new();
+            HttpResponseMessage responseMessage = await client.GetAsync("users/GetUsers");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                list = await responseMessage.Content.ReadFromJsonAsync<List<AccountModel>>();
+            }
+            return list ?? new();
+        }
+
+        public async Task<AccountModel> UpdatePassword(int id, AccountModel model)
+        {
+            var account = new AccountModel();
+            HttpResponseMessage responseMessage = await client.PutAsJsonAsync("users/UpdateUser/"+id, model);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+               // account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+            }
+            return account ?? new();
         }
     }
 }

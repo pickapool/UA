@@ -4,6 +4,7 @@
 @inject IAccountService accountService
 @inject ISnackbar Snackbar
 @inject NavigationManager navigationManager
+@inject IDialogService dialogService
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -27,7 +28,7 @@
                                     <div Class='d-flex usercp__btncontainer'>
                                         <MudButton Class='usercp__btnsettings' OnClick="GoToSettings" Variant='Variant.Text' StartIcon='@Icons.Material.Filled.Settings' Size='Size.Small'>Settings</MudButton>
                                         <MudSpacer/>
-                                        <MudButton Class='usercp__btntohub' Variant='Variant.Text' StartIcon='@Icons.Material.Filled.PublishedWithChanges' Size='Size.Small'>Change Password</MudButton>
+                                        <MudButton Class='usercp__btntohub' OnClick="OpenExport" Variant='Variant.Text' StartIcon='@Icons.Material.Filled.PublishedWithChanges' Size='Size.Small'>Change Password</MudButton>
                                     </div>
                                     <MudDivider />
                                     <div class='py-2'>
@@ -144,6 +145,12 @@ else
             IsDateFectch = true;
             StateHasChanged();
         }
+    }
+    private async Task OpenExport()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
+        var resultDialog = await dialogService.Show<Dialogs.ChangePasswordDialog>("", parameters, options).Result;
     }
     private async Task Logout()
     {

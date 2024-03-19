@@ -12,5 +12,6 @@ namespace UA.Common
         public static List<CourseModel> ListOfCourse = new();
         public static List<DepartmentModel> ListOfDepartments = new();
         public static List<SectionModel> ListOfSections = new();
+        public static AccountModel Account = new AccountModel();
     }
 }

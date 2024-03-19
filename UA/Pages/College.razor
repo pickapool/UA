@@ -121,17 +121,26 @@
         <ColGroup>
             <col />
             <col style='width: 120px' />
+            <col style='width: 120px' />
         </ColGroup>
         <HeaderContent>
             <MudTh>
                 Colleges
             </MudTh>
             <MudTh Class="text-center">
+                Total
+            </MudTh>
+            <MudTh Class="text-center">
                 Expand
             </MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Student Name"><b> College of @context.DepartmentName</b></MudTd>
+            <MudTd DataLabel="Student Name"><b> College of @context.DepartmentName</b>
+            </MudTd>
+            <MudTd DataLabel="Total" class="text-center">
+                @(context.Courses.Select( e => e.Course).SelectMany( e => e.Students).SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2"))
+            </MudTd>
+            
             <MudTd DataLabel="Sanctions" Class="text-center">
                 <MudToggleIconButton @bind-Toggled='context.IsOpenDeparment'
                     Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Title="Expand"
@@ -149,19 +158,27 @@
                             Dense='true' Elevation="3">
                             <RowTemplate>
                                 <MudTd DataLabel="Course name">
-                                    <span><b><i> Program - @departmentCourse.Course.CourseName</i></b></span>
+                                    <span>(<b>Program - @departmentCourse.Course.CourseName</b>)</span>
+                                    <span style="font-size: 12px;"><b>TOTAL -</b>
+                                    @departmentCourse.Course.Students.SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2")</span>
                                     <MudTable Items="Enum.GetValues(typeof(Enums.YearLevel)).Cast<Enum>().ToArray()" Class="pa-2 ma-2 data-grid" Context="yearLevel"
                                         Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true'
                                         Dense='true' Elevation="0">
                                         <RowTemplate>
                                             <MudTd DataLabel="year Level">
-                                                <span><b>@Extensions.GetEnumDescription(yearLevel)</b></span>
+                                                <span>(<b>@Extensions.GetEnumDescription(yearLevel)</b>)</span>
+                                                <span style="font-size: 12px;">
+                                                @(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0 ? 
+                                                departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions).Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2") : "")</span>
                                                 @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().Count() > 0)
                                                 {
                                                     <br>
                                                     @foreach(SectionModel sec in departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).Select( e => e.Section).DistinctBy( s => s.SectionId).OrderBy( e => e.SectionName))
                                                     {
                                                         <span> (Section - @sec.SectionName)</span>
+                                                        <span style="font-size: 12px;"><b>TOTAL - </b>
+                                                        @(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0 ?
+                                                        departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2") : "")</span>
                                                         <MudTable 
                                                         Items="departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList()" 
                                                         Class="pa-2 ma-2 data-grid" Context="students"
@@ -172,7 +189,8 @@
                                                         <RowTemplate>
                                                             <MudTd DataLabel="Student name">
                                                                 
-                                                                <span>@students.StudentName</span>
+                                                                <span>@students.StudentName - </span>
+                                                                <span style="font-size: 12px;">@(students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount) > 0 ? students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2") :"")</span>
                                                                 @if(students.Sanctions.Count > 0)
                                                                 {
                                                                 <MudTable 
@@ -201,6 +219,7 @@
                                                                         }
                                                                     </RowTemplate>
                                                                 </MudTable>
+                                                                
                                                                 } else {
                                                                     <span><b> (No record)</b></span>
                                                                 }

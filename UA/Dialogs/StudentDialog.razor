@@ -59,7 +59,7 @@
                         
                             <MudItem xs='11'>
                                 <MudSelect 
-                                @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Course" AdornmentIcon="@Icons.Material.Filled.MenuBook" AdornmentColor="Color.Primary">
+                                @bind-Value="StudentModel.Course" Margin="Margin.Dense" Text="@StudentModel.Course.CourseName" Label="Course" HelperText="Required*" Placeholder="Program" AdornmentIcon="@Icons.Material.Filled.MenuBook" AdornmentColor="Color.Primary">
                                 @if (reload)
                                 {
                                     @foreach (CourseModel c in currentCourses)
@@ -406,7 +406,7 @@
     private async Task OpenQR()
     {
         var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
-        var resultDialog = await dialogService.Show<Dialogs.QRCodeDialog>("", options).Result;
+        var resultDialog = await dialogService.Show<Dialogs.QRCodeDialog>("", options).Result   ;
         if (!resultDialog.Canceled)
         {
             StudentModel.QRCode = (string) resultDialog.Data;
