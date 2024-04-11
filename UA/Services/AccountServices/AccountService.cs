@@ -55,15 +55,38 @@ namespace UA.Services.AccountServices
             return list ?? new();
         }
 
+        public async Task<AccountModel> Remove(int id)
+        {
+            try
+            {
+                var account = new AccountModel();
+                HttpResponseMessage responseMessage = await client.DeleteAsync("users/DeleteUser/"+id);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+                }
+                return account ?? new();
+            } catch(Exception ee)
+            {
+                return new();
+            }
+        }
+
         public async Task<AccountModel> UpdatePassword(int id, AccountModel model)
         {
-            var account = new AccountModel();
-            HttpResponseMessage responseMessage = await client.PutAsJsonAsync("users/UpdateUser/"+id, model);
-            if (responseMessage.IsSuccessStatusCode)
+            try
             {
-                account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+                var account = new AccountModel();
+                HttpResponseMessage responseMessage = await client.PutAsJsonAsync("users/UpdateUser/"+id, model);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+                }
+                return account ?? new();
+            } catch(Exception ee)
+            {
+                return new();
             }
-            return account ?? new();
         }
     }
 }

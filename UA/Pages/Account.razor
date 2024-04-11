@@ -1,0 +1,167 @@
+@page "/Accounts"
+@inject IAccountService AccountService
+@inject IDialogService dialogService
+@inject ISnackbar Snackbar
+
+<div class="settings">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs" Height="70vh"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<AccountModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='User Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='GetList' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="AddUser">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 20px' />
+            <col />
+            <col />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                    SortBy="new Func<AccountModel, object>(x=>x.UserId)">
+                    Id
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<AccountModel, object>(x=>x.Username)">
+                    Username
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<AccountModel, object>(x=>x.Password)">
+                    Password
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="UserId">@context.UserId</MudTd>
+            <MudTd DataLabel="username">@context.Username</MudTd>
+            <MudTd DataLabel="password">@Extensions.FormatPassword(context.Password)</MudTd>
+            <MudTd Class='text-center pa-2'>
+                 <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                         <MudMenuItem OnClick="()=> OpenExport(context)">
+                            <div class='d-flex align-center gap-2 '>
+                                <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                                <MudText Typo='Typo.body2'>Edit</MudText>
+                            </div>
+                        </MudMenuItem> 
+                        <MudMenuItem OnClick="()=> Delete(context)">
+                            <div class='d-flex align-center gap-2 '>
+                                <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                                <MudText Typo='Typo.body2'>Remove</MudText>
+                            </div>
+                        </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code
+{
+    List<AccountModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Accounts";
+        await GetList();
+    }
+    private async Task GetList()
+    {
+        IsLoading = true;
+        Task<List<AccountModel>> data = AccountService.ListOfUsers(new FilterParameter());
+        await data;
+        if (data.Status == TaskStatus.RanToCompletion)
+        {
+            list = data.Result;
+            GlobalClass.accountModels = list;
+            list = list.Where( e => e.UserId != 1).ToList();
+            await Task.Delay(1000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private bool FilterItems(AccountModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.Username.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task OpenExport(AccountModel model)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("accs" , model);
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
+        var resultDialog = await dialogService.Show<Dialogs.ChangeUserPassword>("", parameters, options).Result;
+        if(!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+     private async Task AddUser()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
+        var resultDialog = await dialogService.Show<Dialogs.AddUserDialog>("", parameters, options).Result;
+        if(!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+    private async Task Delete(AccountModel model)
+    {
+        var parameters = new DialogParameters<Confirmation>();
+        parameters.Add("ContentText", "Do you really want to delete these record? This process cannot be undone.");
+        parameters.Add("ButtonText", "Yes");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await dialogService.Show<Confirmation>("Delete", parameters, options).Result;
+        if(!dialog.Canceled)
+        {
+            IsLoading = !IsLoading;
+            Task t = AccountService.Remove(model.UserId);
+            await t;
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                await GetList();
+                Extensions.ShowAlert("User successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+            }
+        }
+    }
+}

@@ -38,8 +38,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMb2dpblNWRy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/cyril/source/repos/UA/UA/Dialogs/AddUserDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = RGlhbG9nc1xBZGRVc2VyRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/cyril/source/repos/UA/UA/Dialogs/ChangePasswordDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = RGlhbG9nc1xDaGFuZ2VQYXNzd29yZERpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cyril/source/repos/UA/UA/Dialogs/ChangeUserPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = RGlhbG9nc1xDaGFuZ2VVc2VyUGFzc3dvcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cyril/source/repos/UA/UA/Dialogs/ConfirmAdmin.razor]
@@ -72,6 +80,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/cyril/source/repos/UA/UA/Dialogs/StudentDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = RGlhbG9nc1xTdHVkZW50RGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/cyril/source/repos/UA/UA/Pages/Account.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/cyril/source/repos/UA/UA/Pages/College.razor]

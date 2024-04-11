@@ -3,7 +3,7 @@
 @inject ISnackbar Snackbar
 
 <div class="settings">
-    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"  Height="70vh"
         FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
         Filter='new Func<SectionModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
         <ToolBarContent>

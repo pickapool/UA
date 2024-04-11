@@ -13,5 +13,6 @@ namespace UA.Common
         public static List<DepartmentModel> ListOfDepartments = new();
         public static List<SectionModel> ListOfSections = new();
         public static AccountModel Account = new AccountModel();
+        public static List<AccountModel> accountModels= new();
     }
 }

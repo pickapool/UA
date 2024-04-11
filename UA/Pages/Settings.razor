@@ -4,6 +4,7 @@
         <div class='subdrawer-left transition-05s-ease mr-2' square style='@(open ? "width:270px" : "width:58px")'>
             <MudDrawer @bind-Open='open' Fixed='false' Anchor='Anchor.Left' Elevation='0' Variant="@DrawerVariant.Mini" OpenMiniOnHover='true'>
                 <MudNavMenu>
+                    <MudNavLink OnClick="()=> GoToPage(5)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ManageAccounts">Accounts</MudNavLink>
                     <MudNavLink OnClick="()=> GoToPage(1)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.MenuBook">Courses</MudNavLink>
                     <MudNavLink OnClick="()=> GoToPage(2)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apartment">Departments</MudNavLink>
                     <MudNavLink OnClick="()=> GoToPage(3)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Attractions">Sanctions</MudNavLink>
@@ -21,18 +22,19 @@
             } else if(currentPage == 4) {
                 <Section/>
             } else if(currentPage == 5) {
-                <Student/>
+                <Account/>
             }
+            
         </MudContainer>
 </div>
 @code
 {
     bool open = false;
-    int currentPage = 1;
+    int currentPage = 5;
 
     protected override async Task OnInitializedAsync()
     {
-
+        
     }
     private void GoToPage(int page)
     {

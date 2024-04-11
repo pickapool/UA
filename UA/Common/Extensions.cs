@@ -48,5 +48,19 @@ namespace UA.Common
                 return MudBlazor.Color.Secondary;
             }
         }
+        public static string FormatPassword(string password, char symbol = '●')
+        {
+            // Create a character array to store the formatted password
+            char[] formattedPassword = new char[password.Length];
+            
+            // Fill the array with the specified symbol
+            for (int i = 0; i < password.Length; i++)
+            {
+                formattedPassword[i] = symbol;
+            }
+            
+            // Convert the character array back to a string
+            return new string(formattedPassword);
+        }
     }
 }
