@@ -14,6 +14,18 @@ namespace UA.Services.AccountServices
             client = _client;
             configuration = _config;
         }
+
+        public async Task<AccountModel> AddUser(AccountModel model)
+        {
+           var account = new AccountModel();
+            HttpResponseMessage responseMessage = await client.PostAsJsonAsync("users/AddUser", model);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+            }
+            return account ?? new();
+        }
+
         public async Task<AccountModel> Authenticate(AccountModel model)
         {
             try
@@ -49,7 +61,7 @@ namespace UA.Services.AccountServices
             HttpResponseMessage responseMessage = await client.PutAsJsonAsync("users/UpdateUser/"+id, model);
             if (responseMessage.IsSuccessStatusCode)
             {
-               // account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
+                account = await responseMessage.Content.ReadFromJsonAsync<AccountModel>();
             }
             return account ?? new();
         }

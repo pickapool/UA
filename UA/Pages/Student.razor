@@ -377,13 +377,24 @@
     }
     private async Task DeleteStudent(int id)
     {
-        IsLoading = !IsLoading;
-        Task t = StudentService.DeleteStudent(id);
-        await t;
-        if(t.Status == TaskStatus.RanToCompletion)
+        var parameters = new DialogParameters<Confirmation>();
+        parameters.Add("ContentText", "Do you really want to delete these record? This process cannot be undone.");
+        parameters.Add("ButtonText", "Yes");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await dialogService.Show<Confirmation>("Delete", parameters, options).Result;
+        if(!dialog.Canceled)
         {
-            await GetList(new FilterParameter());
-            Extensions.ShowAlert("Student successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+            IsLoading = !IsLoading;
+            Task t = StudentService.DeleteStudent(id);
+            await t;
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                await GetList(new FilterParameter());
+                Extensions.ShowAlert("Student successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+            }
         }
     }
     public void Toggle()
