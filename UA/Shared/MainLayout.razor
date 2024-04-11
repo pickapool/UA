@@ -121,6 +121,7 @@ else
             if (account.Result.UserId != 0)
             {
                 await localStorageService.SetItemAsync("token", true);
+                await localStorageService.SetItemAsync("Account", account.Result);
                 await VerifyLogin();
             }
             else
@@ -138,10 +139,13 @@ else
     private async Task VerifyLogin()
     {
         ValueTask<bool> token = localStorageService.GetItemAsync<bool>("token");
+        ValueTask<AccountModel> account = localStorageService.GetItemAsync<AccountModel>("Account");
+        await account;
         await token;
-        if (token.IsCompletedSuccessfully)
+        if (token.IsCompletedSuccessfully && account.IsCompletedSuccessfully)
         {
             GlobalClass.IsLogin = token.Result;
+            GlobalClass.Account = account.Result;
             IsDateFectch = true;
             StateHasChanged();
         }
@@ -155,6 +159,7 @@ else
     private async Task Logout()
     {
         await localStorageService.RemoveItemAsync("token");
+        await localStorageService.RemoveItemAsync("Account");
         GlobalClass.IsLogin = false;
         StateHasChanged();
     }

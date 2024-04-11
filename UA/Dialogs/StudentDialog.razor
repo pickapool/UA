@@ -131,6 +131,7 @@
                                             <col />
                                             <col />
                                             <col />
+                                            <col />
                                             <col style='width: 20px' />
                                         </ColGroup>
                                         <ToolBarContent>
@@ -151,6 +152,7 @@
                                             </MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Amount</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Status</MudTh>
+                                            <MudTh Class='customheader-1 text-center pa-2'>Officer</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
                                         </HeaderContent>
                                         <RowTemplate>
@@ -167,6 +169,7 @@
                                                     <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Error">Not Paid</MudChip>
                                                 </MudTd>
                                             }
+                                            <MudTd DataLabel="Office Name">@uSanc.Account.Username</MudTd>
                                             <MudTd Class='text-center pa-2'>
                                                 <MudMenu Icon='@Icons.Material.Filled.MoreVert'
                                                     AnchorOrigin='Origin.TopLeft' TransformOrigin='Origin.TopRight'
@@ -326,6 +329,7 @@
         userSanc.Sanction.SanctionId = sanction.SanctionId;
         userSanc.Sanction.SanctionName = sanction.SanctionName;
         userSanc.Amount = sanction.Amount;
+        userSanc.UserId = GlobalClass.Account.UserId;
         foreach (var file in files)
         {
             using (MemoryStream memoryStream = new MemoryStream())

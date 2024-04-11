@@ -244,6 +244,7 @@
                             <col />
                             <col />
                             <col />
+                            <col />
                             <col style='width: 20px' />
                         </ColGroup>
                         <HeaderContent>
@@ -261,6 +262,7 @@
                                 </MudTableSortLabel>
                             </MudTh>
                             <MudTh Class='customheader-1 text-center pa-2' style="z-index: 1 !important;">Amount</MudTh>
+                            <MudTh Class='customheader-1 text-center pa-2'>Officer</MudTh>
                             <MudTh Class='customheader-1 text-center pa-2' style="z-index: 1 !important;">Status</MudTh>
                         </HeaderContent>
                         <RowTemplate>
@@ -275,6 +277,7 @@
                             <MudTd DataLabel="Sanction Name">@uSanc.Sanction.SanctionName</MudTd>
                             <MudTd DataLabel="Date">@uSanc.DateRecorded.ToString("MM/dd/yyyy")</MudTd>
                             <MudTd Class="text-end" DataLabel="Sanction Name">@uSanc.Sanction.Amount.ToString("N2")</MudTd>
+                            <MudTd DataLabel="Office Name">@uSanc.Account.Username</MudTd>
                             @if(uSanc.IsPaid)
                             {
                                 <MudTd DataLabel="Paid" Class="text-center">
