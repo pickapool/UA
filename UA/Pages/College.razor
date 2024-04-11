@@ -112,8 +112,8 @@
                     </MudItem>
                     <MudItem xs="7"></MudItem>
                     <MudItem xs="5">
-                        <MudButton OnClick="Toggle" Class="ml-auto mr-1 mb-3" Color="Color.Default">Close</MudButton>
-                        <MudButton OnClick="Filter" Class="ml-auto mr-n3 mb-3" Variant="Variant.Filled" Color="Color.Info">Filter</MudButton> 
+                        <MudButton OnClick="Toggle" Class="ml-auto mr-1 mb-3" Color="Color.Default" Label="true">Close</MudButton>
+                        <MudButton OnClick="Filter" Class="ml-auto mr-n3 mb-3" Variant="Variant.Filled" Color="Color.Default" Label="true">Filter</MudButton> 
                     </MudItem>
                 </MudGrid>
             </MudPopover>
@@ -143,9 +143,9 @@
             
             <MudTd DataLabel="Sanctions" Class="text-center">
                 <MudToggleIconButton @bind-Toggled='context.IsOpenDeparment'
-                    Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Title="Expand"
+                    Icon="@Icons.Material.Filled.KeyboardArrowDown" Color="Color.Default" Label="true" Title="Expand"
                     Size='Size.Small' ToggledSize='Size.Small' ToggledIcon="@Icons.Material.Filled.KeyboardArrowUp"
-                    ToggledColor="@Color.Info" ToggledTitle="Collapse" />
+                    ToggledColor="@Color.Default" ToggledTitle="Collapse" />
             </MudTd>
         </RowTemplate>
         <ChildRowContent>
@@ -159,26 +159,50 @@
                             <RowTemplate>
                                 <MudTd DataLabel="Course name">
                                     <span>(<b>Program - @departmentCourse.Course.CourseName</b>)</span>
-                                    <span style="font-size: 12px;"><b>TOTAL -</b>
-                                    @departmentCourse.Course.Students.SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2")</span>
+                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                        Not Paid - @departmentCourse.Course.Students.SelectMany(e => e.Sanctions.Where(e => !e.IsPaid)).Sum(e => e.Amount).ToString("N2")
+                                    </MudChip>
+                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                        Paid - @departmentCourse.Course.Students.SelectMany(e => e.Sanctions.Where(e => e.IsPaid)).Sum(e => e.Amount).ToString("N2")
+                                    </MudChip>
                                     <MudTable Items="Enum.GetValues(typeof(Enums.YearLevel)).Cast<Enum>().ToArray()" Class="pa-2 ma-2 data-grid" Context="yearLevel"
                                         Height="auto" Hover="true" Breakpoint="Breakpoint.Xs" FixedHeader='true'
                                         Dense='true' Elevation="0">
                                         <RowTemplate>
                                             <MudTd DataLabel="year Level">
                                                 <span>(<b>@Extensions.GetEnumDescription(yearLevel)</b>)</span>
-                                                <span style="font-size: 12px;">
-                                                @(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0 ? 
-                                                departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions).Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2") : "")</span>
+                                                @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0 )
+                                                {
+                                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                        Not Paid - @departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions).Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2")
+                                                    </MudChip>
+                                                }
+                                                @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions.Where( e => e.IsPaid)).Sum( e => e.Amount) > 0 )
+                                                {
+                                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                        Paid - @departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().SelectMany( e => e.Sanctions).Where( e => e.IsPaid).Sum( e => e.Amount).ToString("N2")
+                                                    </MudChip>
+                                                }
                                                 @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).ToList().Count() > 0)
                                                 {
                                                     <br>
                                                     @foreach(SectionModel sec in departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel).Select( e => e.Section).DistinctBy( s => s.SectionId).OrderBy( e => e.SectionName))
                                                     {
                                                         <span> (Section - @sec.SectionName)</span>
-                                                        <span style="font-size: 12px;"><b>TOTAL - </b>
-                                                        @(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0 ?
-                                                        departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2") : "")</span>
+
+                                                        @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount) > 0)
+                                                        {
+                                                            <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                            Not Paid - @departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => !e.IsPaid)).Sum( e => e.Amount).ToString("N2")
+                                                            </MudChip>
+                                                        }
+                                                        @if(departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => e.IsPaid)).Sum( e => e.Amount) > 0)
+                                                        {
+                                                            <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                            Paid - @departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList().SelectMany( e => e.Sanctions.Where( e => e.IsPaid)).Sum( e => e.Amount).ToString("N2")
+                                                            </MudChip>
+                                                        }
+                                                        
                                                         <MudTable 
                                                         Items="departmentCourse.Course.Students.Where( e => e.YearLevel == (Enums.YearLevel) yearLevel && e.Section.SectionId == sec.SectionId).ToList()" 
                                                         Class="pa-2 ma-2 data-grid" Context="students"
@@ -190,7 +214,18 @@
                                                             <MudTd DataLabel="Student name">
                                                                 
                                                                 <span>@students.StudentName - </span>
-                                                                <span style="font-size: 12px;">@(students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount) > 0 ? students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2") :"")</span>
+                                                                @if(students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount) > 0)
+                                                                {
+                                                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                                        Not Paid - @students.Sanctions.Where( e => !e.IsPaid).Sum( e => e.Amount).ToString("N2")
+                                                                    </MudChip>
+                                                                }
+                                                                @if(students.Sanctions.Where( e => e.IsPaid).Sum( e => e.Amount) > 0)
+                                                                {
+                                                                    <MudChip Variant="Variant.Filled" Size="Size.Small" Color="Color.Default" Label="true">
+                                                                        Paid - @students.Sanctions.Where( e => e.IsPaid).Sum( e => e.Amount).ToString("N2")
+                                                                    </MudChip>
+                                                                }
                                                                 @if(students.Sanctions.Count > 0)
                                                                 {
                                                                 <MudTable 
@@ -210,7 +245,7 @@
                                                                         @if(uSanc.IsPaid)
                                                                         {
                                                                             <MudTd DataLabel="Paid" Class="text-center">
-                                                                                <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Info">Paid</MudChip>
+                                                                                <MudChip Size="Size.Small" Variant="Variant.Filled" Color="Color.Default" Label="true">Paid</MudChip>
                                                                             </MudTd>
                                                                         } else {
                                                                             <MudTd DataLabel="Paid" Class="text-center">
@@ -247,7 +282,7 @@
     } else {
         <div class="d-flex flex-column justify-content-end gap-1">
             <iframe src='@PDF' style='height:81vh;'/>
-            <MudButton OnClick="()=> IsPrint = !IsPrint" Class="ml-auto mr-1 mb-3" Variant="Variant.Filled" Color="Color.Warning">Cancel</MudButton>
+            <MudButton OnClick="()=> IsPrint = !IsPrint" Class="ml-auto mr-1 mb-3" Variant="Variant.Filled" Color="Color.Default" Label="true">Cancel</MudButton>
         </div>
     }
 </div>
