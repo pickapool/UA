@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YXrk1mR9qmxcQPGAMFmF75bLIcMjKYK/VwVjNqF9FxY=",
+  "Hash": "GOOdoOP2r2wjNS5R+3DtF/O7g4/HPkkWCxSHYKCc5Oc=",
   "Source": "UA",
   "BasePath": "/",
   "Mode": "Root",
@@ -2105,6 +2105,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.16\\runtimes\\browser-wasm\\lib\\net7.0\\netstandard.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net6.0\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Polly.dll",
@@ -7368,6 +7387,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\EPPlus.Interfaces.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\er5hm538bu.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\erd0pub6l1.gz",

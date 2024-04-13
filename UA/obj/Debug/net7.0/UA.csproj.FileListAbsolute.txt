@@ -970,3 +970,7 @@ C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.dll
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\refint\UA.dll
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.pdb
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\ref\UA.dll
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\er5hm538bu.gz

@@ -1,7 +1,7 @@
 {
   "entryAssembly": "UA",
   "resources": {
-    "hash": "sha256-csH9gNlPp1KWvuXx8zQpncyGmH0MjLlZK+AY5oTACiU=",
+    "hash": "sha256-yD61+Ae9Sto8MlSVQgGDwVsunXwqoGx//a0SWwYVs1I=",
     "runtime": {
       "dotnet.7.0.16.ik6z6t025g.js": "sha256-4BiArKugJJtpQrznGF5zWfmJ2TB98+p6rKsyoqhtMk4=",
       "dotnet.timezones.blat": "sha256-rwyJqJu36keQwNmm/O1XV7tnkkVldIOK8GIjn4gTUt4=",
@@ -58,6 +58,7 @@
       "Microsoft.Net.Http.Headers.dll": "sha256-P66ftDrXwc6ayND8uYzIk0CPQy1GjNZAPHx9RMhi3V4=",
       "Microsoft.Win32.SystemEvents.dll": "sha256-11EaR4uBFrqdhbwihIzsW8r1bTUaibTxgByDX1ra+eQ=",
       "MudBlazor.dll": "sha256-fZeXRwimdnkNYIcH1nxZtKemTPxYlfxqYtGXFluJYpY=",
+      "Newtonsoft.Json.dll": "sha256-IsZJ91/OW+fHzNqIgEc7Y072ns8z9dGritiSyvR9Wgc=",
       "Polly.dll": "sha256-XnYz9eW2tgQbUJFBrN4qpq1PN0NV4gq8+JUw+zRNIfY=",
       "Polly.Extensions.Http.dll": "sha256-2Fko7Lrhp7qO8hi8vDjnMdqlMUVrXRjhYPSaXjhEAlw=",
       "SixLabors.Fonts.dll": "sha256-W+gLxS+oYslRXSu22FZYccEnHI35JOzkEpP2JZM5QV4=",
@@ -238,10 +239,10 @@
       "mscorlib.dll": "sha256-7yxnoj0sx/xIMKjSCkfYzaeQKDj1UsUSr/JXW7fRggs=",
       "netstandard.dll": "sha256-c9xgB5oQro5/rBTTHeD+4cqLi9QOB+6fhaP3jmkeGo4=",
       "System.Private.CoreLib.dll": "sha256-FGXoQzMt7mcWfUZbWXoXgg8tPIt7PF+QZoXXBQWegAQ=",
-      "UA.dll": "sha256-MtOjCY/DiSJ+0pDTNeu/c6nMgDTmDGlCOu6198oLd2M="
+      "UA.dll": "sha256-aG1hc9Rw6oBYV/wiKxi4oCNXI0zA3T9v14+WN1hyttM="
     },
     "pdb": {
-      "UA.pdb": "sha256-eJd+9Bl+YiYK7Ibu7DHIxSInhGjcMmUPeoxQhGFAkOk="
+      "UA.pdb": "sha256-eOxSgXm146IU6swrubpZ8nrPNyETPXpMRDJLcTUJCnU="
     },
     "runtimeAssets": {
       "dotnet.wasm": {

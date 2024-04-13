@@ -14,6 +14,8 @@ namespace UA.Models
         public byte[] SanctionImage { get; set; } = new byte[] { };
         public int UserId { get; set; }
         public AccountModel Account { get; set; } = new();
+        public int? MarkAsPaidById { get; set; }
+        public AccountModel MarkAsPaidByAccount { get; set; } = new();
         public string ImageBase64
         {
             get

@@ -153,6 +153,7 @@
                                             <MudTh Class='customheader-1 text-center pa-2'>Amount</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Status</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Officer</MudTh>
+                                            <MudTh Class='customheader-1 text-center pa-2'>Mark by</MudTh>
                                             <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
                                         </HeaderContent>
                                         <RowTemplate>
@@ -170,6 +171,7 @@
                                                 </MudTd>
                                             }
                                             <MudTd DataLabel="Office Name">@uSanc.Account.Username</MudTd>
+                                            <MudTd DataLabel="Office Name">@(uSanc.MarkAsPaidById == null || !uSanc.IsPaid? "" :uSanc.MarkAsPaidByAccount.Username)</MudTd>
                                             <MudTd Class='text-center pa-2'>
                                                 <MudMenu Icon='@Icons.Material.Filled.MoreVert'
                                                     AnchorOrigin='Origin.TopLeft' TransformOrigin='Origin.TopRight'
@@ -330,6 +332,7 @@
         userSanc.Sanction.SanctionName = sanction.SanctionName;
         userSanc.Amount = sanction.Amount;
         userSanc.UserId = GlobalClass.Account.UserId;
+        userSanc.MarkAsPaidById = 0;
         foreach (var file in files)
         {
             using (MemoryStream memoryStream = new MemoryStream())
@@ -406,6 +409,8 @@
             if(!resultDialog.Cancelled)
             {
                 uSan.IsPaid = !uSan.IsPaid;
+                uSan.MarkAsPaidById = GlobalClass.Account.UserId;
+                //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(uSan, Newtonsoft.Json.Formatting.Indented));
                 Task<UserSanctionModel> t = userSanctionService.UpdateUserSanction(uSan);
                 await t;
                 if(t.Status == TaskStatus.RanToCompletion)
@@ -418,6 +423,8 @@
             }
         } else {
             uSan.IsPaid = !uSan.IsPaid;
+            uSan.MarkAsPaidById = GlobalClass.Account.UserId;
+            //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(uSan, Newtonsoft.Json.Formatting.Indented));
             Task<UserSanctionModel> t1 = userSanctionService.UpdateUserSanction(uSan);
             await t1;
             if(t1.Status == TaskStatus.RanToCompletion)
