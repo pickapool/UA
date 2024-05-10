@@ -22,6 +22,7 @@ namespace UA.Models
         public SectionModel Section { get; set; } = new();
         public List<UserSanctionModel> Sanctions { get; set;} = new();
         public Enums.Enums.YearLevel YearLevel { get; set; }
+        public string FacialRecognitionId { get; set; } = string.Empty;
         public bool IsTableLoading { get; set; }
 
         //For report

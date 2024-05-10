@@ -14,6 +14,8 @@ using UA.Services.DepartmentCourseServices;
 using Microsoft.AspNetCore.Http.Features;
 using UA.Services;
 using UA.Services.ReportServices;
+using UA.Services.EventServices;
+using UA.Services.EventAttendanceServices;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -31,6 +33,8 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IUserSanctionService, UserSanctionService>();
 builder.Services.AddScoped<IDepartmentCourseService, DepartmentCourseService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IEventAttendanceService, EventAttendanceService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

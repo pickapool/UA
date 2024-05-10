@@ -1,0 +1,150 @@
+@page "/events"
+
+@inject IEventService EventService
+@inject IDialogService dialogService
+@inject IEventAttendanceService EventAttendanceService
+@inject ISnackbar Snackbar
+
+<div class="settings pa-2 table-fix-header">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<EventModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Event Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='() => GetList(new FilterParameter())' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="()=> OpenDialog(new())">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+            
+        </ToolBarContent>
+        <ColGroup>
+            <col />
+            <col style='width: 120px' />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            
+            <MudTh Class='customheader-1'>
+                Event
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                Date
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.EventName</MudTd>
+            <MudTd DataLabel="Date">@context.DateOfEvent?.ToString("MM/dd/yyyy")</MudTd>
+            <MudTd Class='text-center pa-2'>
+                <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                    <MudMenuItem OnClick="()=> OpenDialog(context)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Edit</MudText>
+                        </div>
+                    </MudMenuItem>
+                    <MudMenuItem OnClick="()=> DeleteEvent(context.EventId)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Remove</MudText>
+                        </div>
+                    </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <span>No Records found</span>
+        </NoRecordsContent>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code
+{
+    List<EventModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+    public bool _isOpen;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetList(new());
+    }   
+    private async Task GetList(FilterParameter filterParameter)
+    {
+        list = await EventService.ListOfEvent(filterParameter);
+        var a = await EventAttendanceService.ListOfEventAttendance(filterParameter);
+        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(a, Newtonsoft.Json.Formatting.Indented));
+        IsLoading = false;
+    }
+    private bool FilterItems(EventModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.EventName.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task OpenDialog(EventModel dept)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("color", dept.EventId == 0 ? Color.Info : Color.Success);
+        parameters.Add("dialogTitle", dept.EventId == 0 ? "Add Event" : "Edit Event");
+        parameters.Add("buttonText", dept.EventId == 0 ? "Add" : "Save");
+        parameters.Add("Event", dept);
+        MaxWidth width = MaxWidth.ExtraSmall;
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = width, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
+        var resultDialog = await dialogService.Show<Dialogs.AddEventDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList(new FilterParameter());
+        } else {
+            await GetList(new FilterParameter());
+        }
+    }
+     private async Task DeleteEvent(int id)
+    {
+        var parameters = new DialogParameters<Confirmation>();
+        parameters.Add("ContentText", "Do you really want to delete these record? This process cannot be undone.");
+        parameters.Add("ButtonText", "Yes");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await dialogService.Show<Confirmation>("Delete", parameters, options).Result;
+        if(!dialog.Canceled)
+        {
+            IsLoading = !IsLoading;
+            Task t = EventService.DeleteEvent(id);
+            await t;
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                await GetList(new FilterParameter());
+                Extensions.ShowAlert("Event successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+            }
+        }
+    }
+}
+

@@ -43,6 +43,10 @@
                                 <ValidationMessage For="()=> StudentModel.IdNo" />
                             </MudItem>
                             <MudItem xs='11'>
+                                <MudTextField @bind-Value='@StudentModel.FacialRecognitionId' Label='Facial Recognition'
+                                    ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
+                            </MudItem>
+                            <MudItem xs='11'>
                                 <MudTextField @bind-Value='@StudentModel.StudentName' Label='Student Name'
                                     ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
                                 <ValidationMessage For="()=> StudentModel.StudentName" />
@@ -471,3 +475,15 @@
         files.Add(file);
     }
 }
+<style>
+    .mud-dialog .mud-dialog-actions
+    {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    .mud-dialog
+    {
+        overflow: hidden;
+    }
+</style>

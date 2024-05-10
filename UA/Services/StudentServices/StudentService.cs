@@ -52,5 +52,14 @@ namespace UA.Services.StudentServices
             }
             return model?? new();
         }
+        public async Task<StudentModel> GetStudentByFace(string face)
+        {
+            HttpResponseMessage responseMessage = await client.GetAsync(String.Format("Student/GetStudentByFace/{0}", face));
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                model = await responseMessage.Content.ReadFromJsonAsync<StudentModel>();
+            }
+            return model?? new();
+        }
     }
 }

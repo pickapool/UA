@@ -10,5 +10,6 @@ namespace UA.Services.StudentServices
         Task<StudentModel> AddStudent(StudentModel model);
         Task<StudentModel> UpdateStudent(StudentModel model);
         Task<StudentModel> DeleteStudent(int id);
+        Task<StudentModel> GetStudentByFace(string face);
     }
 }

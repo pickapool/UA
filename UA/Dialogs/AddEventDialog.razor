@@ -1,0 +1,89 @@
+@inject ISnackbar Snackbar
+@inject IEventService EventService
+
+<MudDialog Class='customdialog2'>
+    <TitleContent>
+        <div class='d-flex align-center'>
+            @if (Event.EventId != 0)
+            {
+                <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" />
+            }
+            else
+            {
+                <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3" />
+            }
+            <MudText Class='txt-uppercase' Typo='Typo.h6'>@dialogTitle</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <MudPaper Class='pa-2' Elevation='0'>
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="@Event.EventName" Label="Event name"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudDatePicker @bind-Date="@Event.DateOfEvent" Label="Date of Event" AnchorOrigin="Origin.TopCenter"></MudDatePicker>
+                    </MudItem>
+                </MudGrid>
+                
+            </MudPaper>
+        </DialogContent>
+        <DialogActions>
+            <MudSpacer />
+            <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small'
+            DisableElevation>Cancel</MudButton>
+        @if(IsLoading)
+        {
+        <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color' Size='Size.Small' Disabled=IsLoading DisableElevation>
+            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+            <MudText Class='font11 ms-2'>Loading...</MudText>
+        </MudButton>
+        } else {
+            <MudButton OnClick="Submit" Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color'
+                Size='Size.Small' Disabled=IsLoading DisableElevation>
+                @buttonText
+            </MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public EventModel Event { get; set; }
+    [Parameter] public Color color { get; set; }
+    [Parameter] public string dialogTitle { get; set; } = string.Empty;
+    [Parameter] public string buttonText { get; set; } = string.Empty;
+    private bool IsLoading = true;
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = false;
+
+    }
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    private async Task Submit()
+    {
+        IsLoading = !IsLoading;
+        Task t = Event.EventId == 0 ? AddEvent() : UpdateEvent();
+        await t;
+        if (t.Status == TaskStatus.RanToCompletion)
+        {
+            await Task.Delay(1000);
+            Extensions.ShowAlert("Student successfully saved.", Variant.Filled, Snackbar, Severity.Success);
+            MudDialog.Close();
+            IsLoading = !IsLoading;
+        }
+        
+    }
+    private async Task AddEvent()
+    {
+        await EventService.AddEvent(Event);
+    }
+    private async Task UpdateEvent()
+    {
+        await EventService.UpdateEvent(Event);
+    }
+}
