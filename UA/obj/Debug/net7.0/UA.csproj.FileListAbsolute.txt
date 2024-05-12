@@ -60,6 +60,7 @@ C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Microsoft.
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\mscorlib.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\MudBlazor.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\netstandard.dll
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Polly.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Polly.Extensions.Http.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\SixLabors.Fonts.dll
@@ -337,6 +338,7 @@ C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\icudt_EFIG
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\System.Security.AccessControl.dll.gz
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\System.Core.dll.gz
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\EPPlus.Interfaces.dll.gz
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\System.Drawing.Primitives.dll.gz
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\System.Threading.Tasks.Extensions.dll.gz
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Microsoft.AspNetCore.Components.dll.gz
@@ -522,6 +524,7 @@ C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Microsoft.JSInterop.WebAssemb
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Microsoft.Net.Http.Headers.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\MudBlazor.dll
+C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Polly.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Polly.Extensions.Http.dll
 C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\SixLabors.Fonts.dll
@@ -776,6 +779,7 @@ C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\7n2t6afj7p.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\jdz82he3i2.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\03j3zjazye.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\o4ifq5d8qq.gz
+C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\er5hm538bu.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\xumd1xw6js.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\it3bnq3j4k.gz
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\qlybuyq00n.gz
@@ -970,7 +974,3 @@ C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.dll
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\refint\UA.dll
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\UA.pdb
 C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\ref\UA.dll
-C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll
-C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
-C:\Users\cyril\source\repos\UA\UA\bin\Debug\net7.0\Newtonsoft.Json.dll
-C:\Users\cyril\source\repos\UA\UA\obj\Debug\net7.0\compressed\er5hm538bu.gz

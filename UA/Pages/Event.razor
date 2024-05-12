@@ -4,6 +4,10 @@
 @inject IDialogService dialogService
 @inject IEventAttendanceService EventAttendanceService
 @inject ISnackbar Snackbar
+@inject IStudentService StudentService
+@inject ISanctionService SanctionService
+@inject IUserSanctionService UserSanctionService
+@inject ISnackbar Snackbar
 
 <div class="settings pa-2 table-fix-header">
     <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs"
@@ -68,9 +72,71 @@
                             <MudText Typo='Typo.body2'>Remove</MudText>
                         </div>
                     </MudMenuItem>
+                    <MudMenuItem OnClick="()=> GetAttendance(context)">
+                        <div class='d-flex align-center gap-2 '>
+                            <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                            <MudText Typo='Typo.body2'>Attendance</MudText>
+                        </div>
+                    </MudMenuItem>
                 </MudMenu>
             </MudTd>
         </RowTemplate>
+        <ChildRowContent>
+            @if(context.ShowAttendance)
+            {
+                <td class="overflow-hidden" colspan="3">
+                <MudGrid Class="pa-3 d-flex justify-content-center" Spacing="2">
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.h6">Attendees</MudText>
+                        <MudTable Context="currentEvent" Items="context.ListAttendance" Height="400px" FixedHeader FixedFooter Dense>
+                            <ColGroup>
+                            </ColGroup>
+                            <HeaderContent>
+                                <MudTd DataLabel="Name">Name</MudTd>
+                                <MudTd DataLabel="Name">Department</MudTd>
+                                <MudTd DataLabel="Name">Course</MudTd>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Name">@currentEvent.Student.StudentName</MudTd>
+                                <MudTd DataLabel="Name">@currentEvent.Student.Department.DepartmentName</MudTd>
+                                <MudTd DataLabel="Name">@currentEvent.Student.Course.CourseName</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <div class="d-flex flex-row">
+                        <MudText Class="flex-1" Typo="Typo.h6">Absent</MudText>
+                        <MudButton OnClick="AddALLSanction" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small">Add ALL Sanction</MudButton>
+                        </div>
+                        <MudTable Context="student" Items="context.ListAbsent" Height="400px" FixedHeader FixedFooter Dense>
+                            <ColGroup>
+                            <col/>
+                            <col/>
+                            <col/>
+                            <col style="10px !important;"/>
+                            </ColGroup>
+                            <HeaderContent>
+                                <MudTd DataLabel="Name">Name</MudTd>
+                                <MudTd DataLabel="Name">Department</MudTd>
+                                <MudTd DataLabel="Name">Course</MudTd>
+                                <MudTd></MudTd>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Name">@student.StudentName</MudTd>
+                                <MudTd DataLabel="Name">@student.Department.DepartmentName</MudTd>
+                                <MudTd DataLabel="Name">@student.Course.CourseName</MudTd>
+                                <MudTd style="width: 150px;">
+                                    <MudTooltip Text="Add Sanction">
+                                        <MudButton OnClick="()=> AddSanction(student)" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small">Add Sanction</MudButton>
+                                    </MudTooltip>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudItem>
+                </MudGrid>
+                </td>
+            }
+        </ChildRowContent>
         <NoRecordsContent>
             <span>No Records found</span>
         </NoRecordsContent>
@@ -87,11 +153,42 @@
     private string searchTerm = string.Empty;
     private bool IsLoading = true;
     public bool _isOpen;
+    IEnumerable<SanctionModel> sanctions;
+    SanctionModel currentSanction = new();
+    EventModel currentEvent = new();
 
     protected override async Task OnInitializedAsync()
     {
         await GetList(new());
+        sanctions = await SanctionService.ListOfSanction(new FilterParameter());
+        currentSanction = sanctions.ToList().Where( e => e.SanctionName.Contains("Attendance", StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
     }   
+    private async Task GetAttendance(EventModel events)
+    {
+        currentEvent = events;
+        if(events.ShowAttendance)
+        {
+            events.ShowAttendance = false;
+            StateHasChanged();
+            return;
+        }
+        foreach(EventModel e in list)
+        {
+            e.ShowAttendance =false;
+            StateHasChanged();
+        }
+        FilterParameter param = new();
+        param.EventId = events.EventId;
+        events.ListAttendance = await EventAttendanceService.ListOfEventAttendance(param);
+        events.ListAttendance.RemoveAll( e => e.Student.StudentId == 0);
+        List<StudentModel> students = await StudentService.ListOfStudent(new());
+        events.ListAttendance = events.ListAttendance.DistinctBy( e => e.Student.StudentId).ToList();
+        events.ListAbsent = students.Where(student => 
+            !events.ListAttendance.Any(attendance => attendance.StudentId == student.StudentId))
+            .ToList();
+        events.ShowAttendance = true;
+        StateHasChanged();
+    }
     private async Task GetList(FilterParameter filterParameter)
     {
         list = await EventService.ListOfEvent(filterParameter);
@@ -144,6 +241,35 @@
                 await GetList(new FilterParameter());
                 Extensions.ShowAlert("Event successfully remove.", Variant.Filled, Snackbar, Severity.Success);
             }
+        }
+    }
+    private async Task AddALLSanction()
+    {
+        foreach(StudentModel stud in currentEvent.ListAbsent)
+        {
+            await AddSanction(stud);
+        }
+    }
+    private async Task AddSanction(StudentModel student)
+    {
+        if(currentSanction == null)
+        {
+            Extensions.ShowAlert("Sanction named (Attendance) not found!", Variant.Filled, Snackbar, Severity.Error);
+            return;
+        }
+        UserSanctionModel userSanc  = new();
+        userSanc.StudentId = student.StudentId;
+        userSanc.SanctionId = currentSanction.SanctionId;
+        userSanc.Sanction.SanctionId = currentSanction.SanctionId;
+        userSanc.Sanction.SanctionName = currentSanction.SanctionName;
+        userSanc.Amount = currentSanction.Amount;
+        userSanc.UserId = GlobalClass.Account.UserId;
+        userSanc.MarkAsPaidById = 1;
+        Task<UserSanctionModel> task = UserSanctionService.AddUserSanction(userSanc);
+        await task;
+        if(task.Status == TaskStatus.RanToCompletion)
+        {
+            Extensions.ShowAlert("Sanction successfully added.", Variant.Filled, Snackbar, Severity.Success);
         }
     }
 }

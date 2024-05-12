@@ -17,5 +17,6 @@ namespace UA.Models
         public List<SectionModel> Sections { get; set; } = new();
         public int StudentId { get; set; }
         public int DepartmentId { get; set; }
+        public int EventId { get; set; }
     }
 }
