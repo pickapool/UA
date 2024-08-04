@@ -15,5 +15,9 @@ namespace UA.Enums
             [Description("5th year")]
             Fifthyear = 5,
         }
+        public enum AccountType : byte { 
+            Encoder = 0,
+            Mayor = 1
+        }
     }
 }

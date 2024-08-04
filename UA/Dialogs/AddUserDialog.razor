@@ -22,6 +22,14 @@
                      <MudTextField @bind-Value='@confirmPassword' Label='Confirm Password' InputType="InputType.Password"
                                   ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' Required/>
                 </MudItem>
+                <MudItem xs='11'>
+                    @* <MudSelect @bind-Value="StudentModel.AccountType" Margin="Margin.Dense" Label="Account Tyoe" HelperText="Required*" Placeholder="Type" AdornmentIcon="@Icons.Material.Filled.FormatListNumbered" AdornmentColor="Color.Primary">
+                        @foreach (Enums.AccountType item in Enum.GetValues(typeof(Enums.AccountType)))
+                        {
+                            <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
+                        }
+                    </MudSelect> *@
+                </MudItem>
             </MudGrid>
         </MudPaper>
     </DialogContent>
