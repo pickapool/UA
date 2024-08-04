@@ -23,12 +23,12 @@
                                   ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' Required/>
                 </MudItem>
                 <MudItem xs='11'>
-                    @* <MudSelect @bind-Value="StudentModel.AccountType" Margin="Margin.Dense" Label="Account Tyoe" HelperText="Required*" Placeholder="Type" AdornmentIcon="@Icons.Material.Filled.FormatListNumbered" AdornmentColor="Color.Primary">
+                    <MudSelect @bind-Value="account.AccountType" Margin="Margin.Dense" Label="Account Type" HelperText="Required*" Placeholder="Type" AdornmentIcon="@Icons.Material.Filled.FormatListNumbered" AdornmentColor="Color.Primary">
                         @foreach (Enums.AccountType item in Enum.GetValues(typeof(Enums.AccountType)))
                         {
                             <MudSelectItem Value="@item">@Extensions.GetEnumDescription(item)</MudSelectItem>
                         }
-                    </MudSelect> *@
+                    </MudSelect>
                 </MudItem>
             </MudGrid>
         </MudPaper>
@@ -59,8 +59,13 @@
 @code {
     [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
     private bool IsLoading = false, reload = false;
-    private AccountModel account = new();
+    [Parameter] public AccountModel account { get; set; }= new();
     private string confirmPassword = "";
+    protected override void OnInitialized()
+    {
+        account ??= new();
+        account = account.UserId > 0 ? account.CloneJson() : account;
+    }
 
     void Cancel()
     {
@@ -83,7 +88,7 @@
         StateHasChanged();
         if(account.Password == confirmPassword)
         {
-            Task t =  AccountService.AddUser(account);
+            Task t =  account.UserId <= 0 ? AccountService.AddUser(account) : AccountService.UpdatePassword(account.UserId, account);
             await t;
             if(t.Status == TaskStatus.RanToCompletion)
             {

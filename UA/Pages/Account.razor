@@ -107,7 +107,7 @@
         {
             list = data.Result;
             GlobalClass.accountModels = list;
-            list = list.Where( e => e.UserId != 1).ToList();
+            @* list = list.Where( e => e.UserId != 1).ToList(); *@
             await Task.Delay(1000);
             IsLoading = false;
             StateHasChanged();
@@ -124,9 +124,9 @@
     private async Task OpenExport(AccountModel model)
     {
         var parameters = new DialogParameters();
-        parameters.Add("accs" , model);
+        parameters.Add("account" , model);
         var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = true };
-        var resultDialog = await dialogService.Show<Dialogs.ChangeUserPassword>("", parameters, options).Result;
+        var resultDialog = await dialogService.Show<Dialogs.AddUserDialog>("", parameters, options).Result;
         if(!resultDialog.Canceled)
         {
             await GetList();
