@@ -1,0 +1,97 @@
+@inject IReminderService ReminderService
+@inject ISnackbar Snackbar
+@inject IConfiguration config
+
+<EditForm Model='reminder' OnValidSubmit='Submit'>
+    <DataAnnotationsValidator />
+    <MudDialog Class='customdialog2'>
+
+        <TitleContent>
+            <div class='d-flex align-center'>
+                @if (reminder.ReminderId != 0)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3" />
+                }
+                <MudText Class='txt-uppercase' Typo='Typo.h6'>@dialogTitle</MudText>
+                </div>
+            </TitleContent>
+            <DialogContent>
+                <MudPaper Class='pa-2' Elevation='0'>
+                    <MudGrid Class='settings-dialog  pa-2' Spacing='1'>
+                        <MudItem xs='12' sm='9'>
+                            <MudTextField @bind-Value='@reminder.Reminder' Label='Reminder' Lines="15" Variant="Variant.Filled"
+                                ErrorText="Required*" HelperText="Required*" Margin='Margin.Dense' />
+                            <ValidationMessage For="()=> reminder.Reminder" />
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </DialogContent>
+            <DialogActions>
+                <MudSpacer />
+                <MudButton Class='btn-ios-d font12' OnClick="Cancel" Variant='Variant.Text' Size='Size.Small'
+                DisableElevation>Cancel</MudButton>
+            @if(IsLoading)
+            {
+            <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color' Size='Size.Small' Disabled=IsLoading DisableElevation>
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class='font11 ms-2'>Loading...</MudText>
+            </MudButton>
+            } else {
+                <MudButton Class='btn-ios-d font12' ButtonType='ButtonType.Submit' Variant='Variant.Filled' Color='@color'
+                    Size='Size.Small' Disabled=IsLoading DisableElevation>
+                    @buttonText
+                </MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+
+@code {
+    [CascadingParameter] public MudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public RemindersModel reminder { get; set; }
+    [Parameter] public Color color { get; set; }
+    [Parameter] public string dialogTitle { get; set; } = string.Empty;
+    [Parameter] public string buttonText { get; set; } = string.Empty;
+    private bool IsLoading = false;
+    private HubConnection connection;
+    protected override async Task OnInitializedAsync()
+    {
+        connection = Extensions.ConnectionBuilder(config["BaseAPIUrl"] + "NotificationHub");
+        await connection.StartAsync();
+        connection.On<string>("Notify", message => {
+            Console.WriteLine(message);
+        });
+    }
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task Submit()
+    {
+        IsLoading = !IsLoading;
+        Task<RemindersModel> t = reminder.ReminderId == 0 ? AddReminder() : UpdateReminder();
+        await t;
+        if (t.Status == TaskStatus.RanToCompletion)
+        {
+            await connection.InvokeAsync("Notify", t.Result.Reminder);
+            await Task.Delay(1000);
+            Extensions.ShowAlert("Reminder successfully saved.", Variant.Filled, Snackbar, Severity.Success);
+            MudDialog.Close();
+            IsLoading = !IsLoading;
+        }
+    }
+    private async Task<RemindersModel> AddReminder()
+    {
+        return await ReminderService.AddReminder(reminder);
+    }
+    private async Task<RemindersModel> UpdateReminder()
+    {
+        return await ReminderService.UpdateReminder(reminder.ReminderId, reminder);
+    }
+}

@@ -5,6 +5,7 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager navigationManager
 @inject IDialogService dialogService
+@inject IConfiguration config
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -54,6 +55,7 @@
             <MudNavLink Href="/events" Icon="@Icons.Material.Filled.Event">Events</MudNavLink>
             @if(GlobalClass.Account.AccountType == Enums.AccountType.Mayor)
             {
+                <MudNavLink Href="/reminder" Icon="@Icons.Material.Filled.Info">Reminders</MudNavLink>
                 <MudNavLink Href="https://localhost:7256/" Icon="@Icons.Material.Filled.DocumentScanner">Event Attendance</MudNavLink>
             }
         </MudDrawer>
@@ -114,6 +116,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         await VerifyLogin();
+        var connection = Extensions.ConnectionBuilder(config["BaseAPIUrl"] + "NotificationHub");
+        await connection.StartAsync();
+        connection.On<string>("Notify", message => {
+            Console.WriteLine(message);
+        });
     }
     private async Task Login()
     {

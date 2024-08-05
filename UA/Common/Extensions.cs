@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor;
 using Newtonsoft.Json;
 using System.ComponentModel;
@@ -75,6 +76,15 @@ namespace UA.Common
             var deserializeSettings = new JsonSerializerSettings {ObjectCreationHandling = ObjectCreationHandling.Replace};
 
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
+        }
+        public static HubConnection ConnectionBuilder(string connection)
+        {
+            HubConnection hubConnection = new HubConnectionBuilder()
+            .WithUrl(connection)
+            .WithAutomaticReconnect()
+            .Build();
+
+            return hubConnection;
         }
     }
 }

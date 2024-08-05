@@ -1,0 +1,152 @@
+@page "/reminder"
+
+@inject IReminderService ReminderService
+@inject IDialogService dialogService
+@inject ISnackbar Snackbar
+
+<div class="settings">
+    <MudTable class="data-grid" Items="@list" Hover="true" Breakpoint="Breakpoint.Xs" Height="70vh"
+        FixedHeader='true' FixedFooter='true' Bordered='true' Dense='true' RowsPerPage='15'
+        Filter='new Func<RemindersModel,bool>(FilterItems)' Loading="IsLoading" Elevation="3">
+        <ToolBarContent>
+            <div class="d-flex flex-column">
+                <MudText Typo='Typo.caption'>
+                @list.Count()
+                @(list.Count() == 1 ? "item" : "items")
+                in Total
+                </MudText>
+                <MudTextField Class='txtfield-75' @bind-Value='searchTerm' Placeholder='Reminder Name'
+                        Adornment='Adornment.Start' AdornmentIcon='@Icons.Material.Filled.Search' IconSize='Size.Small'
+                        Clearable='true' Variant='Variant.Text' Immediate="true" Margin="Margin.Dense"/>
+            </div>
+            <MudSpacer />
+            <MudTooltip Text="Refresh Table">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" Size="Size.Small" OnClick='GetList' />
+            </MudTooltip>
+            <MudMenu StartIcon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small' Label='More'>
+                <MudMenuItem OnClick="()=> OpenExport(new())">
+                    <div class='d-flex align-center gap-2 '>
+                        <MudIcon Icon='@Icons.Material.Filled.Add' Size='Size.Small' />
+                        <MudText Typo='Typo.body2'>Add</MudText>
+                    </div>
+                </MudMenuItem>
+            </MudMenu>
+        </ToolBarContent>
+        <ColGroup>
+            <col style='width: 20px' />
+            <col />
+            <col style='width: 20px' />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending"
+                    SortBy="new Func<RemindersModel, object>(x=>x.ReminderId)">
+                    Id
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1'>
+                <MudTableSortLabel InitialDirection="SortDirection.None"
+                    SortBy="new Func<RemindersModel, object>(x=>x.Reminder)">
+                    Reminder
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Class='customheader-1 text-center pa-2'>Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="ReminderId">@context.ReminderId</MudTd>
+            <MudTd DataLabel="Reminder">@context.Reminder</MudTd>
+            <MudTd Class='text-center pa-2'>
+                 <MudMenu Icon='@Icons.Material.Filled.MoreVert' AnchorOrigin='Origin.TopLeft'
+                    TransformOrigin='Origin.TopRight' Dense='true' Size='Size.Small'>
+                         <MudMenuItem OnClick="()=> OpenExport(context)">
+                            <div class='d-flex align-center gap-2 '>
+                                <MudIcon Icon='@Icons.Material.Filled.Edit' Size='Size.Small' />
+                                <MudText Typo='Typo.body2'>Edit</MudText>
+                            </div>
+                        </MudMenuItem> 
+                        <MudMenuItem OnClick="()=> Delete(context)">
+                            <div class='d-flex align-center gap-2 '>
+                                <MudIcon Icon='@Icons.Material.Filled.Delete' Size='Size.Small' />
+                                <MudText Typo='Typo.body2'>Remove</MudText>
+                            </div>
+                        </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions='@pageSize' />
+        </PagerContent>
+    </MudTable>
+</div>
+
+@code
+{
+    List<RemindersModel> list = new();
+    private int[] pageSize = new int[] {30, 50, 100, 500, 1000 };
+    private string searchTerm = string.Empty;
+    private bool IsLoading = true;
+    protected override async Task OnInitializedAsync()
+    {
+        GlobalClass.pageTitle = "Reminders";
+        await GetList();
+    }
+    private async Task GetList()
+    {
+        IsLoading = true;
+        Task<List<RemindersModel>> data = ReminderService.ListReminders(new FilterParameter());
+        await data;
+        if (data.Status == TaskStatus.RanToCompletion)
+        {
+            list = data.Result;
+            GlobalClass.reminders = list;
+            await Task.Delay(1000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+    private bool FilterItems(RemindersModel items)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+            return true;
+        if (items.Reminder.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase))
+            return true;
+        return false;
+    }
+    private async Task OpenExport(RemindersModel model)
+    {
+         var parameters = new DialogParameters();
+        parameters.Add("color", model.ReminderId == 0 ? Color.Info : Color.Success);
+        parameters.Add("dialogTitle", model.ReminderId == 0 ? "Add Reminder" : "Edit Reminder");
+        parameters.Add("buttonText", model.ReminderId == 0 ? "Add" : "Save");
+        parameters.Add("reminder", model);
+        var options = new DialogOptions() { CloseButton = false, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, NoHeader = false, DisableBackdropClick = false };
+        var resultDialog = await dialogService.Show<Dialogs.AddRemindersDialog>("", parameters, options).Result;
+        if (!resultDialog.Canceled)
+        {
+            await GetList();
+        }
+    }
+    private async Task Delete(RemindersModel model)
+    {
+        var parameters = new DialogParameters<Confirmation>();
+        parameters.Add("ContentText", "Do you really want to delete these record? This process cannot be undone.");
+        parameters.Add("ButtonText", "Yes");
+        parameters.Add("Color", Color.Error);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await dialogService.Show<Confirmation>("Delete", parameters, options).Result;
+        if(!dialog.Canceled)
+        {
+            IsLoading = !IsLoading;
+            Task t = ReminderService.Remove(model.ReminderId);
+            await t;
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                await GetList();
+                Extensions.ShowAlert("Reminder successfully remove.", Variant.Filled, Snackbar, Severity.Success);
+            }
+        }
+    }
+}

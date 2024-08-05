@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8lkibdNrnVGTQNe/lwAyTi4CSwU0HM0jdF8/3WwatNw=",
+  "Hash": "dvKAxZJs1knnpf2j5ij9Rn6WMKg0N7L5AkKr+4GALAg=",
   "Source": "UA",
   "BasePath": "/",
   "Mode": "Root",
@@ -1404,6 +1404,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\7.0.10\\lib\\net7.0\\Microsoft.AspNetCore.Components.WebAssembly.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Connections.Abstractions.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Connections.Abstractions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\8.0.7\\lib\\netstandard2.1\\Microsoft.AspNetCore.Connections.Abstractions.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Abstractions.dll",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -1421,6 +1440,44 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\lib\\netstandard2.0\\Microsoft.AspNetCore.Http.Abstractions.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Client.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Http.Connections.Client.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\8.0.7\\lib\\netstandard2.1\\Microsoft.AspNetCore.Http.Connections.Client.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Common.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Http.Connections.Common.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.http.connections.common\\8.0.7\\lib\\netstandard2.0\\Microsoft.AspNetCore.Http.Connections.Common.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.dll",
@@ -1480,6 +1537,82 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.metadata\\7.0.12\\lib\\net7.0\\Microsoft.AspNetCore.Metadata.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.Core.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Client.Core.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\8.0.7\\lib\\netstandard2.1\\Microsoft.AspNetCore.SignalR.Client.Core.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Client.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.signalr.client\\8.0.7\\lib\\netstandard2.0\\Microsoft.AspNetCore.SignalR.Client.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Common.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Common.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.signalr.common\\8.0.7\\lib\\netstandard2.0\\Microsoft.AspNetCore.SignalR.Common.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Protocols.Json.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Protocols.Json.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.signalr.protocols.json\\8.0.7\\lib\\netstandard2.0\\Microsoft.AspNetCore.SignalR.Protocols.Json.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.WebUtilities.dll",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -1497,6 +1630,44 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\lib\\netstandard2.0\\Microsoft.AspNetCore.WebUtilities.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.AsyncInterfaces.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Bcl.AsyncInterfaces.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\lib\\netstandard2.1\\Microsoft.Bcl.AsyncInterfaces.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.TimeProvider.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Bcl.TimeProvider.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.bcl.timeprovider\\8.0.1\\lib\\netstandard2.0\\Microsoft.Bcl.TimeProvider.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.CSharp.dll",
@@ -1629,7 +1800,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.1\\lib\\net7.0\\Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.dll",
@@ -1648,7 +1819,26 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.DependencyInjection.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\lib\\net7.0\\Microsoft.Extensions.DependencyInjection.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Features.dll",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Features.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.features\\8.0.7\\lib\\netstandard2.0\\Microsoft.Extensions.Features.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.FileProviders.Abstractions.dll",
@@ -1800,7 +1990,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\lib\\net7.0\\Microsoft.Extensions.Logging.Abstractions.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.1\\lib\\net7.0\\Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll",
@@ -1819,7 +2009,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.Logging.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\lib\\net7.0\\Microsoft.Extensions.Logging.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.ObjectPool.dll",
@@ -1857,7 +2047,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\lib\\net7.0\\Microsoft.Extensions.Options.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.options\\8.0.2\\lib\\net7.0\\Microsoft.Extensions.Options.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll",
@@ -1876,7 +2066,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.Primitives.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\lib\\net7.0\\Microsoft.Extensions.Primitives.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.IO.RecyclableMemoryStream.dll",
@@ -3225,7 +3415,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\system.io.pipelines\\7.0.0\\lib\\net7.0\\System.IO.Pipelines.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\system.io.pipelines\\8.0.0\\lib\\net7.0\\System.IO.Pipelines.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Pipes.AccessControl.dll",
@@ -4859,7 +5049,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.20\\runtimes\\browser-wasm\\lib\\net7.0\\System.Text.Encodings.Web.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\runtimes\\browser\\lib\\net7.0\\System.Text.Encodings.Web.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Json.dll",
@@ -4878,7 +5068,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.20\\runtimes\\browser-wasm\\lib\\net7.0\\System.Text.Json.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\system.text.json\\8.0.4\\lib\\net7.0\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.RegularExpressions.dll",
@@ -4916,7 +5106,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.20\\runtimes\\browser-wasm\\lib\\net7.0\\System.Threading.Channels.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\.nuget\\packages\\system.threading.channels\\8.0.0\\lib\\net7.0\\System.Threading.Channels.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.dll",
@@ -5527,6 +5717,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Components.WebAssembly.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\0vw3frjdfc.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Bcl.TimeProvider.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.TimeProvider.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.TimeProvider.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\0xvnu5s818.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -5563,6 +5772,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Security.SecureString.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\116u2nox0v.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.IO.Pipelines.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Pipelines.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Pipelines.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\1b1aro3kx4.gz",
@@ -5603,6 +5831,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Security.Cryptography.X509Certificates.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\1gcxn7c4qo.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Protocols.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Protocols.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Protocols.Json.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\1igwun1fy4.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -5639,25 +5886,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.FileSystem.DriveInfo.dll"
-    },
-    {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\1kvlifvszk.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.DependencyInjection.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\1r6hmuvlx1.gz",
@@ -5698,23 +5926,42 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Globalization.Extensions.dll"
     },
     {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\2jrr5jh8rd.gz",
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\2avod3byfj.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Http.Connections.Common.dll.gz",
       "AssetKind": "Build",
       "AssetMode": "All",
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Common.dll",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Common.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\2dxkrjpb8a.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Logging.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\2lsev62b2r.gz",
@@ -6629,44 +6876,6 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Runtime.Serialization.Primitives.dll"
     },
     {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\9ycbhthigf.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Options.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Options.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Options.dll"
-    },
-    {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\9ydacmpdoy.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/System.Threading.Channels.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.Channels.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.Channels.dll"
-    },
-    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\a0xcr7y584.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -6743,6 +6952,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Linq.Queryable.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\adxoi62mj3.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Text.Encodings.Web.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Encodings.Web.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Encodings.Web.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\aetw5ka2zl.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -6817,6 +7045,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\IronSoftware.Logger.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\as1ofgijo8.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\atqc5rrxsh.gz",
@@ -6950,25 +7197,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Configuration.dll"
-    },
-    {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\bp5yz5kql4.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/System.Text.Json.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Json.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\bzm2lirx62.gz",
@@ -7313,6 +7541,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Net.Http.Json.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\e8pzzsfxor.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Threading.Channels.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.Channels.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.Channels.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\ed9tmpzsg3.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -7465,6 +7712,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Resources.Reader.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\fn7lufruc1.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Client.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\fpx7l73ezu.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -7520,25 +7786,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Net.WebSockets.Client.dll"
-    },
-    {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\g9nfbxp2lx.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Logging.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\gl9xc2uwfa.gz",
@@ -7598,25 +7845,6 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Security.Cryptography.Pkcs.dll"
     },
     {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\h02w2uj4ha.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Primitives.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll"
-    },
-    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\h20hw7o9rg.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -7653,6 +7881,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Blazored.LocalStorage.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\h8aqwhq4m6.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Http.Connections.Client.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Client.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Http.Connections.Client.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\hj6xpk7k7d.gz",
@@ -7786,6 +8033,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Private.Uri.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\hy6ot32wbh.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Text.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\ifjmmr5n73.gz",
@@ -7978,6 +8244,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Net.HttpListener.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\jsg4iu72q8.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Logging.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\jwvnrvhgw1.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -8109,6 +8394,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.ServiceModel.Web.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\kpnwpq2gnk.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Features.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Features.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Features.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\kx5qhpgaqs.gz",
@@ -8605,25 +8909,6 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Security.Cryptography.ProtectedData.dll"
     },
     {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\owu8kg2n5z.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/System.Text.Encodings.Web.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Encodings.Web.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Text.Encodings.Web.dll"
-    },
-    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\p373ygks94.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -8717,6 +9002,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Collections.Specialized.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\pjw9vmo7k6.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Options.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Options.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Options.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\pte5rasvnq.gz",
@@ -8871,6 +9175,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\SixLabors.Fonts.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\qzm499429i.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Primitives.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\r1zqm0upo3.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -8945,25 +9268,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\IronSoftware.Drawing.Common.dll"
-    },
-    {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\siyzi3mqm5.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Logging.Abstractions.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\sj3o1sujih.gz",
@@ -9479,25 +9783,6 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Windows.dll"
     },
     {
-      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\vgyutydy9o.gz",
-      "SourceId": "UA",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/System.IO.Pipelines.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Pipelines.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Pipelines.dll"
-    },
-    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\vh01v3kf3u.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -9515,6 +9800,44 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.MemoryMappedFiles.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\vk7rp5vzki.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.DependencyInjection.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.DependencyInjection.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\vs6fpoqzt8.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Client.Core.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.Core.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Client.Core.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\vuo6gj4g3z.gz",
@@ -9897,6 +10220,25 @@
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Transactions.dll"
     },
     {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\zggbf9cux0.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Connections.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Connections.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Connections.Abstractions.dll"
+    },
+    {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\zj8lazxpxn.gz",
       "SourceId": "UA",
       "SourceType": "Computed",
@@ -9971,6 +10313,44 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Numerics.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\zwb7gqww3z.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Bcl.AsyncInterfaces.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.AsyncInterfaces.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Bcl.AsyncInterfaces.dll"
+    },
+    {
+      "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\compressed\\zzc7m7u8bl.gz",
+      "SourceId": "UA",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.SignalR.Common.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Common.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.AspNetCore.SignalR.Common.dll"
     },
     {
       "Identity": "C:\\Users\\cyril\\source\\repos\\UA\\UA\\obj\\Debug\\net7.0\\scopedcss\\bundle\\UA.styles.css",

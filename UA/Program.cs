@@ -16,6 +16,8 @@ using UA.Services;
 using UA.Services.ReportServices;
 using UA.Services.EventServices;
 using UA.Services.EventAttendanceServices;
+using UA.Services.ReminderServices;
+using UA.Pages;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -35,6 +37,7 @@ builder.Services.AddScoped<IDepartmentCourseService, DepartmentCourseService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventAttendanceService, EventAttendanceService>();
+builder.Services.AddScoped<IReminderService, ReminderService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
