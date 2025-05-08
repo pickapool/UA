@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/UA/DesignTimeBuild/.dtbcache.v2
+/.vs/UA/FileContentIndex/281fffc2-2fa1-4601-b87b-d83064c3d517.vsidx
+/.vs/UA/FileContentIndex/4e48b4c1-ac3e-4857-84fe-16ac4bdc56a6.vsidx
+/.vs/UA/FileContentIndex/66b8ea85-6bcd-4b60-bf1f-089eb8e6ead9.vsidx
+/.vs/UA/FileContentIndex/aa094d8a-10b6-45ad-9a95-a260a6d14d19.vsidx
+/.vs/UA/FileContentIndex/df72a078-b026-480b-b5f8-e3cb1762fc0b.vsidx
+/.vs/UA/FileContentIndex/d5d329b9-4bae-4361-a1ce-6f9754d6467c.vsidx
+/.vs/ProjectEvaluation/ua.metadata.v7.bin
+/.vs/ProjectEvaluation/ua.projects.v7.bin
+/.vs/UA/v17/.futdcache.v2
+/.vs/UA/v17/.suo
+*.json
